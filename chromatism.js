@@ -26,6 +26,61 @@ function convert( from, to, value ) {
 	}
 }
 
+function adjacent( mode, deg, amount, colourRef ) {
+	var colours = [colourRef];
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
+	}
+	for(i=0;i<(amount-2);i++) {
+		colour.h = (colour.h + deg) % 360;
+		if (mode != "hsl") {
+			tempColour = convert( "hsl", mode, colour );
+			colours.push(tempColour);
+		} else {
+			colours.push(colour);
+		}
+	}
+	return colours;
+}
+
+function shade( mode, shift, colourRef ) {
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
+	}
+	colour.l = colour.l + shift;
+	if (colour.l < 0) {
+		colour.l = 0;
+	} else if (colour.l > 100) {
+		colour.l = 100;
+	}
+	if (mode != "hsl") {
+		colour = convert( "hsl", mode, colour );
+	}
+	return colour;
+}
+
+function saturation( mode, shift, colourRef ) {
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
+	}
+	colour.s = colour.s + shift;
+	if (colour.s < 0) {
+		colour.s = 0;
+	} else if (colour.s > 100) {
+		colour.s = 100;
+	}
+	if (mode != "hsl") {
+		colour = convert( "hsl", mode, colour );
+	}
+	return colour;
+}
+
 function complementary( mode, colourRef ) {
 	if (mode != "hsl") {
 		colour = convert( mode, "hsl", colourRef );
@@ -75,6 +130,21 @@ function tetrad( mode, colourRef ) {
 		}
 	}
 	return colours;
+}
+
+function invert( mode, colourRef ) {
+	if (mode != "rgb") {
+		colour = convert( mode, "rgb", colourRef );
+	} else {
+		colour = {r:colourRef.r, g:colourRef.g, b:colourRef.b};
+	}
+	colour.r = negMod((255 - colour.r), 255);
+	colour.g = negMod((255 - colour.g), 255);
+	colour.b = negMod((255 - colour.b), 255);
+	if (mode != "rgb") {
+		colour = convert( "rgb", mode, colour );
+	}
+	return colour;
 }
 
 //////////////////////////
@@ -138,7 +208,7 @@ function fromHex( to, value ) {
 				g: value[1],
 				b: value[2]
 			});
-			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "," + Math.round(hsl.l) + ")";
+			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
 	}
 }
@@ -194,7 +264,7 @@ function fromRgb( to, value ) {
 			break;
 		case "css-hsl":
 			var hsl = convert("rgb", "hsl", value);
-			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "," + Math.round(hsl.l) + ")";
+			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
 	}
 }
@@ -262,7 +332,7 @@ function fromCssRgb( to, value ) {
 				g: value[1],
 				b: value[2]
 			});
-			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "," + Math.round(hsl.l) + ")";
+			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
 	}
 }
@@ -332,13 +402,13 @@ function fromHsl( to, value ) {
 			return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
 			break;
 		case "css-hsl":
-			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "," + Math.round(value.l) + ")";
+			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
 			break;
 	}
 }
 
 function fromCssHsl( to, value ) {
-	value = value.replace(/(hsl\(|\))/g,'').split(",");
+	value = value.replace(/(hsl\(|\)|%)/g,'').split(",");
 	for (i=0;i<value.length;i++){
 		value[i] = parseInt(value[i]);
 	}
@@ -427,5 +497,9 @@ module.exports = {
 	convert: convert,
 	complementary: complementary,
 	triad: triad,
-	tetrad: tetrad
+	tetrad: tetrad,
+	invert: invert,
+	adjacent: adjacent,
+	shade: shade,
+	saturation: saturation
 }
