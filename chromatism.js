@@ -18,6 +18,30 @@ function convert( from, to, value ) {
 	}
 }
 
+function complementary( mode, colour ) {
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colour );
+	}
+	console.log("BEFORE -> "+colour.h)
+	colour.h = (colour.h + 180) % 360;
+	console.log("AFTER -> "+colour.h)
+	if (mode != "hsl") {
+		colour = convert( "hsl", mode, colour );
+	}
+	return colour;
+}
+
+function tetrad( mode, colour ) {
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colour );
+	}
+	colour.h = (colour.h + 180) % 360;
+	if (mode != "hsl") {
+		colour = convert( "hsl", mode, colour );
+	}
+	return colour;
+}
+
 function fromHex( to, value ) {
 	value = value.replace('#','').match(/.{2}/g);
 	for (i=0;i<value.length;i++){
@@ -106,9 +130,9 @@ function fromRgb( to, value ) {
 				h = 0;
 			} else {
 				if (l >= 50) {
-					s = ((rgbOrdered[2] - rgbOrdered[0])/(2.0 - rgbOrdered[2] - rgbOrdered[0])) * 101;
+					s = ((rgbOrdered[2] - rgbOrdered[0])/(2.0 - rgbOrdered[2] - rgbOrdered[0])) * 100;
 				} else {
-					s = ((rgbOrdered[2] - rgbOrdered[0])/(rgbOrdered[2] + rgbOrdered[0])) * 101;
+					s = ((rgbOrdered[2] - rgbOrdered[0])/(rgbOrdered[2] + rgbOrdered[0])) * 100;
 				}
 				if (rgbOrdered[2] == r) {
 					h = ((g-b)/(rgbOrdered[2] - rgbOrdered[0])) * 60;
@@ -170,9 +194,9 @@ function fromCssRgb( to, value ) {
 				h = 0;
 			} else {
 				if (l >= 50) {
-					s = ((rgbOrdered[2] - rgbOrdered[0])/(2.0 - rgbOrdered[2] - rgbOrdered[0])) * 101;
+					s = ((rgbOrdered[2] - rgbOrdered[0])/(2.0 - rgbOrdered[2] - rgbOrdered[0])) * 100;
 				} else {
-					s = ((rgbOrdered[2] - rgbOrdered[0])/(rgbOrdered[2] + rgbOrdered[0])) * 101;
+					s = ((rgbOrdered[2] - rgbOrdered[0])/(rgbOrdered[2] + rgbOrdered[0])) * 100;
 				}
 				if (rgbOrdered[2] == r) {
 					h = ((g-b)/(rgbOrdered[2] - rgbOrdered[0])) * 60;
@@ -351,11 +375,16 @@ function fromCssHsl( to, value ) {
 			return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
 			break;
 		case "hsl":
-			return "hsl(" + Math.round(value[0]) + "," + Math.round(value[1]) + "," + Math.round(value[2]) + ")";
+			return {
+				h: value[0],
+				s: value[1],
+				l: value[2]
+			};
 			break;
 	}
 }
 
 module.exports = {
-	convert: convert
+	convert: convert,
+	complementary: complementary
 }
