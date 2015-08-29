@@ -36,7 +36,7 @@ var newColour = chroma.invert( mode, value );
 
 ### Generate an array of adjacent hue-shifted colours (rainbow effect) 
 ```javascript
-var newColour = chroma.tetrad( mode, shift, number-of-colours, value );
+var newColour = chroma.adjacent( mode, shift, number-of-colours, value );
 ```
 
 Shift should be in degrees. It can be either positive and negative.
