@@ -1,0 +1,21 @@
+{
+  "name": "chromatism",
+  "version": "1.0.0",
+  "description": "A simple set of utility functions for colours.",
+  "main": "chromatism.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "keywords": [
+    "color",
+    "colour",
+    "utility",
+    "hue",
+    "chroma",
+    "CMYK",
+    "RGA",
+    "HSL"
+  ],
+  "author": "Toish <techpanda@digitalpanda.ca>",
+  "license": "ISC"
+}
