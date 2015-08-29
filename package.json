@@ -1,6 +1,6 @@
 {
   "name": "chromatism",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "A simple set of utility functions for colours.",
   "main": "chromatism.js",
   "scripts": {
