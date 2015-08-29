@@ -1,3 +1,11 @@
+function negMod( n, m ) {
+	return ((n % m) + m) % m;
+}
+
+//////////////////////
+// Module Functions //
+//////////////////////
+
 function convert( from, to, value ) {
 	switch (from){
 		case "hex":
@@ -18,29 +26,60 @@ function convert( from, to, value ) {
 	}
 }
 
-function complementary( mode, colour ) {
+function complementary( mode, colourRef ) {
 	if (mode != "hsl") {
-		colour = convert( mode, "hsl", colour );
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
 	}
-	console.log("BEFORE -> "+colour.h)
 	colour.h = (colour.h + 180) % 360;
-	console.log("AFTER -> "+colour.h)
 	if (mode != "hsl") {
 		colour = convert( "hsl", mode, colour );
 	}
 	return colour;
 }
 
-function tetrad( mode, colour ) {
+function triad( mode, colourRef ) {
+	var colours = [colourRef];
 	if (mode != "hsl") {
-		colour = convert( mode, "hsl", colour );
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
 	}
-	colour.h = (colour.h + 180) % 360;
-	if (mode != "hsl") {
-		colour = convert( "hsl", mode, colour );
+	for(i=0;i<2;i++) {
+		colour.h = (colour.h + 120) % 360;
+		if (mode != "hsl") {
+			tempColour = convert( "hsl", mode, colour );
+			colours.push(tempColour);
+		} else {
+			colours.push(colour);
+		}
 	}
-	return colour;
+	return colours;
 }
+
+function tetrad( mode, colourRef ) {
+	var colours = [colourRef];
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
+	}
+	for(i=0;i<3;i++) {
+		colour.h = (colour.h + 90) % 360;
+		if (mode != "hsl") {
+			tempColour = convert( "hsl", mode, colour );
+			colours.push(tempColour);
+		} else {
+			colours.push(colour);
+		}
+	}
+	return colours;
+}
+
+//////////////////////////
+// Conversion Functions //
+//////////////////////////
 
 function fromHex( to, value ) {
 	value = value.replace('#','').match(/.{2}/g);
@@ -70,7 +109,7 @@ function fromHex( to, value ) {
 				h = 0;
 			} else {
 				if (l >= 50) {
-					s = (rgbOrdered[2] - rgbOrdered[0])/(2.0 - (rgbOrdered[2] - rgbOrdered[0])) * 100;
+					s = (rgbOrdered[2] - rgbOrdered[0])/((2.0 - rgbOrdered[2]) - rgbOrdered[0]) * 100;
 				} else {
 					s = (rgbOrdered[2] - rgbOrdered[0])/(rgbOrdered[2] + rgbOrdered[0]) * 100;
 				}
@@ -130,7 +169,7 @@ function fromRgb( to, value ) {
 				h = 0;
 			} else {
 				if (l >= 50) {
-					s = ((rgbOrdered[2] - rgbOrdered[0])/(2.0 - rgbOrdered[2] - rgbOrdered[0])) * 100;
+					s = ((rgbOrdered[2] - rgbOrdered[0])/((2.0 - rgbOrdered[2]) - rgbOrdered[0])) * 100;
 				} else {
 					s = ((rgbOrdered[2] - rgbOrdered[0])/(rgbOrdered[2] + rgbOrdered[0])) * 100;
 				}
@@ -250,9 +289,9 @@ function fromHsl( to, value ) {
 				}
 				tempTwo = (2 * (value.l/100)) - tempOne;
 				tempHue = value.h / 360;
-				tempR = tempHue + 0.333;
+				tempR = (tempHue + 0.333) % 1;
 				tempG = tempHue;
-				tempB = tempHue - 0.333;
+				tempB = negMod((tempHue - 0.333), 1);
 				var r,g,b;
 				if ((6 * tempR) < 1) {
 					r = tempTwo + ((tempOne - tempTwo) * 6 * tempR);
@@ -328,9 +367,9 @@ function fromCssHsl( to, value ) {
 				}
 				tempTwo = (2 * (value[2]/100)) - tempOne;
 				tempHue = value[0] / 360;
-				tempR = tempHue + 0.333;
+				tempR = (tempHue + 0.333) % 1;
 				tempG = tempHue;
-				tempB = tempHue - 0.333;
+				tempB = negMod((tempHue - 0.333), 1);
 				var r,g,b;
 				if ((6 * tempR) < 1) {
 					r = tempTwo + ((tempOne - tempTwo) * 6 * tempR);
@@ -386,5 +425,7 @@ function fromCssHsl( to, value ) {
 
 module.exports = {
 	convert: convert,
-	complementary: complementary
+	complementary: complementary,
+	triad: triad,
+	tetrad: tetrad
 }
