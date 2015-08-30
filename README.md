@@ -55,6 +55,23 @@ var newColour = chroma.saturation( mode, shift, value );
 
 Shift should be a number between -100 and 100.
 
+### Shift the hue of a colour
+```javascript
+var newColour = chroma.hue( mode, shift, value );
+```
+
+### Greyscale version of the colour
+```javascript
+var newColour = chroma.greyscale( mode, value );
+```
+
+### Determine accessible colour for foreground text.
+```javascript
+var newColour = chroma.contrastRatio( mode, value );
+```
+
+Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
+
 ----------------
 
 ## Colour Modes:

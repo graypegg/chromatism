@@ -48,6 +48,51 @@ function adjacent( mode, deg, amount, colourRef ) {
 	return colours;
 }
 
+function contrastRatio( mode, colourRef ) {
+	if (mode != "rgb") {
+		colour = convert( mode, "rgb", colourRef );
+	} else {
+		colour = {r:colourRef.r, g:colourRef.g, g:colourRef.g};
+	}
+	var yiq = ((colour.r*299)+(colour.g*587)+(colour.b*114))/1000;
+	if (yiq >= 128) {
+		colour = {r:0, g:0, b:0};
+	} else {
+		colour = {r:255, g:255, b:255};
+	}
+	if (mode != "rgb") {
+		colour = convert( "rgb", mode, colour );
+	}
+	return colour;
+}
+
+function greyscale( mode, colourRef ) {
+	if (mode != "rgb") {
+		colour = convert( mode, "rgb", colourRef );
+	} else {
+		colour = {r:colourRef.r, g:colourRef.g, g:colourRef.g};
+	}
+	grey = ( (colour.r + colour.g + colour.b) / 3 );
+	colour = {r: grey, g: grey, b: grey};
+	if (mode != "rgb") {
+		colour = convert( "rgb", mode, colour );
+	}
+	return colour;
+}
+
+function hue( mode, shift, colourRef ) {
+	if (mode != "hsl") {
+		colour = convert( mode, "hsl", colourRef );
+	} else {
+		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
+	}
+	colour.h = (colour.h + shift) % 360;
+	if (mode != "hsl") {
+		colour = convert( "hsl", mode, colour );
+	}
+	return colour;
+}
+
 function shade( mode, shift, colourRef ) {
 	if (mode != "hsl") {
 		colour = convert( mode, "hsl", colourRef );
@@ -619,6 +664,9 @@ module.exports = {
 	tetrad: tetrad,
 	invert: invert,
 	adjacent: adjacent,
+	hue: hue,
 	shade: shade,
-	saturation: saturation
+	saturation: saturation,
+	greyscale: greyscale,
+	contrastRatio: contrastRatio
 }
