@@ -4,7 +4,7 @@ A simple set of utility functions for colours.
 ## How to use
 
 ```javascript
-chroma = require("./chromatism.js");
+chroma = require("chromatism");
 ```
 
 ### Convert colour types
