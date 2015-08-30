@@ -23,6 +23,9 @@ function convert( from, to, value ) {
 		case "css-hsl":
 			return fromCssHsl( to, value );
 			break;
+		case "cmyk":
+			return fromCmyk( to, value );
+			break;
 	}
 }
 
@@ -210,6 +213,22 @@ function fromHex( to, value ) {
 			});
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
+		case "cmyk":
+			var tempR = value[0]/255;
+			var tempG = value[1]/255;
+			var tempB = value[2]/255;
+			var k = 1 - (Math.max(tempR, tempG, tempB));
+			if (k != 1) {
+				var c = ((1 - tempR) - k) / (1 - k);
+				var m = ((1 - tempG) - k) / (1 - k);
+				var y = ((1 - tempB) - k) / (1 - k);
+			} else {
+				var c = 0;
+				var m = 0;
+				var y = 0;
+			}
+			return {c: c, m: m, y: y, k: k};
+			break;
 	}
 }
 
@@ -265,6 +284,22 @@ function fromRgb( to, value ) {
 		case "css-hsl":
 			var hsl = convert("rgb", "hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
+			break;
+		case "cmyk":
+			var tempR = value['r']/255;
+			var tempG = value['g']/255;
+			var tempB = value['b']/255;
+			var k = 1 - (Math.max(tempR, tempG, tempB));
+			if (k != 1) {
+				var c = ((1 - tempR) - k) / (1 - k);
+				var m = ((1 - tempG) - k) / (1 - k);
+				var y = ((1 - tempB) - k) / (1 - k);
+			} else {
+				var c = 0;
+				var m = 0;
+				var y = 0;
+			}
+			return {c: c, m: m, y: y, k: k};
 			break;
 	}
 }
@@ -333,6 +368,22 @@ function fromCssRgb( to, value ) {
 				b: value[2]
 			});
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
+			break;
+		case "cmyk":
+			var tempR = value[0]/255;
+			var tempG = value[1]/255;
+			var tempB = value[2]/255;
+			var k = 1 - (Math.max(tempR, tempG, tempB));
+			if (k != 1) {
+				var c = ((1 - tempR) - k) / (1 - k);
+				var m = ((1 - tempG) - k) / (1 - k);
+				var y = ((1 - tempB) - k) / (1 - k);
+			} else {
+				var c = 0;
+				var m = 0;
+				var y = 0;
+			}
+			return {c: c, m: m, y: y, k: k};
 			break;
 	}
 }
@@ -403,6 +454,23 @@ function fromHsl( to, value ) {
 			break;
 		case "css-hsl":
 			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
+			break;
+		case "cmyk":
+			var rgb = convert("hsl", "rgb", value);
+			var tempR = rgb['r']/255;
+			var tempG = rgb['g']/255;
+			var tempB = rgb['b']/255;
+			var k = 1 - (Math.max(tempR, tempG, tempB));
+			if (k != 1) {
+				var c = ((1 - tempR) - k) / (1 - k);
+				var m = ((1 - tempG) - k) / (1 - k);
+				var y = ((1 - tempB) - k) / (1 - k);
+			} else {
+				var c = 0;
+				var m = 0;
+				var y = 0;
+			}
+			return {c: c, m: m, y: y, k: k};
 			break;
 	}
 }
@@ -490,6 +558,57 @@ function fromCssHsl( to, value ) {
 				l: value[2]
 			};
 			break;
+		case "cmyk":
+			var rgb = convert("css-hsl", "rgb", value);
+			var tempR = rgb['r']/255;
+			var tempG = rgb['g']/255;
+			var tempB = rgb['b']/255;
+			var k = 1 - (Math.max(tempR, tempG, tempB));
+			if (k != 1) {
+				var c = ((1 - tempR) - k) / (1 - k);
+				var m = ((1 - tempG) - k) / (1 - k);
+				var y = ((1 - tempB) - k) / (1 - k);
+			} else {
+				var c = 0;
+				var m = 0;
+				var y = 0;
+			}
+			return {c: c, m: m, y: y, k: k};
+			break;
+	}
+}
+
+function fromCmyk( to, value ) {
+	switch (to){
+		case "hex":
+			var r = 255 * (1-value.c) * (1-value.k);
+			var g = 255 * (1-value.m) * (1-value.k);
+			var b = 255 * (1-value.y) * (1-value.k);
+			return convert("rgb", "hex", {r: r, g: g, b: b});
+			break;
+		case "rgb":
+			var r = 255 * (1-value.c) * (1-value.k);
+			var g = 255 * (1-value.m) * (1-value.k);
+			var b = 255 * (1-value.y) * (1-value.k);
+			return {r: r, g: g, b: b};
+			break;
+		case "css-rgb":
+			var r = 255 * (1-value.c) * (1-value.k);
+			var g = 255 * (1-value.m) * (1-value.k);
+			var b = 255 * (1-value.y) * (1-value.k);
+			return "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
+			break;
+		case "hsl":
+			var r = 255 * (1-value.c) * (1-value.k);
+			var g = 255 * (1-value.m) * (1-value.k);
+			var b = 255 * (1-value.y) * (1-value.k);
+			return convert("rgb", "hsl", {r: r, g: g, b: b});
+			break;
+		case "css-hsl":
+			var r = 255 * (1-value.c) * (1-value.k);
+			var g = 255 * (1-value.m) * (1-value.k);
+			var b = 255 * (1-value.y) * (1-value.k);
+			return convert("rgb", "css-hsl", {r: r, g: g, b: b});
 	}
 }
 

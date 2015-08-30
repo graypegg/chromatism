@@ -3,6 +3,7 @@
   "version": "1.5.1",
   "description": "A simple set of utility functions for colours.",
   "main": "chromatism.js",
+  "repository": "toish/chromatism",
   "scripts": {
     "test": "node test.js"
   },
@@ -13,7 +14,7 @@
     "hue",
     "chroma",
     "CMYK",
-    "RGA",
+    "RGB",
     "HSL"
   ],
   "author": "Toish <techpanda@digitalpanda.ca>",

@@ -63,3 +63,4 @@ Shift should be a number between -100 and 100.
 - css-rgb ---> "rgb(255,200,55)"
 - hsl     ---> { h: 44, s: 100, l: 61 }
 - css-hsl ---> "hsl(44,100,61)"
+- cmyk    ---> {c: 0.5, m: 1, y: 0.2, k: 0.45}
