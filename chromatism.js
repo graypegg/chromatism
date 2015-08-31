@@ -42,7 +42,7 @@ function adjacent( mode, deg, amount, colourRef ) {
 			tempColour = convert( "hsl", mode, colour );
 			colours.push(tempColour);
 		} else {
-			colours.push(colour);
+			colours.push({h:colour.h, s:colour.s, l:colour.l});
 		}
 	}
 	return colours;
@@ -155,7 +155,7 @@ function triad( mode, colourRef ) {
 			tempColour = convert( "hsl", mode, colour );
 			colours.push(tempColour);
 		} else {
-			colours.push(colour);
+			colours.push({h:colour.h, s:colour.s, l:colour.l});
 		}
 	}
 	return colours;
@@ -174,7 +174,7 @@ function tetrad( mode, colourRef ) {
 			tempColour = convert( "hsl", mode, colour );
 			colours.push(tempColour);
 		} else {
-			colours.push(colour);
+			colours.push({h:colour.h, s:colour.s, l:colour.l});
 		}
 	}
 	return colours;
@@ -486,6 +486,9 @@ function fromHsl( to, value ) {
 				} else {
 					b = tempTwo;
 				}
+				if (r < 0) r = 0;
+				if (g < 0) g = 0;
+				if (b < 0) b = 0;
 				return {
 					r: r * 255,
 					g: g * 255,
@@ -581,6 +584,9 @@ function fromCssHsl( to, value ) {
 				} else {
 					b = tempTwo;
 				}
+				if (r < 0) r = 0;
+				if (g < 0) g = 0;
+				if (b < 0) b = 0;
 				return {
 					r: r * 255,
 					g: g * 255,
