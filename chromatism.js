@@ -2,6 +2,18 @@ function negMod( n, m ) {
 	return ((n % m) + m) % m;
 }
 
+function slopeMod( n, m ) {
+	if (n > (m*2)) {
+		return slopeMod( n-(m*2), m );
+	} else if (n > m){
+		return (m*2) - n;
+	} else if (n < 0){
+		return slopeMod( n+(m*2), m );
+	} else {
+		return n;
+	}
+}
+
 //////////////////////
 // Module Functions //
 //////////////////////
@@ -27,6 +39,35 @@ function convert( from, to, value ) {
 			return fromCmyk( to, value );
 			break;
 	}
+}
+
+function fade( mode, amount, fromRef, toRef ) {
+	amount = amount - 1;
+	var colours = [fromRef];
+	if (mode != "hsl") {
+		fromColour = convert( mode, "hsl", fromRef );
+		toColour = convert( mode, "hsl", toRef );
+	} else {
+		fromColour = {h:fromRef.h, s:fromRef.s, l:fromRef.l};
+		toColour = {h:toRef.h, s:toRef.s, l:toRef.l};
+	}
+	hueDiff = (toColour.h - fromColour.h) / (amount);
+	satDiff = (toColour.s - fromColour.s) / (amount);
+	lightDiff = (toColour.l - fromColour.l) / (amount);
+	var colour = fromColour;
+	for(i=0;i<(amount-1);i++) {
+		colour.h = (colour.h + hueDiff) % 360;
+		colour.s = slopeMod(colour.s + satDiff, 100);
+		colour.l = slopeMod(colour.l + lightDiff, 100);
+		if (mode != "hsl") {
+			tempColour = convert( "hsl", mode, colour );
+			colours.push(tempColour);
+		} else {
+			colours.push({h:colour.h, s:colour.s, l:colour.l});
+		}
+	}
+	colours.push(toRef);
+	return colours;
 }
 
 function adjacent( mode, deg, amount, colourRef ) {
@@ -670,6 +711,7 @@ module.exports = {
 	tetrad: tetrad,
 	invert: invert,
 	adjacent: adjacent,
+	fade: fade,
 	hue: hue,
 	shade: shade,
 	saturation: saturation,
