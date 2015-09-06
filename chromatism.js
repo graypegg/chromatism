@@ -14,6 +14,19 @@ function slopeMod( n, m ) {
 	}
 }
 
+function matrix( mode, data ) {
+	this.mode = mode;
+	this.data = data;
+
+	this.map = function( func ) {
+		for (x=0;x<this.data.length;x++){
+			for (y=0;y<this.data[x].length;y++){
+				this.data[x][y] = func(this.data[x][y]);
+			}
+		}
+	}
+}
+
 //////////////////////
 // Module Functions //
 //////////////////////
@@ -39,6 +52,24 @@ function convert( from, to, value ) {
 			return fromCmyk( to, value );
 			break;
 	}
+}
+
+function mid( mode, colourOneRef, colourTwoRef ) {
+	if (mode != "hsl") {
+		colourOne = convert( mode, "hsl", colourOneRef );
+		colourTwo = convert( mode, "hsl", colourTwoRef );
+	} else {
+		colourOne = {h:colourOneRef.h, s:colourOneRef.s, l:colourOneRef.l};
+		colourTwo = {h:colourTwoRef.h, s:colourTwoRef.s, l:colourTwoRef.l};
+	}
+	var midHue = (colourOne.h + colourTwo.h) / 2;
+	var midSat = (colourOne.s + colourTwo.s) / 2;
+	var midLight = (colourOne.l + colourTwo.l) / 2;
+	colour = {h:midHue, s:midSat, l:midLight};
+	if (mode != "hsl") {
+		colour = convert( "hsl", mode, colour );
+	}
+	return colour;
 }
 
 function fade( mode, amount, fromRef, toRef ) {
@@ -712,9 +743,11 @@ module.exports = {
 	invert: invert,
 	adjacent: adjacent,
 	fade: fade,
+	mid: mid,
 	hue: hue,
 	shade: shade,
 	saturation: saturation,
 	greyscale: greyscale,
-	contrastRatio: contrastRatio
+	contrastRatio: contrastRatio,
+	matrix: matrix
 }
