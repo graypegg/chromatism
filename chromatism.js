@@ -25,6 +25,9 @@ function matrix( mode, data ) {
 			}
 		}
 	}
+	this.change = function( x, y, value ) {
+		this.data[y][x] = value;
+	}
 }
 
 //////////////////////
