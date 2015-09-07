@@ -16,7 +16,7 @@ function slopeMod( n, m ) {
 
 function matrix( mode, data ) {
 	this.mode = mode;
-	this.data = data;
+	this.data = (typeof data[0] == "object" ? data : [data]);
 
 	this.map = function( func ) {
 		for (x=0;x<this.data.length;x++){
