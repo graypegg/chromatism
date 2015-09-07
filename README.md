@@ -1,6 +1,14 @@
 # Chromatism
 A simple set of utility functions for colours.
 
+## Colour Modes:
+- hex     ---> "#FFC837"
+- rgb     ---> { r:255, g: 200, b: 55 }
+- css-rgb ---> "rgb(255,200,55)"
+- hsl     ---> { h: 44, s: 100, l: 61 }
+- css-hsl ---> "hsl(44,100,61)"
+- cmyk    ---> {c: 0.5, m: 1, y: 0.2, k: 0.45}
+
 ## How to use
 
 ```javascript
@@ -27,6 +35,11 @@ var newColour = chroma.triad( mode, value );
 ### Generate an array of tetrad colours
 ```javascript
 var newColour = chroma.tetrad( mode, value );
+```
+
+### Find the mid point between two colours
+```javascript
+var newColour = chroma.mid( mode, colourOne, colourTwo );
 ```
 
 ### Invert a colour
@@ -79,12 +92,25 @@ var newColour = chroma.contrastRatio( mode, value );
 
 Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
 
-----------------
+### Generate a matrix of colours.
+```javascript
+var newMatrix = new chroma.matrix( mode, [
+  [ colourOne, colourTwo, colourThree ],
+  [ colourFour, colourFive, colourSix ],
+  [ colourSeven, colourEight, colourNine ]
+] );
+```
 
-## Colour Modes:
-- hex     ---> "#FFC837"
-- rgb     ---> { r:255, g: 200, b: 55 }
-- css-rgb ---> "rgb(255,200,55)"
-- hsl     ---> { h: 44, s: 100, l: 61 }
-- css-hsl ---> "hsl(44,100,61)"
-- cmyk    ---> {c: 0.5, m: 1, y: 0.2, k: 0.45}
+## Matrix Operations
+
+### Map a function over the colours in a matrix
+```javascript
+newMatrix.map( function( colour ){
+  return chroma.greyscale("hex", colour);
+} );
+```
+
+### Change a value in a matrix
+```javascript
+newMatrix.change( x, y, newColour );
+```
