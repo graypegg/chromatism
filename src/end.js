@@ -11,6 +11,5 @@
 	exports.saturation = saturation;
 	exports.greyscale = greyscale;
 	exports.contrastRatio = contrastRatio;
-	exports.matrix = matrix;
 
 })( (typeof exports === 'undefined') ? (window['chroma'] = {}) : (exports) );

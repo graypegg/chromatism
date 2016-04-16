@@ -91,26 +91,3 @@ var newColour = chroma.contrastRatio( mode, value );
 ```
 
 Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
-
-### Generate a matrix of colours.
-```javascript
-var newMatrix = new chroma.matrix( mode, [
-  [ colourOne, colourTwo, colourThree ],
-  [ colourFour, colourFive, colourSix ],
-  [ colourSeven, colourEight, colourNine ]
-] );
-```
-
-## Matrix Operations
-
-### Map a function over the colours in a matrix
-```javascript
-newMatrix.map( function( colour ){
-  return chroma.greyscale("hex", colour);
-} );
-```
-
-### Change a value in a matrix
-```javascript
-newMatrix.change( x, y, newColour );
-```

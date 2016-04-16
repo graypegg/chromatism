@@ -1,7 +1,5 @@
 "use strict";
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 (function (exports) {
@@ -637,22 +635,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		return colour;
 	}
 
-	function matrix(mode, data) {
-		this.mode = mode;
-		this.data = _typeof(data[0]) == "object" ? data : [data];
-
-		this.map = function (func) {
-			for (var x = 0; x < this.data.length; x++) {
-				for (var y = 0; y < this.data[x].length; y++) {
-					this.data[x][y] = func(this.data[x][y]);
-				}
-			}
-		};
-		this.change = function (x, y, value) {
-			this.data[y][x] = value;
-		};
-	}
-
 	function mid(mode, colourOneRef, colourTwoRef) {
 		var colourOne, colourTwo;
 		if (mode != "hsl") {
@@ -765,5 +747,4 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 	exports.saturation = saturation;
 	exports.greyscale = greyscale;
 	exports.contrastRatio = contrastRatio;
-	exports.matrix = matrix;
 })(typeof exports === 'undefined' ? window['chroma'] = {} : exports);
