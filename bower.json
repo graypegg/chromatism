@@ -1,0 +1,30 @@
+{
+  "name": "chromatism",
+  "description": "A simple set of utility functions for colours.",
+  "main": "dist/chromatism.min.js",
+  "authors": [
+    "Toish <techpanda@digitalpanda.ca>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "color",
+    "colour",
+    "utility",
+    "hue",
+    "chroma",
+    "CMYK",
+    "RGB",
+    "HSL"
+  ],
+  "homepage": "https://github.com/toish/chromatism",
+  "moduleType": [
+    "globals"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

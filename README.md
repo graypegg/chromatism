@@ -3,11 +3,21 @@ A simple set of utility functions for colours.
 
 **NOTE: The following examples return different types of values, (hex, rgb, hsl) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.**
 
-## How to use
+## Installation
 
+#### Node
 ```javascript
-chroma = require("chromatism");
+var chroma = require("chromatism");
 ```
+#### Browser
+```javascript
+<script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
+```
+**_Note:_ Browser user's should install chromatism using Bower:**
+
+[![](https://img.shields.io/bower/v/chromatism.svg)](https://github.com/toish/chromatism)
+
+---
 
 ### Convert colour types
 ```javascript
