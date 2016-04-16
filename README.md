@@ -1,9 +1,11 @@
-# Chromatism
+![Chromatism Logo](http://digitalpanda.ca/resources/img/chromatism.png)
+
 A simple set of utility functions for colours.
 
-**NOTE: The following examples return different types of values, (hex, rgb, hsl) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.**
-
 ## Installation
+
+[![NPM](https://nodei.co/npm/chromatism.png?mini=true)](https://nodei.co/npm/chromatism/)
+[![Bower](http://digitalpanda.ca/resources/img/bower-chromatism.png)](https://nodei.co/npm/chromatism/)
 
 #### Node
 ```javascript
@@ -13,11 +15,12 @@ var chroma = require("chromatism");
 ```javascript
 <script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
 ```
-**_Note:_ Browser user's should install chromatism using Bower:**
-
-[![](https://img.shields.io/bower/v/chromatism.svg)](https://github.com/toish/chromatism)
 
 ---
+
+## Colour Functions
+
+**_Note:_ The following examples return different types of values, (hex, rgb, hsl) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.**
 
 ### Convert colour types
 ```javascript
