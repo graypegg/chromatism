@@ -9,6 +9,7 @@
 	exports.hue = hue;
 	exports.shade = shade;
 	exports.saturation = saturation;
+	exports.contrast = contrast;
 	exports.greyscale = greyscale;
 	exports.contrastRatio = contrastRatio;
 

@@ -89,6 +89,13 @@ var newColour = chroma.hue( shift, value ).hex;
 
 Hue shift is measured in degrees, using the HSL colour model.
 
+### Shift the contrast of a colour
+```javascript
+var newColour = chroma.contrast( shift, value ).hsl;
+```
+
+Contrast shift can be supplied in floating point form! You'll normally use a value between 0 and 4.
+
 ### Greyscale version of the colour
 ```javascript
 var newColour = chroma.greyscale( value ).cmyk;
