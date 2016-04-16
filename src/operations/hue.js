@@ -1,13 +1,7 @@
-function hue( mode, shift, colourRef ) {
-	var colour;
-	if (mode != "hsl") {
-		colour = convert( mode, "hsl", colourRef );
-	} else {
-		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
-	}
-	colour.h = (colour.h + shift) % 360;
-	if (mode != "hsl") {
-		colour = convert( "hsl", mode, colour );
-	}
-	return colour;
+function hue( shift, colourRef ) {
+	var colour = convert( "hsl", colourRef );
+
+	colour.h = negMod((colour.h + shift), 360);
+
+	return ready( colour );
 }

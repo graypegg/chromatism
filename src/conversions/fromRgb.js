@@ -48,7 +48,7 @@ function fromRgb( to, value ) {
 			};
 			break;
 		case "css-hsl":
-			var hsl = convert("rgb", "hsl", value);
+			var hsl = convert("hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
 		case "cmyk":

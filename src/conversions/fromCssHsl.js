@@ -5,12 +5,12 @@ function fromCssHsl( to, value ) {
 	}
 	switch (to) {
 		case "hex":
-			var rgb = convert("hsl", "rgb", {
+			var rgb = convert("rgb", {
 				h: value[0],
 				s: value[1],
 				l: value[2]
 			});
-			return convert("rgb", "hex", rgb);
+			return convert("hex", rgb);
 			break;
 		case "rgb":
 			if (value[1] == 0) {
@@ -71,7 +71,7 @@ function fromCssHsl( to, value ) {
 			}
 			break;
 		case "css-rgb":
-			var rgb = convert("hsl", "rgb", {
+			var rgb = convert("rgb", {
 				h: value[0],
 				s: value[1],
 				l: value[2]
@@ -86,7 +86,7 @@ function fromCssHsl( to, value ) {
 			};
 			break;
 		case "cmyk":
-			var rgb = convert("css-hsl", "rgb", value);
+			var rgb = convert("rgb", value);
 			var tempR = rgb['r']/255;
 			var tempG = rgb['g']/255;
 			var tempB = rgb['b']/255;

@@ -1,8 +1,8 @@
 function fromHsl( to, value ) {
 	switch (to){
 		case "hex":
-			var rgb = convert("hsl", "rgb", value);
-			return convert("rgb", "hex", rgb);
+			var rgb = convert("rgb", value);
+			return convert("hex", rgb);
 			break;
 		case "rgb":
 			if (value.s == 0) {
@@ -63,14 +63,14 @@ function fromHsl( to, value ) {
 			}
 			break;
 		case "css-rgb":
-			var rgb = convert("hsl", "rgb", value);
+			var rgb = convert("rgb", value);
 			return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
 			break;
 		case "css-hsl":
 			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
 			break;
 		case "cmyk":
-			var rgb = convert("hsl", "rgb", value);
+			var rgb = convert("rgb", value);
 			var tempR = rgb['r']/255;
 			var tempG = rgb['g']/255;
 			var tempB = rgb['b']/255;

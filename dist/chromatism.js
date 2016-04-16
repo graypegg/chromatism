@@ -1,6 +1,6 @@
 "use strict";
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 (function (exports) {
 	function negMod(n, m) {
@@ -19,13 +19,109 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		}
 	}
 
+	function determineMode(colour) {
+		switch (typeof colour === "undefined" ? "undefined" : _typeof(colour)) {
+			case "object":
+				if (typeof colour.r != "undefined") {
+					return "rgb";
+				} else if (typeof colour.h != "undefined") {
+					return "hsl";
+				} else if (typeof colour.c != "undefined") {
+					return "cmyk";
+				} else {
+					return null;
+				}
+				break;
+			case "string":
+				if (colour[0] === "#") {
+					return "hex";
+				} else if (colour.indexOf("rgb(") == 0) {
+					return "css-rgb";
+				} else if (colour.indexOf("hsl(") == 0) {
+					return "css-hsl";
+				} else {
+					return null;
+				}
+				break;
+			default:
+				return null;
+				break;
+		}
+	}
+
+	function ready(colour) {
+		switch (Object.prototype.toString.call(colour)) {
+			case "[object Object]":
+			case "[object String]":
+				return {
+					colour: colour,
+					get rgb() {
+						return convert("rgb", this.colour);
+					},
+					get hsl() {
+						return convert("hsl", this.colour);
+					},
+					get hex() {
+						return convert("hex", this.colour);
+					},
+					get cmyk() {
+						return convert("cmyk", this.colour);
+					},
+					get cssrgb() {
+						return convert("css-rgb", this.colour);
+					},
+					get csshsl() {
+						return convert("css-hsl", this.colour);
+					}
+				};
+				break;
+			case "[object Array]":
+				return {
+					colours: colour,
+					get rgb() {
+						return this.colours.map(function (colour) {
+							return convert("rgb", colour);
+						});
+					},
+					get hsl() {
+						return this.colours.map(function (colour) {
+							return convert("hsl", colour);
+						});
+					},
+					get hex() {
+						return this.colours.map(function (colour) {
+							return convert("hex", colour);
+						});
+					},
+					get cmyk() {
+						return this.colours.map(function (colour) {
+							return convert("cmyk", colour);
+						});
+					},
+					get cssrgb() {
+						return this.colours.map(function (colour) {
+							return convert("css-rgb", colour);
+						});
+					},
+					get csshsl() {
+						return this.colours.map(function (colour) {
+							return convert("css-hsl", colour);
+						});
+					}
+				};
+				break;
+			default:
+				return null;
+				break;
+		}
+	}
 	function fromCmyk(to, value) {
 		switch (to) {
 			case "hex":
 				var r = 255 * (1 - value.c) * (1 - value.k);
 				var g = 255 * (1 - value.m) * (1 - value.k);
 				var b = 255 * (1 - value.y) * (1 - value.k);
-				return convert("rgb", "hex", { r: r, g: g, b: b });
+				return convert("hex", { r: r, g: g, b: b });
 				break;
 			case "rgb":
 				var r = 255 * (1 - value.c) * (1 - value.k);
@@ -43,13 +139,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				var r = 255 * (1 - value.c) * (1 - value.k);
 				var g = 255 * (1 - value.m) * (1 - value.k);
 				var b = 255 * (1 - value.y) * (1 - value.k);
-				return convert("rgb", "hsl", { r: r, g: g, b: b });
+				return convert("hsl", { r: r, g: g, b: b });
 				break;
 			case "css-hsl":
 				var r = 255 * (1 - value.c) * (1 - value.k);
 				var g = 255 * (1 - value.m) * (1 - value.k);
 				var b = 255 * (1 - value.y) * (1 - value.k);
-				return convert("rgb", "css-hsl", { r: r, g: g, b: b });
+				return convert("css-hsl", { r: r, g: g, b: b });
 		}
 	}
 
@@ -60,12 +156,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		}
 		switch (to) {
 			case "hex":
-				var rgb = convert("hsl", "rgb", {
+				var rgb = convert("rgb", {
 					h: value[0],
 					s: value[1],
 					l: value[2]
 				});
-				return convert("rgb", "hex", rgb);
+				return convert("hex", rgb);
 				break;
 			case "rgb":
 				if (value[1] == 0) {
@@ -126,7 +222,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				}
 				break;
 			case "css-rgb":
-				var rgb = convert("hsl", "rgb", {
+				var rgb = convert("rgb", {
 					h: value[0],
 					s: value[1],
 					l: value[2]
@@ -141,7 +237,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				};
 				break;
 			case "cmyk":
-				var rgb = convert("css-hsl", "rgb", value);
+				var rgb = convert("rgb", value);
 				var tempR = rgb['r'] / 255;
 				var tempG = rgb['g'] / 255;
 				var tempB = rgb['b'] / 255;
@@ -218,7 +314,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				};
 				break;
 			case "css-hsl":
-				var hsl = convert("rgb", "hsl", {
+				var hsl = convert("hsl", {
 					r: value[0],
 					g: value[1],
 					b: value[2]
@@ -325,8 +421,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 	function fromHsl(to, value) {
 		switch (to) {
 			case "hex":
-				var rgb = convert("hsl", "rgb", value);
-				return convert("rgb", "hex", rgb);
+				var rgb = convert("rgb", value);
+				return convert("hex", rgb);
 				break;
 			case "rgb":
 				if (value.s == 0) {
@@ -387,14 +483,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				}
 				break;
 			case "css-rgb":
-				var rgb = convert("hsl", "rgb", value);
+				var rgb = convert("rgb", value);
 				return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
 				break;
 			case "css-hsl":
 				return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
 				break;
 			case "cmyk":
-				var rgb = convert("hsl", "rgb", value);
+				var rgb = convert("rgb", value);
 				var tempR = rgb['r'] / 255;
 				var tempG = rgb['g'] / 255;
 				var tempB = rgb['b'] / 255;
@@ -463,7 +559,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 				};
 				break;
 			case "css-hsl":
-				var hsl = convert("rgb", "hsl", value);
+				var hsl = convert("hsl", value);
 				return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 				break;
 			case "cmyk":
@@ -485,253 +581,180 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 		}
 	}
 
-	function adjacent(mode, deg, amount, colourRef) {
-		var colours = [colourRef];
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
+	function adjacent(deg, amount, colourRef) {
+		var colour = convert("hsl", colourRef);
+		var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+
+		for (var i = 0; i < amount - 1; i++) {
+			colour.h = negMod(colour.h + deg, 360);
+			colours.push({ h: colour.h, s: colour.s, l: colour.l });
 		}
-		for (var i = 0; i < amount - 2; i++) {
-			colour.h = (colour.h + deg) % 360;
-			if (mode != "hsl") {
-				var tempColour = convert("hsl", mode, colour);
-				colours.push(tempColour);
-			} else {
-				colours.push({ h: colour.h, s: colour.s, l: colour.l });
-			}
-		}
-		return colours;
+
+		return ready(colours);
 	}
-	function complementary(mode, colourRef) {
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
-		}
+	function complementary(colourRef) {
+		var colour = convert("hsl", colourRef);
+
 		colour.h = (colour.h + 180) % 360;
-		if (mode != "hsl") {
-			colour = convert("hsl", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function contrastRatio(mode, colourRef) {
-		var colour;
-		if (mode != "rgb") {
-			colour = convert(mode, "rgb", colourRef);
-		} else {
-			colour = _defineProperty({ r: colourRef.r, g: colourRef.g }, "g", colourRef.g);
-		}
+	function contrastRatio(colourRef) {
+		var colour = convert("rgb", colourRef);
+
 		var yiq = (colour.r * 299 + colour.g * 587 + colour.b * 114) / 1000;
 		if (yiq >= 128) {
 			colour = { r: 0, g: 0, b: 0 };
 		} else {
 			colour = { r: 255, g: 255, b: 255 };
 		}
-		if (mode != "rgb") {
-			colour = convert("rgb", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function convert(from, to, value) {
-		switch (from) {
-			case "hex":
-				return fromHex(to, value);
-				break;
-			case "rgb":
-				return fromRgb(to, value);
-				break;
-			case "css-rgb":
-				return fromCssRgb(to, value);
-				break;
-			case "hsl":
-				return fromHsl(to, value);
-				break;
-			case "css-hsl":
-				return fromCssHsl(to, value);
-				break;
-			case "cmyk":
-				return fromCmyk(to, value);
-				break;
-		}
-	}
-
-	function fade(mode, amount, fromRef, toRef) {
-		amount = amount - 1;
-		var colours = [fromRef];
-		var fromColour, toColour;
-		if (mode != "rgb") {
-			fromColour = convert(mode, "rgb", fromRef);
-			toColour = convert(mode, "rgb", toRef);
+	function convert(to, value) {
+		if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk") {
+			var from = determineMode(value);
+			if (from != to) {
+				switch (from) {
+					case "hex":
+						return fromHex(to, value);
+						break;
+					case "rgb":
+						return fromRgb(to, value);
+						break;
+					case "css-rgb":
+						return fromCssRgb(to, value);
+						break;
+					case "hsl":
+						return fromHsl(to, value);
+						break;
+					case "css-hsl":
+						return fromCssHsl(to, value);
+						break;
+					case "cmyk":
+						return fromCmyk(to, value);
+						break;
+				}
+			} else {
+				return value;
+			}
 		} else {
-			fromColour = { r: fromRef.r, g: fromRef.g, b: fromRef.b };
-			toColour = { r: toRef.r, g: toRef.g, b: toRef.b };
+			return ready(to);
 		}
+	}
+
+	function fade(amount, fromRef, toRef) {
+		var fromColour = convert("rgb", fromRef);
+		var toColour = convert("rgb", toRef);
+
+		var colours = [fromColour];
+		amount = amount - 1;
+
 		var rDiff = (toColour.r - fromColour.r) / amount;
 		var gDiff = (toColour.g - fromColour.g) / amount;
 		var bDiff = (toColour.b - fromColour.b) / amount;
-		var colour = fromColour;
+		var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b };
 		for (var i = 0; i < amount - 1; i++) {
 			colour.r = slopeMod(colour.r + rDiff, 255);
 			colour.g = slopeMod(colour.g + gDiff, 255);
 			colour.b = slopeMod(colour.b + bDiff, 255);
-			if (mode != "rgb") {
-				var tempColour = convert("rgb", mode, colour);
-				colours.push(tempColour);
-			} else {
-				colours.push({ r: colour.r, g: colour.g, b: colour.b });
-			}
+			colours.push({ r: colour.r, g: colour.g, b: colour.b });
 		}
-		colours.push(toRef);
-		return colours;
+
+		colours.push(toColour);
+
+		return ready(colours);
 	}
 
-	function greyscale(mode, colourRef) {
-		var colour;
-		if (mode != "rgb") {
-			colour = convert(mode, "rgb", colourRef);
-		} else {
-			colour = _defineProperty({ r: colourRef.r, g: colourRef.g }, "g", colourRef.g);
-		}
+	function greyscale(colourRef) {
+		var colour = convert("rgb", colourRef);
+
 		var grey = (colour.r + colour.g + colour.b) / 3;
 		colour = { r: grey, g: grey, b: grey };
-		if (mode != "rgb") {
-			colour = convert("rgb", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function hue(mode, shift, colourRef) {
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
-		}
-		colour.h = (colour.h + shift) % 360;
-		if (mode != "hsl") {
-			colour = convert("hsl", mode, colour);
-		}
-		return colour;
+	function hue(shift, colourRef) {
+		var colour = convert("hsl", colourRef);
+
+		colour.h = negMod(colour.h + shift, 360);
+
+		return ready(colour);
 	}
 
-	function invert(mode, colourRef) {
-		var colour;
-		if (mode != "rgb") {
-			colour = convert(mode, "rgb", colourRef);
-		} else {
-			colour = { r: colourRef.r, g: colourRef.g, b: colourRef.b };
-		}
+	function invert(colourRef) {
+		var colour = convert("rgb", colourRef);
+
 		colour.r = negMod(255 - colour.r, 255);
 		colour.g = negMod(255 - colour.g, 255);
 		colour.b = negMod(255 - colour.b, 255);
-		if (mode != "rgb") {
-			colour = convert("rgb", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function mid(mode, colourOneRef, colourTwoRef) {
-		var colourOne, colourTwo;
-		if (mode != "hsl") {
-			colourOne = convert(mode, "hsl", colourOneRef);
-			colourTwo = convert(mode, "hsl", colourTwoRef);
-		} else {
-			colourOne = { h: colourOneRef.h, s: colourOneRef.s, l: colourOneRef.l };
-			colourTwo = { h: colourTwoRef.h, s: colourTwoRef.s, l: colourTwoRef.l };
-		}
+	function mid(colourOneRef, colourTwoRef) {
+		var colourOne = convert("hsl", colourOneRef);
+		var colourTwo = convert("hsl", colourTwoRef);
+
 		var midHue = (colourOne.h + colourTwo.h) / 2;
 		var midSat = (colourOne.s + colourTwo.s) / 2;
 		var midLight = (colourOne.l + colourTwo.l) / 2;
 		var colour = { h: midHue, s: midSat, l: midLight };
-		if (mode != "hsl") {
-			colour = convert("hsl", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function saturation(mode, shift, colourRef) {
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
-		}
+	function saturation(shift, colourRef) {
+		var colour = convert("hsl", colourRef);
+
 		colour.s = colour.s + shift;
 		if (colour.s < 0) {
 			colour.s = 0;
 		} else if (colour.s > 100) {
 			colour.s = 100;
 		}
-		if (mode != "hsl") {
-			colour = convert("hsl", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function shade(mode, shift, colourRef) {
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
-		}
+	function shade(shift, colourRef) {
+		var colour = convert("hsl", colourRef);
+
 		colour.l = colour.l + shift;
 		if (colour.l < 0) {
 			colour.l = 0;
 		} else if (colour.l > 100) {
 			colour.l = 100;
 		}
-		if (mode != "hsl") {
-			colour = convert("hsl", mode, colour);
-		}
-		return colour;
+
+		return ready(colour);
 	}
 
-	function tetrad(mode, colourRef) {
-		var colours = [colourRef];
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
-		}
+	function tetrad(colourRef) {
+		var colour = convert("hsl", colourRef);
+
+		var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
 		for (var i = 0; i < 3; i++) {
 			colour.h = (colour.h + 90) % 360;
-			var tempColour;
-			if (mode != "hsl") {
-				tempColour = convert("hsl", mode, colour);
-				colours.push(tempColour);
-			} else {
-				colours.push({ h: colour.h, s: colour.s, l: colour.l });
-			}
+			colours.push({ h: colour.h, s: colour.s, l: colour.l });
 		}
-		return colours;
+
+		return ready(colours);
 	}
 
-	function triad(mode, colourRef) {
-		var colours = [colourRef];
-		var colour;
-		if (mode != "hsl") {
-			colour = convert(mode, "hsl", colourRef);
-		} else {
-			colour = { h: colourRef.h, s: colourRef.s, l: colourRef.l };
-		}
+	function triad(colourRef) {
+		var colour = convert("hsl", colourRef);
+
+		var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
 		for (var i = 0; i < 2; i++) {
 			colour.h = (colour.h + 120) % 360;
-			var tempColour;
-			if (mode != "hsl") {
-				tempColour = convert("hsl", mode, colour);
-				colours.push(tempColour);
-			} else {
-				colours.push({ h: colour.h, s: colour.s, l: colour.l });
-			}
+			colours.push({ h: colour.h, s: colour.s, l: colour.l });
 		}
-		return colours;
+
+		return ready(colours);
 	}
 
 	exports.convert = convert;

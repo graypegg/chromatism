@@ -1,20 +1,11 @@
-function triad( mode, colourRef ) {
-	var colours = [colourRef];
-	var colour;
-	if (mode != "hsl") {
-		colour = convert( mode, "hsl", colourRef );
-	} else {
-		colour = {h:colourRef.h, s:colourRef.s, l:colourRef.l};
-	}
+function triad( colourRef ) {
+	var colour = convert( "hsl", colourRef );
+
+	var colours = [{h:colour.h, s:colour.s, l:colour.l}];
 	for(var i=0;i<2;i++) {
 		colour.h = (colour.h + 120) % 360;
-		var tempColour;
-		if (mode != "hsl") {
-			tempColour = convert( "hsl", mode, colour );
-			colours.push(tempColour);
-		} else {
-			colours.push({h:colour.h, s:colour.s, l:colour.l});
-		}
+		colours.push({h:colour.h, s:colour.s, l:colour.l});
 	}
-	return colours;
+
+	return ready( colours );
 }
