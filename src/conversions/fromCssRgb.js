@@ -1,5 +1,5 @@
 function fromCssRgb( to, value ) {
-	value = value.replace(/(rgb\(|\))/g,'').split(",");
+	value = value.replace(/((rgb\(|\))|[\s]*)/g,'').split(",");
 	for (var i=0;i<value.length;i++){
 		value[i] = parseInt(value[i]);
 	}

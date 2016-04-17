@@ -1,5 +1,5 @@
 function fromCssHsl( to, value ) {
-	value = value.replace(/(hsl\(|\)|%)/g,'').split(",");
+	value = value.replace(/(hsl\(|\)|%|[\s]*)/g,'').split(",");
 	for (var i=0;i<value.length;i++){
 		value[i] = parseInt(value[i]);
 	}
