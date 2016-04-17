@@ -19,10 +19,12 @@ function determineMode( colour ) {
 		case "object":
 			if (typeof colour.r != "undefined") {
 				return "rgb";
-			} else if (typeof colour.h != "undefined") {
+			} else if (typeof colour.l != "undefined") {
 				return "hsl";
 			} else if (typeof colour.c != "undefined") {
 				return "cmyk";
+			} else if (typeof colour.v != "undefined") {
+				return "hsv";
 			} else {
 				return null;
 			}
@@ -56,6 +58,7 @@ function ready( colour ) {
 				get cmyk() { return convert("cmyk", this.colour) },
 				get cssrgb() { return convert("css-rgb", this.colour) },
 				get csshsl() { return convert("css-hsl", this.colour) },
+				get hsv() { return convert("hsv", this.colour) }
 			}
 			break;
 		case "[object Array]":
@@ -79,6 +82,9 @@ function ready( colour ) {
 				get csshsl() { return this.colours.map( function(colour) {
 					return convert("css-hsl", colour)
 				}) },
+				get hsv() { return this.colours.map( function(colour) {
+					return convert("hsv", colour)
+				}) }
 			}
 			break;
 		default:

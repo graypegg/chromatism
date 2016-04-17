@@ -73,5 +73,9 @@ function fromHex( to, value ) {
 			}
 			return {c: c, m: m, y: y, k: k};
 			break;
+		case "hsv":
+			var rgb = convert("rgb", value);
+			return convert("hsv", rgb);
+			break;
 	}
 }

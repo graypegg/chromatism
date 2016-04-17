@@ -79,5 +79,13 @@ function fromCssRgb( to, value ) {
 			}
 			return {c: c, m: m, y: y, k: k};
 			break;
+		case "hsv":
+			var rgb = convert("rgb", {
+				r: value[0],
+				g: value[1],
+				b: value[2]
+			});
+			return convert("hsv", rgb);
+			break;
 	}
 }

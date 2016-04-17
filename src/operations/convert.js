@@ -4,7 +4,8 @@ function convert( to, value ) {
 		to == "css-rgb" ||
 		to == "css-hsl" ||
 		to == "hex" ||
-		to == "cmyk") {
+		to == "cmyk" ||
+		to == "hsv") {
 		var from = determineMode(value);
 		if (from != to) {
 			switch (from){
@@ -25,6 +26,9 @@ function convert( to, value ) {
 					break;
 				case "cmyk":
 					return fromCmyk( to, value );
+					break;
+				case "hsv":
+					return fromHsv( to, value );
 					break;
 			}
 		} else {

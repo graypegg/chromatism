@@ -86,5 +86,16 @@ function fromHsl( to, value ) {
 			}
 			return {c: c, m: m, y: y, k: k};
 			break;
+		case "hsv":
+			value.s = value.s / 100;
+			value.l = value.l / 100;
+			var i = value.s * (value.l < .5 ? value.l : 1 - value.l);
+
+			var h = value.h;
+			var s = 2 * i / (value.l + i);
+			var v = value.l + i;
+
+			return {h: h, s: s*100, v: v*100};
+			break;
 	}
 }

@@ -67,5 +67,36 @@ function fromRgb( to, value ) {
 			}
 			return {c: c, m: m, y: y, k: k};
 			break;
+		case "hsv":
+			var r = ( value.r / 255 );
+			var g = ( value.g / 255 );
+			var b = ( value.b / 255 );
+
+			var min = Math.min( r, g, b );
+			var max = Math.max( r, g, b );
+			var maxDelta = max - min;
+
+			var v = max
+			var h, s;
+
+			if ( maxDelta == 0 ) {
+				h = 0
+				s = 0
+			} else {
+				s = maxDelta / max;
+
+				var rDelta = ( ( ( max - r ) / 6 ) + ( maxDelta / 2 ) ) / maxDelta;
+				var gDelta = ( ( ( max - g ) / 6 ) + ( maxDelta / 2 ) ) / maxDelta;
+				var bDelta = ( ( ( max - b ) / 6 ) + ( maxDelta / 2 ) ) / maxDelta;
+
+				if      ( r == max ) h = bDelta - gDelta;
+				else if ( g == max ) h = ( 1 / 3 ) + rDelta - bDelta;
+				else if ( b == max ) h = ( 2 / 3 ) + gDelta - rDelta;
+
+				if ( h < 0 ) h += 1;
+				if ( h > 1 ) h -= 1;
+			}
+			return {h: h*360, s: s*100, v: v*100};
+			break;
 	}
 }

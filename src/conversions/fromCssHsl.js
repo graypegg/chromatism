@@ -102,5 +102,12 @@ function fromCssHsl( to, value ) {
 			}
 			return {c: c, m: m, y: y, k: k};
 			break;
+		case "hsv":
+			return convert("hsv", {
+				h: value[0],
+				s: value[1],
+				l: value[2]
+			});
+			break;
 	}
 }
