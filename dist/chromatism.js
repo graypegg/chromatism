@@ -909,6 +909,17 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		return ready(colour);
 	}
 
+	function sepia(colourRef) {
+		var colour = convert("rgb", colourRef);
+
+		var newcolour = {};
+		newcolour.r = colour.r * 0.393 + colour.g * 0.769 + colour.b * 0.189;
+		newcolour.g = colour.r * 0.349 + colour.g * 0.686 + colour.b * 0.168;
+		newcolour.b = colour.r * 0.272 + colour.g * 0.534 + colour.b * 0.131;
+
+		return ready(newcolour);
+	}
+
 	function shade(shift, colourRef) {
 		var colour = convert("hsl", colourRef);
 
@@ -960,4 +971,5 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	exports.contrast = contrast;
 	exports.greyscale = greyscale;
 	exports.contrastRatio = contrastRatio;
+	exports.sepia = sepia;
 })(typeof exports === 'undefined' ? window['chroma'] = {} : exports);

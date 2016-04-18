@@ -12,5 +12,6 @@
 	exports.contrast = contrast;
 	exports.greyscale = greyscale;
 	exports.contrastRatio = contrastRatio;
+	exports.sepia = sepia;
 
 })( (typeof exports === 'undefined') ? (window['chroma'] = {}) : (exports) );

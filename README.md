@@ -12,7 +12,7 @@ A simple set of utility functions for colours.
 var chroma = require("chromatism");
 ```
 #### Browser
-```javascript
+```html
 <script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
 ```
 
@@ -101,6 +101,11 @@ Contrast shift can be supplied in floating point form! You'll normally use a val
 var newColour = chroma.greyscale( value ).cmyk;
 ```
 
+### Sepia version of the colour
+```javascript
+var newColour = chroma.sepia( value ).hsv;
+```
+
 ### Determine accessible colour for foreground text.
 ```javascript
 var newColour = chroma.contrastRatio( value ).rgb;
@@ -122,7 +127,7 @@ Use this function to determine the colour of text needed to create a high contra
 | hsv     | `{h: 44, s: 78, v: 100}`          |
 | cmyk    | `{c: 0.5, m: 1, y: 0.2, k: 0.45}` |
 
-All functions return an object containing all modes of the result. (In getters, so don't worry, Chromaticism doesn't calculate *all* the versions of the result when you use a function!)
+All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 
 For example, if you need a string containing the hex code for the colour result, simply use `.hex`:
 
