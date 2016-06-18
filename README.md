@@ -66,6 +66,11 @@ var newColour = chroma.invert( value ).hex;
 var newColour = chroma.invertLightness( value ).hsl;
 ```
 
+### Blend two colours (Multiply)
+```javascript
+var newColour = chroma.multiply( valueOne, valueTwo ).hsv;
+```
+
 ### Generate an array of adjacent hue-shifted colours (rainbow effect)
 ```javascript
 var newColour = chroma.adjacent( shift, number-of-colours, value ).cmyk;
@@ -125,7 +130,6 @@ var newColour = chroma.contrastRatio( value ).rgb;
 
 Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
 
----
 
 ## Colour Modes:
 
