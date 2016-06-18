@@ -1,21 +1,29 @@
 #Chromatism
 
-A simple set of utility functions for colours.
+A simple set of utility functions for colours that works on the server and the fronted.
+
+[![NPM](https://nodei.co/npm/chromatism.png?compact=true)](https://nodei.co/npm/chromatism/)
 
 ## Installation
 
 #### Node
+```bash
+$ npm install --save chromatism
+```
+
 ```javascript
 var chroma = require("chromatism");
 ```
-[![NPM](https://nodei.co/npm/chromatism.png?mini=true)](https://nodei.co/npm/chromatism/)
 
 #### Browser
+```bash
+$ bower install --save chromatism
+```
+
 ```html
 <script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
 ```
 
----
 
 ## Colour Functions
 
