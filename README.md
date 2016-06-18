@@ -1,16 +1,15 @@
-![Chromatism Logo](http://digitalpanda.ca/resources/img/chromatism.png)
+#Chromatism
 
 A simple set of utility functions for colours.
 
 ## Installation
 
-[![NPM](https://nodei.co/npm/chromatism.png?mini=true)](https://nodei.co/npm/chromatism/)
-[![Bower](http://digitalpanda.ca/resources/img/bower-chromatism.png)](https://nodei.co/npm/chromatism/)
-
 #### Node
 ```javascript
 var chroma = require("chromatism");
 ```
+[![NPM](https://nodei.co/npm/chromatism.png?mini=true)](https://nodei.co/npm/chromatism/)
+
 #### Browser
 ```html
 <script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
@@ -52,6 +51,11 @@ var newColour = chroma.mid( colourOne, colourTwo ).cssrgb;
 ### Invert a colour
 ```javascript
 var newColour = chroma.invert( value ).hex;
+```
+
+### Invert a grey colour
+```javascript
+var newColour = chroma.invertLightness( value ).hsl;
 ```
 
 ### Generate an array of adjacent hue-shifted colours (rainbow effect)
