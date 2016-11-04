@@ -447,8 +447,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				return { c: c, m: m, y: y, k: k };
 				break;
 			case "hsv":
-				var rgb = convert("rgb", value);
-				return convert("hsv", rgb);
+				return convert("hsv", {
+					r: value[0],
+					g: value[1],
+					b: value[2]
+				});
 				break;
 		}
 	}
