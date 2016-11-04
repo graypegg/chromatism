@@ -423,7 +423,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				};
 				break;
 			case "css-hsl":
-				var hsl = convert("rgb", "hsl", {
+				var hsl = convert("hsl", {
 					r: value[0],
 					g: value[1],
 					b: value[2]
