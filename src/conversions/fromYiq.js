@@ -8,41 +8,62 @@ function fromYiq( to, value ) {
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return convert("hex", {r: r, g: g, b: b});
 			break;
 		case "rgb":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return {r: r, g: g, b: b};
 			break;
 		case "css-rgb":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
 			break;
 		case "hsl":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return convert("hsl", {r: r, g: g, b: b});
 			break;
 		case "css-hsl":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return convert("css-hsl", {r: r, g: g, b: b});
 		case "hsv":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return convert("hsv", {r: r, g: g, b: b});
 			break;
 		case "cmyk":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
 			var b = 255 * (value.y + (-1.106 * value.i) + (-1.703 * value.q));
+			r = bounded(r, [0, 255]);
+			g = bounded(g, [0, 255]);
+			b = bounded(b, [0, 255]);
 			return convert("cmyk", {r: r, g: g, b: b});
 			break;
 	}
