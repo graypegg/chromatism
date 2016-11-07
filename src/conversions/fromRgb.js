@@ -98,5 +98,14 @@ function fromRgb( to, value ) {
 			}
 			return {h: h*360, s: s*100, v: v*100};
 			break;
+		case "yiq":
+			var y = (0.299 * (value.r / 255)) + (0.587 * (value.g / 255)) + (0.114 * (value.b / 255));
+			var i = (0.596 * (value.r / 255)) + (-0.274 * (value.g / 255)) + (-0.322 * (value.b / 255));
+			var q = (0.211 * (value.r / 255)) + (-0.523 * (value.g / 255)) + (0.312 * (value.b / 255));
+			/* YIQ is not a transformation of RGB, so it's pretty lossy */
+			i = bounded(i, [-0.5957, 0.5957]);
+			q = bounded(q, [-0.5226, 0.5226]);
+			return {y:y, i:i, q:q};
+			break;
 	}
 }

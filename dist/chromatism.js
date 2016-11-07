@@ -19,6 +19,15 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 		}
 	}
 
+	function bounded(val, range) {
+		if (val < range[0]) {
+			val = range[0];
+		} else if (val > range[1]) {
+			val = range[1];
+		}
+		return val;
+	}
+
 	function determineMode(colour) {
 		switch (typeof colour === "undefined" ? "undefined" : _typeof(colour)) {
 			case "object":
@@ -30,6 +39,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					return "cmyk";
 				} else if (typeof colour.v != "undefined") {
 					return "hsv";
+				} else if (typeof colour.q != "undefined") {
+					return "yiq";
 				} else {
 					return null;
 				}
@@ -77,6 +88,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					},
 					get hsv() {
 						return convert("hsv", this.colour);
+					},
+					get yiq() {
+						return convert("yiq", this.colour);
 					}
 				};
 				break;
@@ -116,6 +130,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					get hsv() {
 						return this.colours.map(function (colour) {
 							return convert("hsv", colour);
+						});
+					},
+					get yiq() {
+						return this.colours.map(function (colour) {
+							return convert("yiq", colour);
 						});
 					}
 				};
@@ -162,6 +181,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				var b = 255 * (1 - value.y) * (1 - value.k);
 				return convert("hsv", { r: r, g: g, b: b });
 				break;
+			case "yiq":
+				var r = 255 * (1 - value.c) * (1 - value.k);
+				var g = 255 * (1 - value.m) * (1 - value.k);
+				var b = 255 * (1 - value.y) * (1 - value.k);
+				return convert("yiq", { r: r, g: g, b: b });
+				break;
 		}
 	}
 
@@ -171,80 +196,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			value[i] = parseInt(value[i]);
 		}
 		switch (to) {
-			case "hex":
-				var rgb = convert("rgb", {
-					h: value[0],
-					s: value[1],
-					l: value[2]
-				});
-				return convert("hex", rgb);
-				break;
-			case "rgb":
-				if (value[1] == 0) {
-					var grey = value[2] / 100 * 255;
-					return {
-						r: grey,
-						g: grey,
-						b: grey
-					};
-				} else {
-					var tempOne, tempTwo, tempHue;
-					if (value[2] >= 50) {
-						tempOne = value[2] / 100 + value[1] / 100 - value[2] / 100 * (value[1] / 100);
-					} else {
-						tempOne = value[2] / 100 * (1 + value[1] / 100);
-					}
-					tempTwo = 2 * (value[2] / 100) - tempOne;
-					tempHue = value[0] / 360;
-					var tempR = (tempHue + 0.333) % 1;
-					var tempG = tempHue;
-					var tempB = negMod(tempHue - 0.333, 1);
-					var r, g, b;
-					if (6 * tempR < 1) {
-						r = tempTwo + (tempOne - tempTwo) * 6 * tempR;
-					} else if (2 * tempR < 1) {
-						r = tempOne;
-					} else if (3 * tempR < 2) {
-						r = tempTwo + (tempOne - tempTwo) * ((0.666 - tempR) * 6);
-					} else {
-						r = tempTwo;
-					}
-					if (6 * tempG < 1) {
-						g = tempTwo + (tempOne - tempTwo) * 6 * tempG;
-					} else if (2 * tempG < 1) {
-						g = tempOne;
-					} else if (3 * tempG < 2) {
-						g = tempTwo + (tempOne - tempTwo) * ((0.666 - tempG) * 6);
-					} else {
-						g = tempTwo;
-					}
-					if (6 * tempB < 1) {
-						b = tempTwo + (tempOne - tempTwo) * 6 * tempB;
-					} else if (2 * tempB < 1) {
-						b = tempOne;
-					} else if (3 * tempB < 2) {
-						b = tempTwo + (tempOne - tempTwo) * ((0.666 - tempB) * 6);
-					} else {
-						b = tempTwo;
-					}
-					if (r < 0) r = 0;
-					if (g < 0) g = 0;
-					if (b < 0) b = 0;
-					return {
-						r: r * 255,
-						g: g * 255,
-						b: b * 255
-					};
-				}
-				break;
-			case "css-rgb":
-				var rgb = convert("rgb", {
-					h: value[0],
-					s: value[1],
-					l: value[2]
-				});
-				return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
-				break;
 			case "hsl":
 				return {
 					h: value[0],
@@ -252,28 +203,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					l: value[2]
 				};
 				break;
-			case "cmyk":
-				var rgb = convert("rgb", value);
-				var tempR = rgb['r'] / 255;
-				var tempG = rgb['g'] / 255;
-				var tempB = rgb['b'] / 255;
-				var k = 1 - Math.max(tempR, tempG, tempB);
-				if (k != 1) {
-					var c = (1 - tempR - k) / (1 - k);
-					var m = (1 - tempG - k) / (1 - k);
-					var y = (1 - tempB - k) / (1 - k);
-				} else {
-					var c = 0;
-					var m = 0;
-					var y = 0;
-				}
-				return { c: c, m: m, y: y, k: k };
-				break;
-			case "hsv":
-				return convert("hsv", {
-					h: value[0],
-					s: value[1],
-					l: value[2]
+			/* This colour mode is just an expression of HSL */
+			default:
+				return convert(to, {
+					r: value[0],
+					g: value[1],
+					b: value[2]
 				});
 				break;
 		}
@@ -285,15 +220,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			value[i] = parseInt(value[i]);
 		}
 		switch (to) {
-			case "hex":
-				var r = Math.round(value[0]).toString(16);
-				if (r.length == 1) r = "0" + r;
-				var g = Math.round(value[1]).toString(16);
-				if (g.length == 1) g = "0" + g;
-				var b = Math.round(value[2]).toString(16);
-				if (b.length == 1) b = "0" + b;
-				return "#" + r + g + b;
-				break;
 			case "rgb":
 				return {
 					r: value[0],
@@ -301,72 +227,13 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					b: value[2]
 				};
 				break;
-			case "hsl":
-				var r = value[0] / 255;
-				var g = value[1] / 255;
-				var b = value[2] / 255;
-				var rgbOrdered = [r, g, b].sort();
-				var l = (rgbOrdered[0] + rgbOrdered[2]) / 2 * 100;
-				var s, h;
-				if (rgbOrdered[0] == rgbOrdered[2]) {
-					s = 0;
-					h = 0;
-				} else {
-					if (l >= 50) {
-						s = (rgbOrdered[2] - rgbOrdered[0]) / (2.0 - rgbOrdered[2] - rgbOrdered[0]) * 100;
-					} else {
-						s = (rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0]) * 100;
-					}
-					if (rgbOrdered[2] == r) {
-						h = (g - b) / (rgbOrdered[2] - rgbOrdered[0]) * 60;
-					} else if (rgbOrdered[2] == g) {
-						h = (2 + (b - r) / (rgbOrdered[2] - rgbOrdered[0])) * 60;
-					} else {
-						h = (4 + (r - g) / (rgbOrdered[2] - rgbOrdered[0])) * 60;
-					}
-					if (h < 0) {
-						h += 360;
-					} else if (h > 360) {
-						h = h % 360;
-					}
-				};
-				return {
-					h: h,
-					s: s,
-					l: l
-				};
-				break;
-			case "css-hsl":
-				var hsl = convert("hsl", {
+			/* This colour mode is just an expression of RGB */
+			default:
+				return convert(to, {
 					r: value[0],
 					g: value[1],
 					b: value[2]
 				});
-				return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
-				break;
-			case "cmyk":
-				var tempR = value[0] / 255;
-				var tempG = value[1] / 255;
-				var tempB = value[2] / 255;
-				var k = 1 - Math.max(tempR, tempG, tempB);
-				if (k != 1) {
-					var c = (1 - tempR - k) / (1 - k);
-					var m = (1 - tempG - k) / (1 - k);
-					var y = (1 - tempB - k) / (1 - k);
-				} else {
-					var c = 0;
-					var m = 0;
-					var y = 0;
-				}
-				return { c: c, m: m, y: y, k: k };
-				break;
-			case "hsv":
-				var rgb = convert("rgb", {
-					r: value[0],
-					g: value[1],
-					b: value[2]
-				});
-				return convert("hsv", rgb);
 				break;
 		}
 	}
@@ -384,70 +251,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 					b: value[2]
 				};
 				break;
-			case "css-rgb":
-				return "rgb(" + Math.round(value[0]) + "," + Math.round(value[1]) + "," + Math.round(value[2]) + ")";
-				break;
-			case "hsl":
-				var r = value[0] / 255;
-				var g = value[1] / 255;
-				var b = value[2] / 255;
-				var rgbOrdered = [r, g, b].sort();
-				var l = (rgbOrdered[0] + rgbOrdered[2]) / 2 * 100;
-				var s, h;
-				if (rgbOrdered[0] == rgbOrdered[2]) {
-					s = 0;
-					h = 0;
-				} else {
-					if (l >= 50) {
-						s = (rgbOrdered[2] - rgbOrdered[0]) / (2.0 - rgbOrdered[2] - rgbOrdered[0]) * 100;
-					} else {
-						s = (rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0]) * 100;
-					}
-					if (rgbOrdered[2] == r) {
-						h = (g - b) / (rgbOrdered[2] - rgbOrdered[0]) * 60;
-					} else if (rgbOrdered[2] == g) {
-						h = (2 + b - r) / (rgbOrdered[2] - rgbOrdered[0]) * 60;
-					} else {
-						h = (4 + r - g) / (rgbOrdered[2] - rgbOrdered[0]) * 60;
-					}
-					if (h < 0) {
-						h += 360;
-					} else if (h > 360) {
-						h = h % 360;
-					}
-				};
-				return {
-					h: h,
-					s: s,
-					l: l
-				};
-				break;
-			case "css-hsl":
-				var hsl = convert("hsl", {
-					r: value[0],
-					g: value[1],
-					b: value[2]
-				});
-				return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
-				break;
-			case "cmyk":
-				var tempR = value[0] / 255;
-				var tempG = value[1] / 255;
-				var tempB = value[2] / 255;
-				var k = 1 - Math.max(tempR, tempG, tempB);
-				if (k != 1) {
-					var c = (1 - tempR - k) / (1 - k);
-					var m = (1 - tempG - k) / (1 - k);
-					var y = (1 - tempB - k) / (1 - k);
-				} else {
-					var c = 0;
-					var m = 0;
-					var y = 0;
-				}
-				return { c: c, m: m, y: y, k: k };
-				break;
-			case "hsv":
-				return convert("hsv", {
+			/* This colour mode is just an expression of RGB */
+			default:
+				return convert(to, {
 					r: value[0],
 					g: value[1],
 					b: value[2]
@@ -555,6 +361,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 				return { h: h, s: s * 100, v: v * 100 };
 				break;
+			case "yiq":
+				var rgb = convert("rgb", value);
+				return convert("yiq", rgb);
+				break;
 		}
 	}
 
@@ -639,6 +449,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 			case "cmyk":
 				var rgb = convert("rgb", value);
 				return convert("cmyk", rgb);
+				break;
+			case "yiq":
+				var rgb = convert("rgb", value);
+				return convert("yiq", rgb);
 				break;
 		}
 	}
@@ -741,6 +555,65 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 				}
 				return { h: h * 360, s: s * 100, v: v * 100 };
 				break;
+			case "yiq":
+				var y = 0.299 * (value.r / 255) + 0.587 * (value.g / 255) + 0.114 * (value.b / 255);
+				var i = 0.596 * (value.r / 255) + -0.274 * (value.g / 255) + -0.322 * (value.b / 255);
+				var q = 0.211 * (value.r / 255) + -0.523 * (value.g / 255) + 0.312 * (value.b / 255);
+				/* YIQ is not a transformation of RGB, so it's pretty lossy */
+				i = bounded(i, [-0.5957, 0.5957]);
+				q = bounded(q, [-0.5226, 0.5226]);
+				return { y: y, i: i, q: q };
+				break;
+		}
+	}
+
+	function fromYiq(to, value) {
+		/* YIQ is not a transformation of RGB, so it's pretty lossy */
+		value.i = bounded(value.i, [-0.5957, 0.5957]);
+		value.q = bounded(value.q, [-0.5226, 0.5226]);
+
+		switch (to) {
+			case "hex":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return convert("hex", { r: r, g: g, b: b });
+				break;
+			case "rgb":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return { r: r, g: g, b: b };
+				break;
+			case "css-rgb":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
+				break;
+			case "hsl":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return convert("hsl", { r: r, g: g, b: b });
+				break;
+			case "css-hsl":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return convert("css-hsl", { r: r, g: g, b: b });
+			case "hsv":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return convert("hsv", { r: r, g: g, b: b });
+				break;
+			case "cmyk":
+				var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+				var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+				var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+				return convert("cmyk", { r: r, g: g, b: b });
+				break;
 		}
 	}
 
@@ -803,7 +676,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 	}
 
 	function convert(to, value) {
-		if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv") {
+		if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq") {
 			var from = determineMode(value);
 			if (from != to) {
 				switch (from) {
@@ -827,6 +700,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 						break;
 					case "hsv":
 						return fromHsv(to, value);
+						break;
+					case "yiq":
+						return fromYiq(to, value);
 						break;
 				}
 			} else {

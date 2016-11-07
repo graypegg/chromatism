@@ -97,5 +97,9 @@ function fromHsl( to, value ) {
 
 			return {h: h, s: s*100, v: v*100};
 			break;
+		case "yiq":
+			var rgb = convert("rgb", value)
+			return convert("yiq", rgb);
+			break;
 	}
 }

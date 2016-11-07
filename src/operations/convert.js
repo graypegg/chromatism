@@ -5,7 +5,8 @@ function convert( to, value ) {
 		to == "css-hsl" ||
 		to == "hex" ||
 		to == "cmyk" ||
-		to == "hsv") {
+		to == "hsv" ||
+		to == "yiq") {
 		var from = determineMode(value);
 		if (from != to) {
 			switch (from){
@@ -29,6 +30,9 @@ function convert( to, value ) {
 					break;
 				case "hsv":
 					return fromHsv( to, value );
+					break;
+				case "yiq":
+					return fromYiq( to, value );
 					break;
 			}
 		} else {

@@ -14,6 +14,15 @@ function slopeMod( n, m ) {
 	}
 }
 
+function bounded( val, range ) {
+	if (val < range[0]) {
+		val = range[0]
+	} else if (val > range[1]) {
+		val = range[1]
+	}
+	return val;
+}
+
 function determineMode( colour ) {
 	switch (typeof colour) {
 		case "object":
@@ -25,6 +34,8 @@ function determineMode( colour ) {
 				return "cmyk";
 			} else if (typeof colour.v != "undefined") {
 				return "hsv";
+			} else if (typeof colour.q != "undefined") {
+				return "yiq";
 			} else {
 				return null;
 			}
@@ -58,7 +69,8 @@ function ready( colour ) {
 				get cmyk() { return convert("cmyk", this.colour) },
 				get cssrgb() { return convert("css-rgb", this.colour) },
 				get csshsl() { return convert("css-hsl", this.colour) },
-				get hsv() { return convert("hsv", this.colour) }
+				get hsv() { return convert("hsv", this.colour) },
+				get yiq() { return convert("yiq", this.colour) }
 			}
 			break;
 		case "[object Array]":
@@ -84,6 +96,9 @@ function ready( colour ) {
 				}) },
 				get hsv() { return this.colours.map( function(colour) {
 					return convert("hsv", colour)
+				}) },
+				get yiq() { return this.colours.map( function(colour) {
+					return convert("yiq", colour)
 				}) }
 			}
 			break;

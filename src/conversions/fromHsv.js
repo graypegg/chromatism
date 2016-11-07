@@ -85,5 +85,9 @@ function fromHsv( to, value ) {
 			var rgb = convert("rgb", value);
 			return convert("cmyk", rgb);
 			break;
+		case "yiq":
+			var rgb = convert("rgb", value)
+			return convert("yiq", rgb);
+			break;
 	}
 }
