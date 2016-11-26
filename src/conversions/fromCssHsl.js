@@ -14,9 +14,9 @@ function fromCssHsl( to, value ) {
 		/* This colour mode is just an expression of HSL */
 		default:
 			return convert(to, {
-				r: value[0],
-				g: value[1],
-				b: value[2]
+				h: value[0],
+				s: value[1],
+				l: value[2]
 			});
 			break;
 	}
