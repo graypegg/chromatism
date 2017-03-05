@@ -1,5 +1,5 @@
-function triad( colourRef ) {
-	var colour = convert( "hsl", colourRef );
+function triad( { conversions, operations, helpers }, colourRef ) {
+	var colour = operations.convert( { conversions, operations, helpers }, "hsl", colourRef );
 
 	var colours = [{h:colour.h, s:colour.s, l:colour.l}];
 	for(var i=0;i<2;i++) {
@@ -7,5 +7,7 @@ function triad( colourRef ) {
 		colours.push({h:colour.h, s:colour.s, l:colour.l});
 	}
 
-	return ready( colours );
+	return helpers.ready( { conversions, operations, helpers }, colours );
 }
+
+module.exports = triad;

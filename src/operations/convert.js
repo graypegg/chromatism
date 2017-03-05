@@ -1,4 +1,4 @@
-function convert( to, value ) {
+function convert( { conversions, operations, helpers }, to, value ) {
 	if (to == "rgb" ||
 		to == "hsl" ||
 		to == "css-rgb" ||
@@ -7,38 +7,40 @@ function convert( to, value ) {
 		to == "cmyk" ||
 		to == "hsv" ||
 		to == "yiq") {
-		var from = determineMode(value);
+		var from = helpers.determineMode(value);
 		if (from != to) {
 			switch (from){
 				case "hex":
-					return fromHex( to, value );
+					return conversions.fromHex( { conversions, operations, helpers }, to, value );
 					break;
 				case "rgb":
-					return fromRgb( to, value );
+					return conversions.fromRgb( { conversions, operations, helpers }, to, value );
 					break;
 				case "css-rgb":
-					return fromCssRgb( to, value );
+					return conversions.fromCssRgb( { conversions, operations, helpers }, to, value );
 					break;
 				case "hsl":
-					return fromHsl( to, value );
+					return conversions.fromHsl( { conversions, operations, helpers }, to, value );
 					break;
 				case "css-hsl":
-					return fromCssHsl( to, value );
+					return conversions.fromCssHsl( { conversions, operations, helpers }, to, value );
 					break;
 				case "cmyk":
-					return fromCmyk( to, value );
+					return conversions.fromCmyk( { conversions, operations, helpers }, to, value );
 					break;
 				case "hsv":
-					return fromHsv( to, value );
+					return conversions.fromHsv( { conversions, operations, helpers }, to, value );
 					break;
 				case "yiq":
-					return fromYiq( to, value );
+					return conversions.fromYiq( { conversions, operations, helpers }, to, value );
 					break;
 			}
 		} else {
 			return value;
 		}
 	} else {
-		return ready (to);
+		return helpers.ready( { conversions, operations, helpers }, to);
 	}
 }
+
+module.exports = convert;

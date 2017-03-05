@@ -1,5 +1,5 @@
-function shade( shift, colourRef ) {
-	var colour = convert( "hsl", colourRef );
+function shade( { conversions, operations, helpers }, shift, colourRef ) {
+	var colour = operations.convert( { conversions, operations, helpers }, "hsl", colourRef );
 
 	colour.l = colour.l + shift;
 	if (colour.l < 0) {
@@ -8,5 +8,7 @@ function shade( shift, colourRef ) {
 		colour.l = 100;
 	}
 
-	return ready( colour );
+	return helpers.ready( { conversions, operations, helpers }, colour );
 }
+
+module.exports = shade;

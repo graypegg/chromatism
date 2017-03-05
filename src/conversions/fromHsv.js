@@ -1,8 +1,8 @@
-function fromHsv( to, value ) {
+function fromHsv( { conversions, operations, helpers }, to, value ) {
 	switch (to){
 		case "hex":
-			var rgb = convert("rgb", value);
-			return convert("hex", rgb);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
+			return operations.convert({ conversions, helpers }, "hex", rgb);
 			break;
 		case "rgb":
 			var r, g, b;
@@ -61,7 +61,7 @@ function fromHsv( to, value ) {
 			return {r: r, g: g, b: b};
 			break;
 		case "css-rgb":
-			var rgb = convert("rgb", value);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
 			return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
 			break;
 		case "hsl":
@@ -79,15 +79,17 @@ function fromHsv( to, value ) {
 			return {h: h*360, s: s*100, l: l*100};
 			break;
 		case "css-hsl":
-			var hsl = convert("hsl", value);
+			var hsl = operations.convert({ conversions, helpers }, "hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 		case "cmyk":
-			var rgb = convert("rgb", value);
-			return convert("cmyk", rgb);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
+			return operations.convert({ conversions, helpers }, "cmyk", rgb);
 			break;
 		case "yiq":
-			var rgb = convert("rgb", value)
-			return convert("yiq", rgb);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value)
+			return operations.convert({ conversions, helpers }, "yiq", rgb);
 			break;
 	}
 }
+
+module.exports = fromHsv;

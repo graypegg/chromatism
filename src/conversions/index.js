@@ -7,4 +7,4 @@ module.exports = {
   fromHsv: require('./fromHsv.js'),
   fromRgb: require('./fromRgb.js'),
   fromYiq: require('./fromYiq.js')
-}
+};

@@ -1,4 +1,4 @@
-function fromRgb( to, value ) {
+function fromRgb( { conversions, operations, helpers }, to, value ) {
 	switch (to){
 		case "hex":
 			var r = Math.round(value['r']).toString(16);
@@ -48,7 +48,7 @@ function fromRgb( to, value ) {
 			};
 			break;
 		case "css-hsl":
-			var hsl = convert("hsl", value);
+			var hsl = operations.convert({ conversions, helpers }, "hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
 		case "cmyk":
@@ -103,9 +103,11 @@ function fromRgb( to, value ) {
 			var i = (0.596 * (value.r / 255)) + (-0.274 * (value.g / 255)) + (-0.322 * (value.b / 255));
 			var q = (0.211 * (value.r / 255)) + (-0.523 * (value.g / 255)) + (0.312 * (value.b / 255));
 			/* YIQ is not a transformation of RGB, so it's pretty lossy */
-			i = bounded(i, [-0.5957, 0.5957]);
-			q = bounded(q, [-0.5226, 0.5226]);
+			i = helpers.bounded(i, [-0.5957, 0.5957]);
+			q = helpers.bounded(q, [-0.5226, 0.5226]);
 			return {y:y, i:i, q:q};
 			break;
 	}
 }
+
+module.exports = fromRgb;

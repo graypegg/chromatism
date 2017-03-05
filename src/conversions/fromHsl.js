@@ -1,8 +1,8 @@
-function fromHsl( to, value ) {
+function fromHsl( { conversions, operations, helpers }, to, value ) {
 	switch (to){
 		case "hex":
-			var rgb = convert("rgb", value);
-			return convert("hex", rgb);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
+			return operations.convert({ conversions, helpers }, "hex", rgb);
 			break;
 		case "rgb":
 			if (value.s == 0) {
@@ -23,7 +23,7 @@ function fromHsl( to, value ) {
 				tempHue = value.h / 360;
 				var tempR = (tempHue + 0.333) % 1;
 				var tempG = tempHue;
-				var tempB = negMod((tempHue - 0.333), 1);
+				var tempB = helpers.negMod((tempHue - 0.333), 1);
 				var r,g,b;
 				if ((6 * tempR) < 1) {
 					r = tempTwo + ((tempOne - tempTwo) * 6 * tempR);
@@ -63,14 +63,14 @@ function fromHsl( to, value ) {
 			}
 			break;
 		case "css-rgb":
-			var rgb = convert("rgb", value);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
 			return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
 			break;
 		case "css-hsl":
 			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
 			break;
 		case "cmyk":
-			var rgb = convert("rgb", value);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
 			var tempR = rgb['r']/255;
 			var tempG = rgb['g']/255;
 			var tempB = rgb['b']/255;
@@ -98,8 +98,10 @@ function fromHsl( to, value ) {
 			return {h: h, s: s*100, v: v*100};
 			break;
 		case "yiq":
-			var rgb = convert("rgb", value)
-			return convert("yiq", rgb);
+			var rgb = operations.convert({ conversions, helpers }, "rgb", value)
+			return operations.convert({ conversions, helpers }, "yiq", rgb);
 			break;
 	}
 }
+
+module.exports = fromHsl;

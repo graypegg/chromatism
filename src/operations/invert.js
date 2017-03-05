@@ -1,9 +1,11 @@
-function invert( colourRef ) {
-	var colour = convert( "rgb", colourRef );
+function invert( { conversions, operations, helpers }, colourRef ) {
+	var colour = operations.convert( { conversions, operations, helpers }, "rgb", colourRef );
 
-	colour.r = negMod((255 - colour.r), 255);
-	colour.g = negMod((255 - colour.g), 255);
-	colour.b = negMod((255 - colour.b), 255);
+	colour.r = helpers.negMod((255 - colour.r), 255);
+	colour.g = helpers.negMod((255 - colour.g), 255);
+	colour.b = helpers.negMod((255 - colour.b), 255);
 
-	return ready( colour );
+	return helpers.ready( { conversions, operations, helpers }, colour );
 }
+
+module.exports = invert;

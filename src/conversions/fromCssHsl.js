@@ -1,4 +1,4 @@
-function fromCssHsl( to, value ) {
+function fromCssHsl( { conversions, operations, helpers }, to, value ) {
 	value = value.replace(/(hsl\(|\)|%|[\s]*)/g,'').split(",");
 	for (var i=0;i<value.length;i++){
 		value[i] = parseInt(value[i]);
@@ -13,7 +13,7 @@ function fromCssHsl( to, value ) {
 			break;
 		/* This colour mode is just an expression of HSL */
 		default:
-			return convert(to, {
+			return operations.convert({ conversions, helpers }, to, {
 				h: value[0],
 				s: value[1],
 				l: value[2]
@@ -21,3 +21,5 @@ function fromCssHsl( to, value ) {
 			break;
 	}
 }
+
+module.exports = fromCssHsl;

@@ -1,5 +1,5 @@
-function tetrad( colourRef ) {
-	var colour = convert( "hsl", colourRef );
+function tetrad( { conversions, operations, helpers }, colourRef ) {
+	var colour = operations.convert( { conversions, operations, helpers }, "hsl", colourRef );
 
 	var colours = [{h:colour.h, s:colour.s, l:colour.l}];
 	for(var i=0;i<3;i++) {
@@ -7,5 +7,7 @@ function tetrad( colourRef ) {
 		colours.push({h:colour.h, s:colour.s, l:colour.l});
 	}
 
-	return ready( colours );
+	return helpers.ready( { conversions, operations, helpers }, colours );
 }
+
+module.exports = tetrad;
