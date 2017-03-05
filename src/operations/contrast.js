@@ -1,5 +1,5 @@
-function contrast( { conversions, operations, helpers }, shift, colourRef ) {
-	var colour = operations.convert( { conversions, operations, helpers }, "rgb", colourRef );
+function contrast( _dep, shift, colourRef ) {
+	var colour = _dep.operations.convert( _dep, "rgb", colourRef );
 
 	colour.r = (((((colour.r / 255.0) - 0.5) * shift) + 0.5) * 255.0)
 	if (colour.r < 0) { colour.r = 0; }
@@ -13,7 +13,7 @@ function contrast( { conversions, operations, helpers }, shift, colourRef ) {
 	if (colour.b < 0) { colour.b = 0; }
 	else if (colour.b > 255) { colour.b = 255; }
 
-	return helpers.ready( { conversions, operations, helpers }, colour );
+	return _dep.helpers.ready( _dep, colour );
 }
 
 module.exports = contrast;

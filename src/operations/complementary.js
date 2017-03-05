@@ -1,9 +1,9 @@
-function complementary( { conversions, operations, helpers }, colourRef ) {
-	var colour = operations.convert( { conversions, operations, helpers }, "hsl", colourRef );
+function complementary( _dep, colourRef ) {
+	var colour = _dep.operations.convert( _dep, "hsl", colourRef );
 
 	colour.h = (colour.h + 180) % 360;
 
-	return helpers.ready( { conversions, operations, helpers }, colour );
+	return _dep.helpers.ready( _dep, colour );
 }
 
 module.exports = complementary;

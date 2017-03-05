@@ -892,20 +892,16 @@ module.exports = fromYiq;
 "use strict";
 
 
-function adjacent(_ref, deg, amount, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function adjacent(_dep, deg, amount, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
 
 	for (var i = 0; i < amount - 1; i++) {
-		colour.h = helpers.negMod(colour.h + deg, 360);
+		colour.h = _dep.helpers.negMod(colour.h + deg, 360);
 		colours.push({ h: colour.h, s: colour.s, l: colour.l });
 	}
 
-	return helpers.ready({ operations: operations }, colours);
+	return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = adjacent;
@@ -917,16 +913,12 @@ module.exports = adjacent;
 "use strict";
 
 
-function complementary(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function complementary(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
 	colour.h = (colour.h + 180) % 360;
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = complementary;
@@ -938,12 +930,8 @@ module.exports = complementary;
 "use strict";
 
 
-function contrast(_ref, shift, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", colourRef);
+function contrast(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
 	colour.r = ((colour.r / 255.0 - 0.5) * shift + 0.5) * 255.0;
 	if (colour.r < 0) {
@@ -966,7 +954,7 @@ function contrast(_ref, shift, colourRef) {
 		colour.b = 255;
 	}
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = contrast;
@@ -978,12 +966,8 @@ module.exports = contrast;
 "use strict";
 
 
-function contrastRatio(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", colourRef);
+function contrastRatio(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
 	var yiq = (colour.r * 299 + colour.g * 587 + colour.b * 114) / 1000;
 	if (yiq >= 128) {
@@ -992,7 +976,7 @@ function contrastRatio(_ref, colourRef) {
 		colour = { r: 255, g: 255, b: 255 };
 	}
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = contrastRatio;
@@ -1004,45 +988,41 @@ module.exports = contrastRatio;
 "use strict";
 
 
-function convert(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
+function convert(_dep, to, value) {
 	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq") {
-		var from = helpers.determineMode(value);
+		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			switch (from) {
 				case "hex":
-					return conversions.fromHex({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromHex(_dep, to, value);
 					break;
 				case "rgb":
-					return conversions.fromRgb({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromRgb(_dep, to, value);
 					break;
 				case "css-rgb":
-					return conversions.fromCssRgb({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromCssRgb(_dep, to, value);
 					break;
 				case "hsl":
-					return conversions.fromHsl({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromHsl(_dep, to, value);
 					break;
 				case "css-hsl":
-					return conversions.fromCssHsl({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromCssHsl(_dep, to, value);
 					break;
 				case "cmyk":
-					return conversions.fromCmyk({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromCmyk(_dep, to, value);
 					break;
 				case "hsv":
-					return conversions.fromHsv({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromHsv(_dep, to, value);
 					break;
 				case "yiq":
-					return conversions.fromYiq({ conversions: conversions, operations: operations, helpers: helpers }, to, value);
+					return _dep.conversions.fromYiq(_dep, to, value);
 					break;
 			}
 		} else {
 			return value;
 		}
 	} else {
-		return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, to);
+		return _dep.helpers.ready(_dep, to);
 	}
 }
 
@@ -1055,13 +1035,9 @@ module.exports = convert;
 "use strict";
 
 
-function fade(_ref, amount, fromRef, toRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var fromColour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", fromRef);
-	var toColour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", toRef);
+function fade(_dep, amount, fromRef, toRef) {
+	var fromColour = _dep.operations.convert(_dep, "rgb", fromRef);
+	var toColour = _dep.operations.convert(_dep, "rgb", toRef);
 
 	var colours = [fromColour];
 	amount = amount - 1;
@@ -1072,15 +1048,15 @@ function fade(_ref, amount, fromRef, toRef) {
 	var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b };
 
 	for (var i = 0; i < amount - 1; i++) {
-		colour.r = helpers.slopeMod(colour.r + rDiff, 255);
-		colour.g = helpers.slopeMod(colour.g + gDiff, 255);
-		colour.b = helpers.slopeMod(colour.b + bDiff, 255);
+		colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
+		colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
+		colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
 		colours.push({ r: colour.r, g: colour.g, b: colour.b });
 	}
 
 	colours.push(toColour);
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colours);
+	return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = fade;
@@ -1092,17 +1068,13 @@ module.exports = fade;
 "use strict";
 
 
-function greyscale(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", colourRef);
+function greyscale(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
 	var grey = (colour.r + colour.g + colour.b) / 3;
 	colour = { r: grey, g: grey, b: grey };
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = greyscale;
@@ -1114,16 +1086,12 @@ module.exports = greyscale;
 "use strict";
 
 
-function hue(_ref, shift, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+function hue(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+	colour.h = _dep.helpers.negMod(colour.h + shift, 360);
 
-	colour.h = helpers.negMod(colour.h + shift, 360);
-
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = hue;
@@ -1135,18 +1103,14 @@ module.exports = hue;
 "use strict";
 
 
-function invert(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+function invert(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", colourRef);
+	colour.r = _dep.helpers.negMod(255 - colour.r, 255);
+	colour.g = _dep.helpers.negMod(255 - colour.g, 255);
+	colour.b = _dep.helpers.negMod(255 - colour.b, 255);
 
-	colour.r = helpers.negMod(255 - colour.r, 255);
-	colour.g = helpers.negMod(255 - colour.g, 255);
-	colour.b = helpers.negMod(255 - colour.b, 255);
-
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = invert;
@@ -1158,16 +1122,12 @@ module.exports = invert;
 "use strict";
 
 
-function invertLightness(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function invertLightness(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
 	colour.l = 100 - colour.l;
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = invertLightness;
@@ -1179,20 +1139,16 @@ module.exports = invertLightness;
 "use strict";
 
 
-function mid(_ref, colourOneRef, colourTwoRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colourOne = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourOneRef);
-	var colourTwo = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourTwoRef);
+function mid(_dep, colourOneRef, colourTwoRef) {
+	var colourOne = _dep.operations.convert(_dep, "hsl", colourOneRef);
+	var colourTwo = _dep.operations.convert(_dep, "hsl", colourTwoRef);
 
 	var midHue = (colourOne.h + colourTwo.h) / 2;
 	var midSat = (colourOne.s + colourTwo.s) / 2;
 	var midLight = (colourOne.l + colourTwo.l) / 2;
 	var colour = { h: midHue, s: midSat, l: midLight };
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = mid;
@@ -1204,19 +1160,15 @@ module.exports = mid;
 "use strict";
 
 
-function multiply(_ref, colourRefOne, colourRefTwo) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var c1 = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRefOne);
-	var c2 = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRefTwo);
+function multiply(_dep, colourRefOne, colourRefTwo) {
+	var c1 = _dep.operations.convert(_dep, "hsl", colourRefOne);
+	var c2 = _dep.operations.convert(_dep, "hsl", colourRefTwo);
 
 	var colour = { h: c1.h, s: c1.s, l: 100 * (c1.l / 100 * (c2.l / 100)) };
 	colour.l = colour.l > 100 ? 100 : colour.l;
 	colour.l = colour.l < 0 ? 0 : colour.l;
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = multiply;
@@ -1228,12 +1180,8 @@ module.exports = multiply;
 "use strict";
 
 
-function saturation(_ref, shift, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function saturation(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
 	colour.s = colour.s + shift;
 	if (colour.s < 0) {
@@ -1242,7 +1190,7 @@ function saturation(_ref, shift, colourRef) {
 		colour.s = 100;
 	}
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = saturation;
@@ -1254,19 +1202,15 @@ module.exports = saturation;
 "use strict";
 
 
-function sepia(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", colourRef);
+function sepia(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
 	var newcolour = {};
 	newcolour.r = colour.r * 0.393 + colour.g * 0.769 + colour.b * 0.189;
 	newcolour.g = colour.r * 0.349 + colour.g * 0.686 + colour.b * 0.168;
 	newcolour.b = colour.r * 0.272 + colour.g * 0.534 + colour.b * 0.131;
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, newcolour);
+	return _dep.helpers.ready(_dep, newcolour);
 }
 
 module.exports = sepia;
@@ -1278,12 +1222,8 @@ module.exports = sepia;
 "use strict";
 
 
-function shade(_ref, shift, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function shade(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
 	colour.l = colour.l + shift;
 	if (colour.l < 0) {
@@ -1292,7 +1232,7 @@ function shade(_ref, shift, colourRef) {
 		colour.l = 100;
 	}
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colour);
+	return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = shade;
@@ -1304,12 +1244,8 @@ module.exports = shade;
 "use strict";
 
 
-function tetrad(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function tetrad(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
 	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
 	for (var i = 0; i < 3; i++) {
@@ -1317,7 +1253,7 @@ function tetrad(_ref, colourRef) {
 		colours.push({ h: colour.h, s: colour.s, l: colour.l });
 	}
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colours);
+	return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = tetrad;
@@ -1329,12 +1265,8 @@ module.exports = tetrad;
 "use strict";
 
 
-function triad(_ref, colourRef) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	var colour = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", colourRef);
+function triad(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
 	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
 	for (var i = 0; i < 2; i++) {
@@ -1342,7 +1274,7 @@ function triad(_ref, colourRef) {
 		colours.push({ h: colour.h, s: colour.s, l: colour.l });
 	}
 
-	return helpers.ready({ conversions: conversions, operations: operations, helpers: helpers }, colours);
+	return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = triad;

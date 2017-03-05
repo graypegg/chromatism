@@ -1,13 +1,13 @@
-function mid( { conversions, operations, helpers }, colourOneRef, colourTwoRef ) {
-	var colourOne = operations.convert( { conversions, operations, helpers }, "hsl", colourOneRef );
-	var colourTwo = operations.convert( { conversions, operations, helpers }, "hsl", colourTwoRef );
+function mid( _dep, colourOneRef, colourTwoRef ) {
+	var colourOne = _dep.operations.convert( _dep, "hsl", colourOneRef );
+	var colourTwo = _dep.operations.convert( _dep, "hsl", colourTwoRef );
 
 	var midHue = (colourOne.h + colourTwo.h) / 2;
 	var midSat = (colourOne.s + colourTwo.s) / 2;
 	var midLight = (colourOne.l + colourTwo.l) / 2;
 	var colour = {h:midHue, s:midSat, l:midLight};
 
-	return helpers.ready( { conversions, operations, helpers }, colour );
+	return _dep.helpers.ready( _dep, colour );
 }
 
 module.exports = mid;

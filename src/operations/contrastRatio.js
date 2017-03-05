@@ -1,5 +1,5 @@
-function contrastRatio( { conversions, operations, helpers }, colourRef ) {
-	var colour = operations.convert( { conversions, operations, helpers }, "rgb", colourRef );
+function contrastRatio( _dep, colourRef ) {
+	var colour = _dep.operations.convert( _dep, "rgb", colourRef );
 
 	var yiq = ((colour.r*299)+(colour.g*587)+(colour.b*114))/1000;
 	if (yiq >= 128) {
@@ -8,7 +8,7 @@ function contrastRatio( { conversions, operations, helpers }, colourRef ) {
 		colour = {r:255, g:255, b:255};
 	}
 
-	return helpers.ready( { conversions, operations, helpers }, colour );
+	return _dep.helpers.ready( _dep, colour );
 }
 
 module.exports = contrastRatio;

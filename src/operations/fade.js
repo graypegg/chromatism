@@ -1,6 +1,6 @@
-function fade( { conversions, operations, helpers }, amount, fromRef, toRef ) {
-	var fromColour = operations.convert( { conversions, operations, helpers }, "rgb", fromRef );
-	var toColour = operations.convert( { conversions, operations, helpers }, "rgb", toRef );
+function fade( _dep, amount, fromRef, toRef ) {
+	var fromColour = _dep.operations.convert( _dep, "rgb", fromRef );
+	var toColour = _dep.operations.convert( _dep, "rgb", toRef );
 
 	var colours = [fromColour];
 	amount = amount - 1;
@@ -11,15 +11,15 @@ function fade( { conversions, operations, helpers }, amount, fromRef, toRef ) {
 	var colour = {r:fromColour.r, g:fromColour.g, b:fromColour.b};
 
 	for(var i=0;i<(amount-1);i++) {
-		colour.r = helpers.slopeMod(colour.r + rDiff, 255);
-		colour.g = helpers.slopeMod(colour.g + gDiff, 255);
-		colour.b = helpers.slopeMod(colour.b + bDiff, 255);
+		colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
+		colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
+		colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
 		colours.push({r:colour.r, g:colour.g, b:colour.b});
 	}
 
 	colours.push(toColour);
 
-	return helpers.ready( { conversions, operations, helpers }, colours );
+	return _dep.helpers.ready( _dep, colours );
 }
 
 module.exports = fade;

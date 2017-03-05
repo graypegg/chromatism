@@ -1,9 +1,9 @@
-function hue( { conversions, operations, helpers },  shift, colourRef ) {
-	var colour = operations.convert( { conversions, operations, helpers }, "hsl", colourRef );
+function hue( _dep,  shift, colourRef ) {
+	var colour = _dep.operations.convert( _dep, "hsl", colourRef );
 
-	colour.h = helpers.negMod((colour.h + shift), 360);
+	colour.h = _dep.helpers.negMod((colour.h + shift), 360);
 
-	return helpers.ready( { conversions, operations, helpers }, colour );
+	return _dep.helpers.ready( _dep, colour );
 }
 
 module.exports = hue;

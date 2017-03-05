@@ -1,4 +1,4 @@
-function convert( { conversions, operations, helpers }, to, value ) {
+function convert( _dep, to, value ) {
 	if (to == "rgb" ||
 		to == "hsl" ||
 		to == "css-rgb" ||
@@ -7,39 +7,39 @@ function convert( { conversions, operations, helpers }, to, value ) {
 		to == "cmyk" ||
 		to == "hsv" ||
 		to == "yiq") {
-		var from = helpers.determineMode(value);
+		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			switch (from){
 				case "hex":
-					return conversions.fromHex( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromHex( _dep, to, value );
 					break;
 				case "rgb":
-					return conversions.fromRgb( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromRgb( _dep, to, value );
 					break;
 				case "css-rgb":
-					return conversions.fromCssRgb( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromCssRgb( _dep, to, value );
 					break;
 				case "hsl":
-					return conversions.fromHsl( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromHsl( _dep, to, value );
 					break;
 				case "css-hsl":
-					return conversions.fromCssHsl( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromCssHsl( _dep, to, value );
 					break;
 				case "cmyk":
-					return conversions.fromCmyk( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromCmyk( _dep, to, value );
 					break;
 				case "hsv":
-					return conversions.fromHsv( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromHsv( _dep, to, value );
 					break;
 				case "yiq":
-					return conversions.fromYiq( { conversions, operations, helpers }, to, value );
+					return  _dep.conversions.fromYiq( _dep, to, value );
 					break;
 			}
 		} else {
 			return value;
 		}
 	} else {
-		return helpers.ready( { conversions, operations, helpers }, to);
+		return _dep.helpers.ready( _dep, to);
 	}
 }
 

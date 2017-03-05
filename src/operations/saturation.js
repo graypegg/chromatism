@@ -1,5 +1,5 @@
-function saturation( { conversions, operations, helpers }, shift, colourRef ) {
-	var colour = operations.convert( { conversions, operations, helpers }, "hsl", colourRef );
+function saturation( _dep, shift, colourRef ) {
+	var colour = _dep.operations.convert( _dep, "hsl", colourRef );
 
 	colour.s = colour.s + shift;
 	if (colour.s < 0) {
@@ -8,7 +8,7 @@ function saturation( { conversions, operations, helpers }, shift, colourRef ) {
 		colour.s = 100;
 	}
 
-	return helpers.ready( { conversions, operations, helpers }, colour );
+	return _dep.helpers.ready( _dep, colour );
 }
 
 module.exports = saturation;
