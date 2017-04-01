@@ -5,7 +5,7 @@
   "main": "dist/chromatism.js",
   "repository": "toish/chromatism",
   "scripts": {
-    "test": "node test.js"
+    "test": "mocha"
   },
   "keywords": [
     "color",
@@ -20,9 +20,12 @@
   "author": "Toish <toish@toi.sh>",
   "license": "ISC",
   "devDependencies": {
-	"babel-core": "^6.22.1",
+    "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
     "webpack": "^2.2.1"
+  },
+  "dependencies": {
+    "mocha": "^3.2.0"
   }
 }
