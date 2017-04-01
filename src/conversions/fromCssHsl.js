@@ -13,7 +13,7 @@ function fromCssHsl( { conversions, operations, helpers }, to, value ) {
 			break;
 		/* This colour mode is just an expression of HSL */
 		default:
-			return operations.convert({ conversions, helpers }, to, {
+			return operations.convert({ conversions, operations, helpers }, to, {
 				h: value[0],
 				s: value[1],
 				l: value[2]
