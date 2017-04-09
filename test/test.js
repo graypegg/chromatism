@@ -14,7 +14,7 @@ describe('Conversion', function() {
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function() {
         it('Return ' + consts.red[toKey] +  ' (pure red)', function() {
           assert.deepEqual(
-            round(chroma.convert(consts.red[fromKey])[toKey], 0.5), /* === */ consts.red[toKey]
+            round(chroma.convert(consts.red[fromKey])[toKey], 0.05), /* === */ round(consts.red[toKey], 0.05)
           )
         })
       })
