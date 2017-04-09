@@ -3,6 +3,7 @@ function applyFactor (inp, factor) {
 }
 
 function round (inp, step) {
+  if (step === 0) return inp
   let factor = 1.0 / step
   let out
 

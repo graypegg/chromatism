@@ -12,10 +12,11 @@ describe('Conversion', function() {
       if (toKey === fromKey) continue
 
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function() {
-        it('Return ' + consts.red[toKey] +  ' (pure red)', function() {
-          console.log('\n', fromKey, consts.red[fromKey], '\n---\n', consts.red, '\n---')
+        it('Return ' + consts.red[toKey].value +  ' (pure red)', function() {
+          //console.log('\n', fromKey, consts.red[fromKey], '\n---\n', consts.red, '\n---')
+          let accuracy = (consts.red[fromKey].accuracy ? consts.red[fromKey].accuracy[toKey] : 0)
           assert.deepEqual(
-            round(chroma.convert(consts.red[fromKey])[toKey], 0.05), /* === */ round(consts.red[toKey], 0.05)
+            round(chroma.convert(consts.red[fromKey].value)[toKey], accuracy), /* === */ round(consts.red[toKey].value, accuracy)
           )
         })
       })
