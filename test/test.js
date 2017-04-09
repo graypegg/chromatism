@@ -1,5 +1,6 @@
 var assert = require('assert')
 var chroma = require('../src/entry.js')
+var round = require('./rounding.js')
 var consts = require('./consts.js')
 
 describe('Conversion', function() {
@@ -13,7 +14,7 @@ describe('Conversion', function() {
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function() {
         it('Return ' + consts.red[toKey] +  ' (pure red)', function() {
           assert.deepEqual(
-            chroma.convert(consts.red[fromKey])[toKey], /* === */ consts.red[toKey]
+            round(chroma.convert(consts.red[fromKey])[toKey], 0.5), /* === */ consts.red[toKey]
           )
         })
       })
