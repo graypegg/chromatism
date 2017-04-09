@@ -304,7 +304,7 @@ function fromCmyk(_ref, to, value) {
 			var r = 255 * (1 - value.c) * (1 - value.k);
 			var g = 255 * (1 - value.m) * (1 - value.k);
 			var b = 255 * (1 - value.y) * (1 - value.k);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "hex", { r: r, g: g, b: b });
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hex", { r: r, g: g, b: b });
 			break;
 		case "rgb":
 			var r = 255 * (1 - value.c) * (1 - value.k);
@@ -322,18 +322,18 @@ function fromCmyk(_ref, to, value) {
 			var r = 255 * (1 - value.c) * (1 - value.k);
 			var g = 255 * (1 - value.m) * (1 - value.k);
 			var b = 255 * (1 - value.y) * (1 - value.k);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "hsl", { r: r, g: g, b: b });
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsl", { r: r, g: g, b: b });
 			break;
 		case "css-hsl":
 			var r = 255 * (1 - value.c) * (1 - value.k);
 			var g = 255 * (1 - value.m) * (1 - value.k);
 			var b = 255 * (1 - value.y) * (1 - value.k);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "css-hsl", { r: r, g: g, b: b });
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "css-hsl", { r: r, g: g, b: b });
 		case "hsv":
 			var r = 255 * (1 - value.c) * (1 - value.k);
 			var g = 255 * (1 - value.m) * (1 - value.k);
 			var b = 255 * (1 - value.y) * (1 - value.k);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "hsv", { r: r, g: g, b: b });
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hsv", { r: r, g: g, b: b });
 			break;
 		case "yiq":
 			var r = 255 * (1 - value.c) * (1 - value.k);
@@ -372,7 +372,7 @@ function fromCssHsl(_ref, to, value) {
 			break;
 		/* This colour mode is just an expression of HSL */
 		default:
-			return operations.convert({ conversions: conversions, helpers: helpers }, to, {
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
 				h: value[0],
 				s: value[1],
 				l: value[2]
@@ -409,7 +409,7 @@ function fromCssRgb(_ref, to, value) {
 			break;
 		/* This colour mode is just an expression of RGB */
 		default:
-			return operations.convert({ conversions: conversions, helpers: helpers }, to, {
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
 				r: value[0],
 				g: value[1],
 				b: value[2]
@@ -446,7 +446,7 @@ function fromHex(_ref, to, value) {
 			break;
 		/* This colour mode is just an expression of RGB */
 		default:
-			return operations.convert({ conversions: conversions, helpers: helpers }, to, {
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
 				r: value[0],
 				g: value[1],
 				b: value[2]
@@ -541,20 +541,7 @@ function fromHsl(_ref, to, value) {
 			break;
 		case "cmyk":
 			var rgb = operations.convert({ conversions: conversions, helpers: helpers }, "rgb", value);
-			var tempR = rgb['r'] / 255;
-			var tempG = rgb['g'] / 255;
-			var tempB = rgb['b'] / 255;
-			var k = 1 - Math.max(tempR, tempG, tempB);
-			if (k != 1) {
-				var c = (1 - tempR - k) / (1 - k);
-				var m = (1 - tempG - k) / (1 - k);
-				var y = (1 - tempB - k) / (1 - k);
-			} else {
-				var c = 0;
-				var m = 0;
-				var y = 0;
-			}
-			return { c: c, m: m, y: y, k: k };
+			return operations.convert({ conversions: conversions, helpers: helpers }, "cmyk", rgb);
 			break;
 		case "hsv":
 			value.s = value.s / 100;
@@ -814,19 +801,10 @@ function fromYiq(_ref, to, value) {
 	    helpers = _ref.helpers;
 
 	/* YIQ is not a transformation of RGB, so it's pretty lossy */
-	value.i = helpers.helpers.bounded(value.i, [-0.5957, 0.5957]);
-	value.q = helpers.helpers.bounded(value.q, [-0.5226, 0.5226]);
+	value.i = helpers.bounded(value.i, [-0.5957, 0.5957]);
+	value.q = helpers.bounded(value.q, [-0.5226, 0.5226]);
 
 	switch (to) {
-		case "hex":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "hex", { r: r, g: g, b: b });
-			break;
 		case "rgb":
 			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
 			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
@@ -836,49 +814,9 @@ function fromYiq(_ref, to, value) {
 			b = helpers.bounded(b, [0, 255]);
 			return { r: r, g: g, b: b };
 			break;
-		case "css-rgb":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
-			break;
-		case "hsl":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "hsl", { r: r, g: g, b: b });
-			break;
-		case "css-hsl":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "css-hsl", { r: r, g: g, b: b });
-		case "hsv":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "hsv", { r: r, g: g, b: b });
-			break;
-		case "cmyk":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return operations.convert({ conversions: conversions, helpers: helpers }, "cmyk", { r: r, g: g, b: b });
+		default:
+			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hex", rgb);
 			break;
 	}
 }
@@ -1286,6 +1224,10 @@ module.exports = triad;
 "use strict";
 
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 var dependencies = {
   conversions: __webpack_require__(1),
   operations: __webpack_require__(0),
@@ -1299,7 +1241,11 @@ var api = Object.keys(dependencies.operations).reduce(function (acc, key) {
       args[_key] = arguments[_key];
     }
 
-    return operation.apply(undefined, [dependencies].concat(args));
+    var clone = args.slice(0).map(function (v) {
+      if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
+      return v;
+    });
+    return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone)));
   };
   return acc;
 }, {});

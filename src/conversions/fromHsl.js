@@ -71,20 +71,7 @@ function fromHsl( { conversions, operations, helpers }, to, value ) {
 			break;
 		case "cmyk":
 			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
-			var tempR = rgb['r']/255;
-			var tempG = rgb['g']/255;
-			var tempB = rgb['b']/255;
-			var k = 1 - (Math.max(tempR, tempG, tempB));
-			if (k != 1) {
-				var c = ((1 - tempR) - k) / (1 - k);
-				var m = ((1 - tempG) - k) / (1 - k);
-				var y = ((1 - tempB) - k) / (1 - k);
-			} else {
-				var c = 0;
-				var m = 0;
-				var y = 0;
-			}
-			return {c: c, m: m, y: y, k: k};
+			return operations.convert({ conversions, helpers }, "cmyk", rgb);
 			break;
 		case "hsv":
 			value.s = value.s / 100;
