@@ -816,7 +816,7 @@ function fromYiq(_ref, to, value) {
 			break;
 		default:
 			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "hex", rgb);
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
 			break;
 	}
 }

@@ -15,7 +15,7 @@ function fromYiq( { conversions, operations, helpers }, to, value ) {
 			break;
 		default:
 			var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
-			return operations.convert({ conversions, operations, helpers }, "hex", rgb);
+			return operations.convert({ conversions, operations, helpers }, to, rgb);
 			break;
 	}
 }
