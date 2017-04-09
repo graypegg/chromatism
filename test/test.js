@@ -13,7 +13,6 @@ describe('Conversion', function() {
 
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function() {
         it('Return ' + consts.red[toKey].value +  ' (pure red)', function() {
-          //console.log('\n', fromKey, consts.red[fromKey], '\n---\n', consts.red, '\n---')
           let accuracy = (consts.red[fromKey].accuracy ? consts.red[fromKey].accuracy[toKey] : 0)
           assert.deepEqual(
             round(chroma.convert(consts.red[fromKey].value)[toKey], accuracy), /* === */ round(consts.red[toKey].value, accuracy)
