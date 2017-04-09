@@ -14,11 +14,11 @@ const red = {
   },
   hex: {
     value: '#ff0000',
-    accuracy: null
+    accuracy: { }
   },
   cssrgb: {
     value: 'rgb(255,0,0)',
-    accuracy: null
+    accuracy: { }
   },
   hsl: {
     value: { h: 0, s: 100, l: 50 },
@@ -35,7 +35,7 @@ const red = {
   },
   csshsl: {
     value: 'hsl(0,100%,50%)',
-    accuracy: null
+    accuracy: { }
   },
   hsv: {
     value: { h: 0, s: 100, v: 100 },

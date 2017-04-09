@@ -9,17 +9,16 @@ describe('Conversion', function() {
 
     for (let toKey in consts.red) {
       if (!consts.red.hasOwnProperty(toKey)) continue
-      if (toKey === fromKey) continue
+
+      let accuracy = consts.red[fromKey].accuracy[toKey] || 0
 
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function() {
-        it('Return ' + consts.red[toKey].value +  ' (pure red)', function() {
-          let accuracy = (consts.red[fromKey].accuracy ? consts.red[fromKey].accuracy[toKey] : 0)
+        it(`should return ${ accuracy !== 0 ? 'a value close to' : 'the value' } ${ JSON.stringify(consts.red[toKey].value) }`, function() {
           assert.deepEqual(
             round(chroma.convert(consts.red[fromKey].value)[toKey], accuracy), /* === */ round(consts.red[toKey].value, accuracy)
           )
         })
       })
     }
-
   }
 })
