@@ -107,6 +107,32 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			q = helpers.bounded(q, [-0.5226, 0.5226]);
 			return {y:y, i:i, q:q};
 			break;
+		case "XYZ":
+      let normalized = [value.r, value.g, value.b].map((v) => v / 255);
+
+      let linear = normalized.map((V) => {
+        if (V <= 0.04045) return V / 12.92
+        return Math.pow(((V + 0.055) / 1.055), 2.4)
+      })
+
+      // Observer is 2°
+      // Whitepoint is D65
+      // sRGB standard stuff eh!
+      // [ Shamelessly stolen off Wikipedia ]
+      let M = [
+        [ 0.4124, 0.3576, 0.1805 ],
+        [ 0.2126, 0.7152, 0.0722 ],
+        [ 0.0193, 0.1192, 0.9505 ]
+      ]
+
+      let [ X, Y, Z ] = M.map((m) => {
+        return linear.reduce((acc, v, key) => {
+          return (m[key] * v) + acc
+        }, 0)
+      }).map((o) => o * 100)
+
+      return { X, Y, Z }
+			break;
 	}
 }
 

@@ -119,7 +119,8 @@ module.exports = {
   fromHsl: __webpack_require__(7),
   fromHsv: __webpack_require__(8),
   fromRgb: __webpack_require__(9),
-  fromYiq: __webpack_require__(10)
+  fromYiq: __webpack_require__(10),
+  fromXYZ: __webpack_require__(29)
 };
 
 /***/ }),
@@ -177,6 +178,8 @@ var helpers = {
           return "hsv";
         } else if (typeof colour.q != "undefined") {
           return "yiq";
+        } else if (typeof colour.X != "undefined") {
+          return "XYZ";
         } else {
           return null;
         }
@@ -230,6 +233,9 @@ var helpers = {
           },
           get yiq() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "yiq", this.colour);
+          },
+          get XYZ() {
+            return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", this.colour);
           }
         };
         break;
@@ -274,6 +280,11 @@ var helpers = {
           get yiq() {
             return this.colours.map(function (colour) {
               return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "yiq", colour);
+            });
+          },
+          get XYZ() {
+            return this.colours.map(function (colour) {
+              return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", colour);
             });
           }
         };
@@ -668,6 +679,8 @@ module.exports = fromHsv;
 "use strict";
 
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 function fromRgb(_ref, to, value) {
 	var conversions = _ref.conversions,
 	    operations = _ref.operations,
@@ -778,6 +791,36 @@ function fromRgb(_ref, to, value) {
 			i = helpers.bounded(i, [-0.5957, 0.5957]);
 			q = helpers.bounded(q, [-0.5226, 0.5226]);
 			return { y: y, i: i, q: q };
+			break;
+		case "XYZ":
+			var normalized = [value.r, value.g, value.b].map(function (v) {
+				return v / 255;
+			});
+
+			var linear = normalized.map(function (V) {
+				if (V <= 0.04045) return V / 12.92;
+				return Math.pow((V + 0.055) / 1.055, 2.4);
+			});
+
+			// Observer is 2°
+			// Whitepoint is D65
+			// sRGB standard stuff eh!
+			// [ Shamelessly stolen off Wikipedia ]
+			var M = [[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]];
+
+			var _M$map$map = M.map(function (m) {
+				return linear.reduce(function (acc, v, key) {
+					return m[key] * v + acc;
+				}, 0);
+			}).map(function (o) {
+				return o * 100;
+			}),
+			    _M$map$map2 = _slicedToArray(_M$map$map, 3),
+			    X = _M$map$map2[0],
+			    Y = _M$map$map2[1],
+			    Z = _M$map$map2[2];
+
+			return { X: X, Y: Y, Z: Z };
 			break;
 	}
 }
@@ -923,7 +966,7 @@ module.exports = contrastRatio;
 
 
 function convert(_dep, to, value) {
-	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq") {
+	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ") {
 		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			switch (from) {
@@ -950,6 +993,9 @@ function convert(_dep, to, value) {
 					break;
 				case "yiq":
 					return _dep.conversions.fromYiq(_dep, to, value);
+					break;
+				case "XYZ":
+					return _dep.conversions.fromXYZ(_dep, to, value);
 					break;
 			}
 		} else {
@@ -1247,6 +1293,61 @@ var api = Object.keys(dependencies.operations).reduce(function (acc, key) {
 }, {});
 
 module.exports = api;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+function fromXYZ(_ref, to, value) {
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
+
+  switch (to) {
+    case "rgb":
+      var normalized = [value.X, value.Y, value.Z].map(function (v) {
+        return v / 100;
+      });
+
+      // Observer is 2°
+      // Whitepoint is D65
+      // sRGB standard stuff eh!
+      // [ Shamelessly stolen off Wikipedia ]
+      var M = [[3.2406, -1.5372, -0.4986], [-0.9689, 1.8758, 0.0415], [0.0557, -0.2040, 1.0570]];
+
+      var linear = M.map(function (m) {
+        return normalized.reduce(function (acc, v, key) {
+          return m[key] * v + acc;
+        }, 0);
+      });
+
+      var _linear$map$map = linear.map(function (C) {
+        if (C <= 0.0031308) return C * 12.92;
+        return 1.055 * Math.pow(C, 1 / 2.4) - 0.055;
+      }).map(function (o) {
+        return o * 255;
+      }),
+          _linear$map$map2 = _slicedToArray(_linear$map$map, 3),
+          r = _linear$map$map2[0],
+          g = _linear$map$map2[1],
+          b = _linear$map$map2[2];
+
+      return { r: r, g: g, b: b };
+
+      break;
+    default:
+      var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
+      break;
+  }
+}
+
+module.exports = fromXYZ;
 
 /***/ })
 /******/ ]);

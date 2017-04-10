@@ -37,6 +37,8 @@ var helpers = {
   				return "hsv";
   			} else if (typeof colour.q != "undefined") {
   				return "yiq";
+  			} else if (typeof colour.X != "undefined") {
+  				return "XYZ";
   			} else {
   				return null;
   			}
@@ -71,7 +73,8 @@ var helpers = {
   				get cssrgb() { return operations.convert({ conversions, operations, helpers }, "css-rgb", this.colour) },
   				get csshsl() { return operations.convert({ conversions, operations, helpers }, "css-hsl", this.colour) },
   				get hsv() { return operations.convert({ conversions, operations, helpers }, "hsv", this.colour) },
-  				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) }
+  				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) },
+  				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) }
   			}
   			break;
   		case "[object Array]":
@@ -100,6 +103,9 @@ var helpers = {
   				}) },
   				get yiq() { return this.colours.map( function(colour) {
   					return operations.convert({ conversions, operations, helpers }, "yiq", colour)
+  				}) },
+  				get XYZ() { return this.colours.map( function(colour) {
+  					return operations.convert({ conversions, operations, helpers }, "XYZ", colour)
   				}) }
   			}
   			break;

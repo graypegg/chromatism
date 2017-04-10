@@ -6,7 +6,8 @@ function convert( _dep, to, value ) {
 		to == "hex" ||
 		to == "cmyk" ||
 		to == "hsv" ||
-		to == "yiq") {
+		to == "yiq" ||
+		to == "XYZ") {
 		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			switch (from){
@@ -33,6 +34,9 @@ function convert( _dep, to, value ) {
 					break;
 				case "yiq":
 					return  _dep.conversions.fromYiq( _dep, to, value );
+					break;
+				case "XYZ":
+					return  _dep.conversions.fromXYZ( _dep, to, value );
 					break;
 			}
 		} else {

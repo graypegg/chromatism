@@ -6,5 +6,6 @@ module.exports = {
   fromHsl: require('./fromHsl.js'),
   fromHsv: require('./fromHsv.js'),
   fromRgb: require('./fromRgb.js'),
-  fromYiq: require('./fromYiq.js')
+  fromYiq: require('./fromYiq.js'),
+  fromXYZ: require('./fromXYZ.js')
 };
