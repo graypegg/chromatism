@@ -352,6 +352,10 @@ function fromCmyk(_ref, to, value) {
 			var b = 255 * (1 - value.y) * (1 - value.k);
 			return operations.convert({ conversions: conversions, helpers: helpers }, "yiq", { r: r, g: g, b: b });
 			break;
+		case "XYZ":
+			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", rgb);
+			break;
 	}
 }
 
@@ -569,6 +573,10 @@ function fromHsl(_ref, to, value) {
 			var rgb = operations.convert({ conversions: conversions, helpers: helpers }, "rgb", value);
 			return operations.convert({ conversions: conversions, helpers: helpers }, "yiq", rgb);
 			break;
+		case "XYZ":
+			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", rgb);
+			break;
 	}
 }
 
@@ -666,6 +674,10 @@ function fromHsv(_ref, to, value) {
 		case "yiq":
 			var rgb = operations.convert({ conversions: conversions, helpers: helpers }, "rgb", value);
 			return operations.convert({ conversions: conversions, helpers: helpers }, "yiq", rgb);
+			break;
+		case "XYZ":
+			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", rgb);
 			break;
 	}
 }

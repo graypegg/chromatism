@@ -88,6 +88,10 @@ function fromHsl( { conversions, operations, helpers }, to, value ) {
 			var rgb = operations.convert({ conversions, helpers }, "rgb", value)
 			return operations.convert({ conversions, helpers }, "yiq", rgb);
 			break;
+		case "XYZ":
+      var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
+      return operations.convert({ conversions, operations, helpers }, "XYZ", rgb);
+			break;
 	}
 }
 
