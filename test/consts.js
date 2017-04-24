@@ -9,7 +9,8 @@ const red = {
       csshsl: null,
       hsv: 0,
       cmyk: 0.5,
-      yiq: 1
+      yiq: 1,
+      XYZ: 0
     }
   },
   hex: {
@@ -30,7 +31,8 @@ const red = {
       csshsl: null,
       hsv: 0,
       cmyk: 0.5,
-      yiq: 1
+      yiq: 1,
+      XYZ: 0
     }
   },
   csshsl: {
@@ -47,7 +49,8 @@ const red = {
       csshsl: null,
       hsv: 0,
       cmyk: 0.5,
-      yiq: 1
+      yiq: 1,
+      XYZ: 0
     }
   },
   cmyk: {
@@ -60,7 +63,8 @@ const red = {
       csshsl: null,
       hsv: 0,
       cmyk: 0,
-      yiq: 1
+      yiq: 1,
+      XYZ: 0
     }
   },
   yiq: {
@@ -73,7 +77,22 @@ const red = {
       csshsl: null,
       hsv: 1,
       cmyk: 1,
-      yiq: 1
+      yiq: 1,
+      XYZ: 1
+    }
+  },
+  XYZ: {
+    value: { X: 41.24, Y: 21.26, Z: 1.9300000000000002 },
+    accuracy: {
+      rgb: 1,
+      cssrgb: null,
+      hex: null,
+      hsl: 1,
+      csshsl: null,
+      hsv: 1,
+      cmyk: 1,
+      yiq: 1,
+      XYZ: 0
     }
   },
 }
