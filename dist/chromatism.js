@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 30);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,24 +84,24 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 module.exports = {
-  adjacent: __webpack_require__(11),
-  complementary: __webpack_require__(12),
-  contrast: __webpack_require__(13),
-  contrastRatio: __webpack_require__(14),
-  convert: __webpack_require__(15),
-  fade: __webpack_require__(16),
-  greyscale: __webpack_require__(17),
-  hue: __webpack_require__(18),
+  adjacent: __webpack_require__(13),
+  complementary: __webpack_require__(14),
+  contrast: __webpack_require__(15),
+  contrastRatio: __webpack_require__(16),
+  convert: __webpack_require__(17),
+  fade: __webpack_require__(18),
+  greyscale: __webpack_require__(19),
+  hue: __webpack_require__(20),
   index: __webpack_require__(0),
-  invert: __webpack_require__(19),
-  invertLightness: __webpack_require__(20),
-  mid: __webpack_require__(21),
-  multiply: __webpack_require__(22),
-  saturation: __webpack_require__(23),
-  sepia: __webpack_require__(24),
-  shade: __webpack_require__(25),
-  tetrad: __webpack_require__(26),
-  triad: __webpack_require__(27)
+  invert: __webpack_require__(21),
+  invertLightness: __webpack_require__(22),
+  mid: __webpack_require__(23),
+  multiply: __webpack_require__(24),
+  saturation: __webpack_require__(25),
+  sepia: __webpack_require__(26),
+  shade: __webpack_require__(27),
+  tetrad: __webpack_require__(28),
+  triad: __webpack_require__(29)
 };
 
 /***/ }),
@@ -111,20 +111,51 @@ module.exports = {
 "use strict";
 
 
-module.exports = {
-  fromCmyk: __webpack_require__(3),
-  fromCssHsl: __webpack_require__(4),
-  fromCssRgb: __webpack_require__(5),
-  fromHex: __webpack_require__(6),
-  fromHsl: __webpack_require__(7),
-  fromHsv: __webpack_require__(8),
-  fromRgb: __webpack_require__(9),
-  fromYiq: __webpack_require__(10),
-  fromXYZ: __webpack_require__(29)
-};
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function makeApi(dependencies) {
+  return Object.keys(dependencies.operations).reduce(function (acc, key) {
+    var operation = dependencies.operations[key];
+    acc[key] = function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var clone = args.slice(0).map(function (v) {
+        if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
+        return v;
+      });
+      return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone)));
+    };
+    return acc;
+  }, {});
+}
+
+module.exports = makeApi;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  fromCmyk: __webpack_require__(4),
+  fromCssHsl: __webpack_require__(5),
+  fromCssRgb: __webpack_require__(6),
+  fromHex: __webpack_require__(7),
+  fromHsl: __webpack_require__(8),
+  fromHsv: __webpack_require__(9),
+  fromRgb: __webpack_require__(10),
+  fromYiq: __webpack_require__(12),
+  fromXYZ: __webpack_require__(11)
+};
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -205,6 +236,9 @@ var helpers = {
         operations = _ref.operations,
         helpers = _ref.helpers;
 
+    var apiFactory = __webpack_require__(1);
+    var api = apiFactory({ conversions: conversions, operations: operations, helpers: helpers });
+
     switch (Object.prototype.toString.call(colour)) {
       case "[object Object]":
       case "[object String]":
@@ -237,7 +271,7 @@ var helpers = {
           get XYZ() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", this.colour);
           }
-        };
+        }.concat(api);
         break;
       case "[object Array]":
         return {
@@ -299,7 +333,7 @@ var helpers = {
 module.exports = helpers;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -362,7 +396,7 @@ function fromCmyk(_ref, to, value) {
 module.exports = fromCmyk;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -399,7 +433,7 @@ function fromCssHsl(_ref, to, value) {
 module.exports = fromCssHsl;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -436,7 +470,7 @@ function fromCssRgb(_ref, to, value) {
 module.exports = fromCssRgb;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -473,7 +507,7 @@ function fromHex(_ref, to, value) {
 module.exports = fromHex;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -583,7 +617,7 @@ function fromHsl(_ref, to, value) {
 module.exports = fromHsl;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -685,7 +719,7 @@ function fromHsv(_ref, to, value) {
 module.exports = fromHsv;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -840,474 +874,7 @@ function fromRgb(_ref, to, value) {
 module.exports = fromRgb;
 
 /***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function fromYiq(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
-
-	/* YIQ is not a transformation of RGB, so it's pretty lossy */
-	value.i = helpers.bounded(value.i, [-0.5957, 0.5957]);
-	value.q = helpers.bounded(value.q, [-0.5226, 0.5226]);
-
-	switch (to) {
-		case "rgb":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return { r: r, g: g, b: b };
-			break;
-		default:
-			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
-			break;
-	}
-}
-
-module.exports = fromYiq;
-
-/***/ }),
 /* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function adjacent(_dep, deg, amount, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
-
-	for (var i = 0; i < amount - 1; i++) {
-		colour.h = _dep.helpers.negMod(colour.h + deg, 360);
-		colours.push({ h: colour.h, s: colour.s, l: colour.l });
-	}
-
-	return _dep.helpers.ready(_dep, colours);
-}
-
-module.exports = adjacent;
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function complementary(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	colour.h = (colour.h + 180) % 360;
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = complementary;
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function contrast(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
-
-	colour.r = ((colour.r / 255.0 - 0.5) * shift + 0.5) * 255.0;
-	if (colour.r < 0) {
-		colour.r = 0;
-	} else if (colour.r > 255) {
-		colour.r = 255;
-	}
-
-	colour.g = ((colour.g / 255.0 - 0.5) * shift + 0.5) * 255.0;
-	if (colour.g < 0) {
-		colour.g = 0;
-	} else if (colour.g > 255) {
-		colour.g = 255;
-	}
-
-	colour.b = ((colour.b / 255.0 - 0.5) * shift + 0.5) * 255.0;
-	if (colour.b < 0) {
-		colour.b = 0;
-	} else if (colour.b > 255) {
-		colour.b = 255;
-	}
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = contrast;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function contrastRatio(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
-
-	var yiq = (colour.r * 299 + colour.g * 587 + colour.b * 114) / 1000;
-	if (yiq >= 128) {
-		colour = { r: 0, g: 0, b: 0 };
-	} else {
-		colour = { r: 255, g: 255, b: 255 };
-	}
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = contrastRatio;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function convert(_dep, to, value) {
-	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ") {
-		var from = _dep.helpers.determineMode(value);
-		if (from != to) {
-			switch (from) {
-				case "hex":
-					return _dep.conversions.fromHex(_dep, to, value);
-					break;
-				case "rgb":
-					return _dep.conversions.fromRgb(_dep, to, value);
-					break;
-				case "css-rgb":
-					return _dep.conversions.fromCssRgb(_dep, to, value);
-					break;
-				case "hsl":
-					return _dep.conversions.fromHsl(_dep, to, value);
-					break;
-				case "css-hsl":
-					return _dep.conversions.fromCssHsl(_dep, to, value);
-					break;
-				case "cmyk":
-					return _dep.conversions.fromCmyk(_dep, to, value);
-					break;
-				case "hsv":
-					return _dep.conversions.fromHsv(_dep, to, value);
-					break;
-				case "yiq":
-					return _dep.conversions.fromYiq(_dep, to, value);
-					break;
-				case "XYZ":
-					return _dep.conversions.fromXYZ(_dep, to, value);
-					break;
-			}
-		} else {
-			return value;
-		}
-	} else {
-		return _dep.helpers.ready(_dep, to);
-	}
-}
-
-module.exports = convert;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function fade(_dep, amount, fromRef, toRef) {
-	var fromColour = _dep.operations.convert(_dep, "rgb", fromRef);
-	var toColour = _dep.operations.convert(_dep, "rgb", toRef);
-
-	var colours = [fromColour];
-	amount = amount - 1;
-
-	var rDiff = (toColour.r - fromColour.r) / amount;
-	var gDiff = (toColour.g - fromColour.g) / amount;
-	var bDiff = (toColour.b - fromColour.b) / amount;
-	var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b };
-
-	for (var i = 0; i < amount - 1; i++) {
-		colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
-		colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
-		colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
-		colours.push({ r: colour.r, g: colour.g, b: colour.b });
-	}
-
-	colours.push(toColour);
-
-	return _dep.helpers.ready(_dep, colours);
-}
-
-module.exports = fade;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function greyscale(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
-
-	var grey = (colour.r + colour.g + colour.b) / 3;
-	colour = { r: grey, g: grey, b: grey };
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = greyscale;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function hue(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	colour.h = _dep.helpers.negMod(colour.h + shift, 360);
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = hue;
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function invert(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
-
-	colour.r = _dep.helpers.negMod(255 - colour.r, 255);
-	colour.g = _dep.helpers.negMod(255 - colour.g, 255);
-	colour.b = _dep.helpers.negMod(255 - colour.b, 255);
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = invert;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function invertLightness(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	colour.l = 100 - colour.l;
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = invertLightness;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function mid(_dep, colourOneRef, colourTwoRef) {
-	var colourOne = _dep.operations.convert(_dep, "hsl", colourOneRef);
-	var colourTwo = _dep.operations.convert(_dep, "hsl", colourTwoRef);
-
-	var midHue = (colourOne.h + colourTwo.h) / 2;
-	var midSat = (colourOne.s + colourTwo.s) / 2;
-	var midLight = (colourOne.l + colourTwo.l) / 2;
-	var colour = { h: midHue, s: midSat, l: midLight };
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = mid;
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function multiply(_dep, colourRefOne, colourRefTwo) {
-	var c1 = _dep.operations.convert(_dep, "hsl", colourRefOne);
-	var c2 = _dep.operations.convert(_dep, "hsl", colourRefTwo);
-
-	var colour = { h: c1.h, s: c1.s, l: 100 * (c1.l / 100 * (c2.l / 100)) };
-	colour.l = colour.l > 100 ? 100 : colour.l;
-	colour.l = colour.l < 0 ? 0 : colour.l;
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = multiply;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function saturation(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	colour.s = colour.s + shift;
-	if (colour.s < 0) {
-		colour.s = 0;
-	} else if (colour.s > 100) {
-		colour.s = 100;
-	}
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = saturation;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function sepia(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
-
-	var newcolour = {};
-	newcolour.r = colour.r * 0.393 + colour.g * 0.769 + colour.b * 0.189;
-	newcolour.g = colour.r * 0.349 + colour.g * 0.686 + colour.b * 0.168;
-	newcolour.b = colour.r * 0.272 + colour.g * 0.534 + colour.b * 0.131;
-
-	return _dep.helpers.ready(_dep, newcolour);
-}
-
-module.exports = sepia;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function shade(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	colour.l = colour.l + shift;
-	if (colour.l < 0) {
-		colour.l = 0;
-	} else if (colour.l > 100) {
-		colour.l = 100;
-	}
-
-	return _dep.helpers.ready(_dep, colour);
-}
-
-module.exports = shade;
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function tetrad(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
-	for (var i = 0; i < 3; i++) {
-		colour.h = (colour.h + 90) % 360;
-		colours.push({ h: colour.h, s: colour.s, l: colour.l });
-	}
-
-	return _dep.helpers.ready(_dep, colours);
-}
-
-module.exports = tetrad;
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function triad(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-
-	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
-	for (var i = 0; i < 2; i++) {
-		colour.h = (colour.h + 120) % 360;
-		colours.push({ h: colour.h, s: colour.s, l: colour.l });
-	}
-
-	return _dep.helpers.ready(_dep, colours);
-}
-
-module.exports = triad;
-
-/***/ }),
-/* 28 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var dependencies = {
-  conversions: __webpack_require__(1),
-  operations: __webpack_require__(0),
-  helpers: __webpack_require__(2)
-};
-
-var api = Object.keys(dependencies.operations).reduce(function (acc, key) {
-  var operation = dependencies.operations[key];
-  acc[key] = function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    var clone = args.slice(0).map(function (v) {
-      if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
-      return v;
-    });
-    return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone)));
-  };
-  return acc;
-}, {});
-
-module.exports = api;
-
-/***/ }),
-/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1360,6 +927,454 @@ function fromXYZ(_ref, to, value) {
 }
 
 module.exports = fromXYZ;
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function fromYiq(_ref, to, value) {
+	var conversions = _ref.conversions,
+	    operations = _ref.operations,
+	    helpers = _ref.helpers;
+
+	/* YIQ is not a transformation of RGB, so it's pretty lossy */
+	value.i = helpers.bounded(value.i, [-0.5957, 0.5957]);
+	value.q = helpers.bounded(value.q, [-0.5226, 0.5226]);
+
+	switch (to) {
+		case "rgb":
+			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+			r = helpers.bounded(r, [0, 255]);
+			g = helpers.bounded(g, [0, 255]);
+			b = helpers.bounded(b, [0, 255]);
+			return { r: r, g: g, b: b };
+			break;
+		default:
+			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
+			break;
+	}
+}
+
+module.exports = fromYiq;
+
+/***/ }),
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function adjacent(_dep, deg, amount, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+
+	for (var i = 0; i < amount - 1; i++) {
+		colour.h = _dep.helpers.negMod(colour.h + deg, 360);
+		colours.push({ h: colour.h, s: colour.s, l: colour.l });
+	}
+
+	return _dep.helpers.ready(_dep, colours);
+}
+
+module.exports = adjacent;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function complementary(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	colour.h = (colour.h + 180) % 360;
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = complementary;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function contrast(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+
+	colour.r = ((colour.r / 255.0 - 0.5) * shift + 0.5) * 255.0;
+	if (colour.r < 0) {
+		colour.r = 0;
+	} else if (colour.r > 255) {
+		colour.r = 255;
+	}
+
+	colour.g = ((colour.g / 255.0 - 0.5) * shift + 0.5) * 255.0;
+	if (colour.g < 0) {
+		colour.g = 0;
+	} else if (colour.g > 255) {
+		colour.g = 255;
+	}
+
+	colour.b = ((colour.b / 255.0 - 0.5) * shift + 0.5) * 255.0;
+	if (colour.b < 0) {
+		colour.b = 0;
+	} else if (colour.b > 255) {
+		colour.b = 255;
+	}
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = contrast;
+
+/***/ }),
+/* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function contrastRatio(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+
+	var yiq = (colour.r * 299 + colour.g * 587 + colour.b * 114) / 1000;
+	if (yiq >= 128) {
+		colour = { r: 0, g: 0, b: 0 };
+	} else {
+		colour = { r: 255, g: 255, b: 255 };
+	}
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = contrastRatio;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function convert(_dep, to, value) {
+	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ") {
+		var from = _dep.helpers.determineMode(value);
+		if (from != to) {
+			switch (from) {
+				case "hex":
+					return _dep.conversions.fromHex(_dep, to, value);
+					break;
+				case "rgb":
+					return _dep.conversions.fromRgb(_dep, to, value);
+					break;
+				case "css-rgb":
+					return _dep.conversions.fromCssRgb(_dep, to, value);
+					break;
+				case "hsl":
+					return _dep.conversions.fromHsl(_dep, to, value);
+					break;
+				case "css-hsl":
+					return _dep.conversions.fromCssHsl(_dep, to, value);
+					break;
+				case "cmyk":
+					return _dep.conversions.fromCmyk(_dep, to, value);
+					break;
+				case "hsv":
+					return _dep.conversions.fromHsv(_dep, to, value);
+					break;
+				case "yiq":
+					return _dep.conversions.fromYiq(_dep, to, value);
+					break;
+				case "XYZ":
+					return _dep.conversions.fromXYZ(_dep, to, value);
+					break;
+			}
+		} else {
+			return value;
+		}
+	} else {
+		return _dep.helpers.ready(_dep, to);
+	}
+}
+
+module.exports = convert;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function fade(_dep, amount, fromRef, toRef) {
+	var fromColour = _dep.operations.convert(_dep, "rgb", fromRef);
+	var toColour = _dep.operations.convert(_dep, "rgb", toRef);
+
+	var colours = [fromColour];
+	amount = amount - 1;
+
+	var rDiff = (toColour.r - fromColour.r) / amount;
+	var gDiff = (toColour.g - fromColour.g) / amount;
+	var bDiff = (toColour.b - fromColour.b) / amount;
+	var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b };
+
+	for (var i = 0; i < amount - 1; i++) {
+		colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
+		colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
+		colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
+		colours.push({ r: colour.r, g: colour.g, b: colour.b });
+	}
+
+	colours.push(toColour);
+
+	return _dep.helpers.ready(_dep, colours);
+}
+
+module.exports = fade;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function greyscale(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+
+	var grey = (colour.r + colour.g + colour.b) / 3;
+	colour = { r: grey, g: grey, b: grey };
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = greyscale;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function hue(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	colour.h = _dep.helpers.negMod(colour.h + shift, 360);
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = hue;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function invert(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+
+	colour.r = _dep.helpers.negMod(255 - colour.r, 255);
+	colour.g = _dep.helpers.negMod(255 - colour.g, 255);
+	colour.b = _dep.helpers.negMod(255 - colour.b, 255);
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = invert;
+
+/***/ }),
+/* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function invertLightness(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	colour.l = 100 - colour.l;
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = invertLightness;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function mid(_dep, colourOneRef, colourTwoRef) {
+	var colourOne = _dep.operations.convert(_dep, "hsl", colourOneRef);
+	var colourTwo = _dep.operations.convert(_dep, "hsl", colourTwoRef);
+
+	var midHue = (colourOne.h + colourTwo.h) / 2;
+	var midSat = (colourOne.s + colourTwo.s) / 2;
+	var midLight = (colourOne.l + colourTwo.l) / 2;
+	var colour = { h: midHue, s: midSat, l: midLight };
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = mid;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function multiply(_dep, colourRefOne, colourRefTwo) {
+	var c1 = _dep.operations.convert(_dep, "hsl", colourRefOne);
+	var c2 = _dep.operations.convert(_dep, "hsl", colourRefTwo);
+
+	var colour = { h: c1.h, s: c1.s, l: 100 * (c1.l / 100 * (c2.l / 100)) };
+	colour.l = colour.l > 100 ? 100 : colour.l;
+	colour.l = colour.l < 0 ? 0 : colour.l;
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = multiply;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function saturation(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	colour.s = colour.s + shift;
+	if (colour.s < 0) {
+		colour.s = 0;
+	} else if (colour.s > 100) {
+		colour.s = 100;
+	}
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = saturation;
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function sepia(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+
+	var newcolour = {};
+	newcolour.r = colour.r * 0.393 + colour.g * 0.769 + colour.b * 0.189;
+	newcolour.g = colour.r * 0.349 + colour.g * 0.686 + colour.b * 0.168;
+	newcolour.b = colour.r * 0.272 + colour.g * 0.534 + colour.b * 0.131;
+
+	return _dep.helpers.ready(_dep, newcolour);
+}
+
+module.exports = sepia;
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function shade(_dep, shift, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	colour.l = colour.l + shift;
+	if (colour.l < 0) {
+		colour.l = 0;
+	} else if (colour.l > 100) {
+		colour.l = 100;
+	}
+
+	return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = shade;
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function tetrad(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+	for (var i = 0; i < 3; i++) {
+		colour.h = (colour.h + 90) % 360;
+		colours.push({ h: colour.h, s: colour.s, l: colour.l });
+	}
+
+	return _dep.helpers.ready(_dep, colours);
+}
+
+module.exports = tetrad;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function triad(_dep, colourRef) {
+	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+	for (var i = 0; i < 2; i++) {
+		colour.h = (colour.h + 120) % 360;
+		colours.push({ h: colour.h, s: colour.s, l: colour.l });
+	}
+
+	return _dep.helpers.ready(_dep, colours);
+}
+
+module.exports = triad;
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var dependencies = {
+  conversions: __webpack_require__(2),
+  operations: __webpack_require__(0),
+  helpers: __webpack_require__(3)
+};
+
+var apiFactory = __webpack_require__(1);
+module.exports = apiFactory(dependencies);
 
 /***/ })
 /******/ ]);

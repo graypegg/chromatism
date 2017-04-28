@@ -61,10 +61,13 @@ var helpers = {
   },
 
   ready( { conversions, operations, helpers }, colour ) {
+    const apiFactory = require('./api.js');
+    const api = apiFactory({ conversions, operations, helpers });
+
   	switch (Object.prototype.toString.call(colour)) {
   		case "[object Object]":
   		case "[object String]":
-  			return {
+  			return ({
   				colour: colour,
   				get rgb() { return operations.convert({ conversions, operations, helpers }, "rgb", this.colour) },
   				get hsl() { return operations.convert({ conversions, operations, helpers }, "hsl", this.colour) },
@@ -75,7 +78,7 @@ var helpers = {
   				get hsv() { return operations.convert({ conversions, operations, helpers }, "hsv", this.colour) },
   				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) },
   				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) }
-  			}
+  			}).concat(api)
   			break;
   		case "[object Array]":
   			return {
