@@ -6,26 +6,22 @@ var helpers = {
   },
 
   matrixMultiply(a, b) {
-    const bCols = this.transpose(b);
-    return a.map(aRow => bCols.map(bCol => this.dotProduct(aRow, bCol)));
-  },
+    if (a[0].length != b.length) {
+      throw "error: incompatible sizes";
+    }
 
-  dotProduct(xs, ys) {
-    return this.sum(this.zipWith((x, y) => x * y, xs, ys));
-  },
-
-  zipWith(f, xs, ys) {
-    return xs.length === ys.length ? (
-        xs.map((x, i) => f(x, ys[i]))
-    ) : undefined;
-  },
-
-  transpose(xs) {
-    return xs[0].map((_, iCol) => xs.map(row => row[iCol]));
-  },
-
-  sum(xs) {
-    return xs.reduce((a, x) => a + x, 0);
+    var result = [];
+    for (var i = 0; i < a.length; i++) {
+      result[i] = [];
+      for (var j = 0; j < b[0].length; j++) {
+        var sum = 0;
+        for (var k = 0; k < a[0].length; k++) {
+          sum += a[i][k] * b[k][j];
+        }
+        result[i][j] = sum;
+      }
+    }
+    return result;
   },
 
   negMod( n, m ) {

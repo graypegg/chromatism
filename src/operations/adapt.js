@@ -2,7 +2,7 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
 	var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
 	var illuminantD = _dep.operations.convert( _dep, "LMS", illuminantDRef );
   if (illuminantSRef) {
-	  var illuminantS = _dep.operations.convert( _dep, "LMS", illuminantDRef );
+	  var illuminantS = _dep.operations.convert( _dep, "LMS", illuminantSRef );
   } else {
     var illuminantS = _dep.operations.convert( _dep, "LMS", _dep.helpers.getIlluminant("D65") );
   }
@@ -34,21 +34,25 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
   // Illuminant ratio matrix
   let M = _dep.helpers.matrixMultiply(MbiMir, Mb)
 
+  // console.log(_dep.operations.convert( _dep, "LMS", illuminantD), _dep.operations.convert( _dep, "LMS", illuminantS))
   console.log(M)
   console.log()
 
-  let valueArray = [ colour.X, colour.Y, colour.Z ]
+  let IlS = [[ _dep.helpers.getIlluminant("D65").X ], [ _dep.helpers.getIlluminant("D65").Y ], [ _dep.helpers.getIlluminant("D65").Z ] ]
+  let IlD = [[ illuminantDRef.X ], [ illuminantDRef.Y ], [ illuminantDRef.Z ] ]
 
-  let resultArray = M.map((m) => {
-    return valueArray.reduce((acc, v, key) => {
-      return (m[key] * v) + acc
-    }, 0)
-  })
+  console.log('should be the same')
+  console.log(_dep.helpers.matrixMultiply(M, IlS))
+  console.log(IlD)
+  console.log('-------------------')
+
+  let valueArray = [[ colour.X ], [ colour.Y ], [ colour.Z ] ]
+  let resultArray = _dep.helpers.matrixMultiply(M, valueArray)
 
   let result = {
-    X: resultArray[0],
-    Y: resultArray[1],
-    Z: resultArray[2]
+    X: resultArray[0][0],
+    Y: resultArray[1][0],
+    Z: resultArray[2][0]
   }
 
 	return _dep.helpers.ready( _dep, result );

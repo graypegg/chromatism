@@ -4,6 +4,7 @@ A simple set of utility functions for colours that works on the server and the f
 
 [![NPM](https://nodei.co/npm/chromatism.png?compact=true)](https://nodei.co/npm/chromatism/)
 
+
 ## Installation
 
 #### Node
@@ -133,17 +134,18 @@ Use this function to determine the colour of text needed to create a high contra
 
 ## Colour Modes:
 
-| Mode    | Example Syntax                      |
-|---------|-------------------------------------|
-| hex     | `"#FFC837"`                         |
-| rgb     | `{ r:255, g: 200, b: 55 }`          |
-| cssrgb  | `"rgb(255,200,55)"`                 |
-| hsl     | `{ h: 44, s: 100, l: 61 }`          |
-| csshsl  | `"hsl(44,100,61)"`                  |
-| hsv     | `{h: 44, s: 78, v: 100}`            |
-| cmyk    | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`   |
-| yiq     | `{ y: 0.132, i: 0.0222, q: 0.195 }` |
-| XYZ     | `{ X: 41.24, Y: 21.26, Z: 1.93 }`   |
+| Mode    | Example Syntax                               |
+|---------|----------------------------------------------|
+| hex     | `"#FFC837"`                                  |
+| rgb     | `{ r:255, g: 200, b: 55 }`                   |
+| cssrgb  | `"rgb(255,200,55)"`                          |
+| hsl     | `{ h: 44, s: 100, l: 61 }`                   |
+| csshsl  | `"hsl(44,100,61)"`                           |
+| hsv     | `{h: 44, s: 78, v: 100}`                     |
+| cmyk    | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`            |
+| yiq     | `{ y: 0.132, i: 0.0222, q: 0.195 }`          |
+| XYZ     | `{ X: 41.24, Y: 21.26, Z: 1.93 }`            |
+| LMS     | `{ rho: 41.24, gamma: 21.26, beta: 1.93 }`   |
 
 All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 

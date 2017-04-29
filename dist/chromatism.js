@@ -73,39 +73,11 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = {
-  adjacent: __webpack_require__(14),
-  complementary: __webpack_require__(15),
-  contrast: __webpack_require__(16),
-  contrastRatio: __webpack_require__(17),
-  convert: __webpack_require__(18),
-  fade: __webpack_require__(19),
-  greyscale: __webpack_require__(20),
-  hue: __webpack_require__(21),
-  index: __webpack_require__(0),
-  invert: __webpack_require__(22),
-  invertLightness: __webpack_require__(23),
-  mid: __webpack_require__(24),
-  multiply: __webpack_require__(25),
-  saturation: __webpack_require__(26),
-  sepia: __webpack_require__(27),
-  shade: __webpack_require__(28),
-  tetrad: __webpack_require__(29),
-  triad: __webpack_require__(30)
-};
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -149,7 +121,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 2 */
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -169,7 +141,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,7 +149,30 @@ module.exports = {
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+var constants = __webpack_require__(0);
+
 var helpers = {
+  getIlluminant: function getIlluminant(ref) {
+    return constants.ILLUMINANTS[ref];
+  },
+  matrixMultiply: function matrixMultiply(a, b) {
+    if (a[0].length != b.length) {
+      throw "error: incompatible sizes";
+    }
+
+    var result = [];
+    for (var i = 0; i < a.length; i++) {
+      result[i] = [];
+      for (var j = 0; j < b[0].length; j++) {
+        var sum = 0;
+        for (var k = 0; k < a[0].length; k++) {
+          sum += a[i][k] * b[k][j];
+        }
+        result[i][j] = sum;
+      }
+    }
+    return result;
+  },
   negMod: function negMod(n, m) {
     return (n % m + m) % m;
   },
@@ -352,6 +347,34 @@ var helpers = {
 };
 
 module.exports = helpers;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = {
+  adapt: __webpack_require__(14),
+  adjacent: __webpack_require__(15),
+  complementary: __webpack_require__(16),
+  contrast: __webpack_require__(17),
+  contrastRatio: __webpack_require__(18),
+  convert: __webpack_require__(19),
+  fade: __webpack_require__(20),
+  greyscale: __webpack_require__(21),
+  hue: __webpack_require__(22),
+  invert: __webpack_require__(23),
+  invertLightness: __webpack_require__(24),
+  mid: __webpack_require__(25),
+  multiply: __webpack_require__(26),
+  saturation: __webpack_require__(27),
+  sepia: __webpack_require__(28),
+  shade: __webpack_require__(29),
+  tetrad: __webpack_require__(30),
+  triad: __webpack_require__(31)
+};
 
 /***/ }),
 /* 4 */
@@ -692,9 +715,9 @@ function fromLMS(_ref, to, value) {
       var valueArray = [value.rho, value.gamma, value.beta];
 
       // Bradford Transformation
-      var M = [[0.8951000, 0.2664000, -0.1614000], [-0.7502000, 1.7135000, 0.0367000], [0.0389000, -0.0685000, 1.0296000]];
+      var Mb = [[0.8951000, 0.2664000, -0.1614000], [-0.7502000, 1.7135000, 0.0367000], [0.0389000, -0.0685000, 1.0296000]];
 
-      var resultArray = M.map(function (m) {
+      var resultArray = Mb.map(function (m) {
         return valueArray.reduce(function (acc, v, key) {
           return m[key] * v + acc;
         }, 0);
@@ -991,6 +1014,63 @@ module.exports = fromYiq;
 "use strict";
 
 
+function adapt(_dep, colourRef, illuminantDRef, illuminantSRef) {
+  var colour = _dep.operations.convert(_dep, "XYZ", colourRef);
+  var illuminantD = _dep.operations.convert(_dep, "LMS", illuminantDRef);
+  if (illuminantSRef) {
+    var illuminantS = _dep.operations.convert(_dep, "LMS", illuminantSRef);
+  } else {
+    var illuminantS = _dep.operations.convert(_dep, "LMS", _dep.helpers.getIlluminant("D65"));
+  }
+
+  // Bradford Transformation
+  var Mb = [[0.8951000, 0.2664000, -0.1614000], [-0.7502000, 1.7135000, 0.0367000], [0.0389000, -0.0685000, 1.0296000]];
+
+  // Inverse Bradford Transformation
+  var Mbi = [[0.9869929, -0.1470543, 0.1599627], [0.4323053, 0.5183603, 0.0492912], [-0.0085287, 0.0400428, 0.9684867]];
+
+  // Illuminant Ratio Matrix
+  var Mir = [[illuminantD.rho / illuminantS.rho, 0, 0], [0, illuminantD.gamma / illuminantS.gamma, 0], [0, 0, illuminantD.beta / illuminantS.beta]];
+
+  // Illuminant ratio matrix, pre-inversion
+  var MbiMir = _dep.helpers.matrixMultiply(Mbi, Mir);
+
+  // Illuminant ratio matrix
+  var M = _dep.helpers.matrixMultiply(MbiMir, Mb);
+
+  // console.log(_dep.operations.convert( _dep, "LMS", illuminantD), _dep.operations.convert( _dep, "LMS", illuminantS))
+  console.log(M);
+  console.log();
+
+  var IlS = [[_dep.helpers.getIlluminant("D65").X], [_dep.helpers.getIlluminant("D65").Y], [_dep.helpers.getIlluminant("D65").Z]];
+  var IlD = [[illuminantDRef.X], [illuminantDRef.Y], [illuminantDRef.Z]];
+
+  console.log('should be the same');
+  console.log(_dep.helpers.matrixMultiply(M, IlS));
+  console.log(IlD);
+  console.log('-------------------');
+
+  var valueArray = [[colour.X], [colour.Y], [colour.Z]];
+  var resultArray = _dep.helpers.matrixMultiply(M, valueArray);
+
+  var result = {
+    X: resultArray[0][0],
+    Y: resultArray[1][0],
+    Z: resultArray[2][0]
+  };
+
+  return _dep.helpers.ready(_dep, result);
+}
+
+module.exports = adapt;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 function adjacent(_dep, deg, amount, colourRef) {
 	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
@@ -1006,7 +1086,7 @@ function adjacent(_dep, deg, amount, colourRef) {
 module.exports = adjacent;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1023,7 +1103,7 @@ function complementary(_dep, colourRef) {
 module.exports = complementary;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1059,7 +1139,7 @@ function contrast(_dep, shift, colourRef) {
 module.exports = contrast;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1081,7 +1161,7 @@ function contrastRatio(_dep, colourRef) {
 module.exports = contrastRatio;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1103,7 +1183,7 @@ function convert(_dep, to, value) {
 module.exports = convert;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1136,7 +1216,7 @@ function fade(_dep, amount, fromRef, toRef) {
 module.exports = fade;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1154,7 +1234,7 @@ function greyscale(_dep, colourRef) {
 module.exports = greyscale;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1171,7 +1251,7 @@ function hue(_dep, shift, colourRef) {
 module.exports = hue;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1190,7 +1270,7 @@ function invert(_dep, colourRef) {
 module.exports = invert;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1207,7 +1287,7 @@ function invertLightness(_dep, colourRef) {
 module.exports = invertLightness;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1228,7 +1308,7 @@ function mid(_dep, colourOneRef, colourTwoRef) {
 module.exports = mid;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1248,7 +1328,7 @@ function multiply(_dep, colourRefOne, colourRefTwo) {
 module.exports = multiply;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1270,7 +1350,7 @@ function saturation(_dep, shift, colourRef) {
 module.exports = saturation;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1290,7 +1370,7 @@ function sepia(_dep, colourRef) {
 module.exports = sepia;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1312,7 +1392,7 @@ function shade(_dep, shift, colourRef) {
 module.exports = shade;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1333,7 +1413,7 @@ function tetrad(_dep, colourRef) {
 module.exports = tetrad;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1354,7 +1434,7 @@ function triad(_dep, colourRef) {
 module.exports = triad;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1366,10 +1446,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 // Require dependencies
 var dependencies = {
-  conversions: __webpack_require__(2),
-  operations: __webpack_require__(0),
-  helpers: __webpack_require__(3) };
-var constants = __webpack_require__(1);
+  conversions: __webpack_require__(1),
+  operations: __webpack_require__(3),
+  helpers: __webpack_require__(2) };
+var constants = __webpack_require__(0);
 
 // Apply transforms to API object
 var api = Object.keys(dependencies.operations).reduce(function (acc, key) {
