@@ -1,4 +1,5 @@
 module.exports = {
+  adapt: require('./adapt.js'),
   adjacent: require('./adjacent.js'),
   complementary: require('./complementary.js'),
   contrast: require('./contrast.js'),
@@ -7,7 +8,6 @@ module.exports = {
   fade: require('./fade.js'),
   greyscale: require('./greyscale.js'),
   hue: require('./hue.js'),
-  index: require('./index.js'),
   invert: require('./invert.js'),
   invertLightness: require('./invertLightness.js'),
   mid: require('./mid.js'),

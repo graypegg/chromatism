@@ -4,13 +4,13 @@ function fromLMS( { conversions, operations, helpers }, to, value ) {
       let valueArray = [ value.rho, value.gamma, value.beta ]
 
       // Bradford Transformation
-      let M = [
+      let Mb = [
         [ 0.8951000, 0.2664000, -0.1614000 ],
         [ -0.7502000, 1.7135000, 0.0367000 ],
         [ 0.0389000, -0.0685000, 1.0296000 ]
       ]
 
-      let resultArray = M.map((m) => {
+      let resultArray = Mb.map((m) => {
         return valueArray.reduce((acc, v, key) => {
           return (m[key] * v) + acc
         }, 0)

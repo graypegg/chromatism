@@ -1,4 +1,33 @@
+let constants = require('./constants.js')
+
 var helpers = {
+  getIlluminant (ref) {
+    return constants.ILLUMINANTS[ref];
+  },
+
+  matrixMultiply(a, b) {
+    const bCols = this.transpose(b);
+    return a.map(aRow => bCols.map(bCol => this.dotProduct(aRow, bCol)));
+  },
+
+  dotProduct(xs, ys) {
+    return this.sum(this.zipWith((x, y) => x * y, xs, ys));
+  },
+
+  zipWith(f, xs, ys) {
+    return xs.length === ys.length ? (
+        xs.map((x, i) => f(x, ys[i]))
+    ) : undefined;
+  },
+
+  transpose(xs) {
+    return xs[0].map((_, iCol) => xs.map(row => row[iCol]));
+  },
+
+  sum(xs) {
+    return xs.reduce((a, x) => a + x, 0);
+  },
+
   negMod( n, m ) {
   	return ((n % m) + m) % m;
   },

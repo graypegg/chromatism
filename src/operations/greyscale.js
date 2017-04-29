@@ -1,4 +1,4 @@
-function greyscale( _dep,  colourRef ) {
+function greyscale( _dep, colourRef ) {
 	var colour = _dep.operations.convert( _dep, "rgb", colourRef );
 
 	var grey = ( (colour.r + colour.g + colour.b) / 3 );
