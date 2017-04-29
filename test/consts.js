@@ -10,7 +10,8 @@ const red = {
       hsv: 0,
       cmyk: 0.5,
       yiq: 1,
-      XYZ: 0
+      XYZ: 0,
+      LMS: 0.5
     }
   },
   hex: {
@@ -32,7 +33,8 @@ const red = {
       hsv: 0,
       cmyk: 0.5,
       yiq: 1,
-      XYZ: 0
+      XYZ: 0,
+      LMS: 0.5
     }
   },
   csshsl: {
@@ -50,7 +52,8 @@ const red = {
       hsv: 0,
       cmyk: 0.5,
       yiq: 1,
-      XYZ: 0
+      XYZ: 0,
+      LMS: 0.5
     }
   },
   cmyk: {
@@ -64,7 +67,8 @@ const red = {
       hsv: 0,
       cmyk: 0,
       yiq: 1,
-      XYZ: 0
+      XYZ: 0,
+      LMS: 0.5
     }
   },
   yiq: {
@@ -77,8 +81,9 @@ const red = {
       csshsl: null,
       hsv: 1,
       cmyk: 1,
-      yiq: 1,
-      XYZ: 1
+      yiq: 0,
+      XYZ: 1,
+      LMS: 0.5
     }
   },
   XYZ: {
@@ -92,7 +97,23 @@ const red = {
       hsv: 1,
       cmyk: 1,
       yiq: 1,
-      XYZ: 0
+      XYZ: 0,
+      LMS: 0.5
+    }
+  },
+  LMS: {
+    value: { rho: 37.885940789, gamma: 28.943742566000005, beta: 2.3687656710000002 },
+    accuracy: {
+      rgb: 1,
+      cssrgb: null,
+      hex: null,
+      hsl: 1,
+      csshsl: null,
+      hsv: 1,
+      cmyk: 1,
+      yiq: 1,
+      XYZ: 0.5,
+      LMS: 0
     }
   },
 }

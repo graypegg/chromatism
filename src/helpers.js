@@ -39,6 +39,8 @@ var helpers = {
   				return "yiq";
   			} else if (typeof colour.X != "undefined") {
   				return "XYZ";
+  			} else if (typeof colour.gamma != "undefined") {
+  				return "LMS";
   			} else {
   				return null;
   			}
@@ -74,7 +76,8 @@ var helpers = {
   				get csshsl() { return operations.convert({ conversions, operations, helpers }, "css-hsl", this.colour) },
   				get hsv() { return operations.convert({ conversions, operations, helpers }, "hsv", this.colour) },
   				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) },
-  				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) }
+  				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) },
+  				get LMS() { return operations.convert({ conversions, operations, helpers }, "LMS", this.colour) }
   			}
   			break;
   		case "[object Array]":
@@ -106,6 +109,9 @@ var helpers = {
   				}) },
   				get XYZ() { return this.colours.map( function(colour) {
   					return operations.convert({ conversions, operations, helpers }, "XYZ", colour)
+  				}) },
+  				get LMS() { return this.colours.map( function(colour) {
+  					return operations.convert({ conversions, operations, helpers }, "LMS", colour)
   				}) }
   			}
   			break;

@@ -1,9 +1,11 @@
-var dependencies = {
+// Require dependencies
+const dependencies = {
   conversions: require('./conversions'),
   operations: require('./operations'),
-  helpers: require('./helpers.js')
-}
+  helpers: require('./helpers.js') }
+const constants = require('./constants.js')
 
+// Apply transforms to API object
 var api = Object.keys(dependencies.operations).reduce((acc, key) => {
   let operation = dependencies.operations[key];
   acc[key] = (...args) => {
@@ -15,5 +17,8 @@ var api = Object.keys(dependencies.operations).reduce((acc, key) => {
   }
   return acc;
 }, {});
+
+// Apply constants to API object
+api = Object.assign(api, constants)
 
 module.exports = api;

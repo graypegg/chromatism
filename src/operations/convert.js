@@ -7,38 +7,11 @@ function convert( _dep, to, value ) {
 		to == "cmyk" ||
 		to == "hsv" ||
 		to == "yiq" ||
-		to == "XYZ") {
-		var from = _dep.helpers.determineMode(value);
+		to == "XYZ" ||
+		to == "LMS") {
+		let from = _dep.helpers.determineMode(value);
 		if (from != to) {
-			switch (from){
-				case "hex":
-					return  _dep.conversions.fromHex( _dep, to, value );
-					break;
-				case "rgb":
-					return  _dep.conversions.fromRgb( _dep, to, value );
-					break;
-				case "css-rgb":
-					return  _dep.conversions.fromCssRgb( _dep, to, value );
-					break;
-				case "hsl":
-					return  _dep.conversions.fromHsl( _dep, to, value );
-					break;
-				case "css-hsl":
-					return  _dep.conversions.fromCssHsl( _dep, to, value );
-					break;
-				case "cmyk":
-					return  _dep.conversions.fromCmyk( _dep, to, value );
-					break;
-				case "hsv":
-					return  _dep.conversions.fromHsv( _dep, to, value );
-					break;
-				case "yiq":
-					return  _dep.conversions.fromYiq( _dep, to, value );
-					break;
-				case "XYZ":
-					return  _dep.conversions.fromXYZ( _dep, to, value );
-					break;
-			}
+			return _dep.conversions[from]( _dep, to, value );
 		} else {
 			return value;
 		}

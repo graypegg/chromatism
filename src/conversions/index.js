@@ -1,11 +1,12 @@
 module.exports = {
-  fromCmyk: require('./fromCmyk.js'),
-  fromCssHsl: require('./fromCssHsl.js'),
-  fromCssRgb: require('./fromCssRgb.js'),
-  fromHex: require('./fromHex.js'),
-  fromHsl: require('./fromHsl.js'),
-  fromHsv: require('./fromHsv.js'),
-  fromRgb: require('./fromRgb.js'),
-  fromYiq: require('./fromYiq.js'),
-  fromXYZ: require('./fromXYZ.js')
+  'cmyk': require('./fromCmyk.js'),
+  'css-hsl': require('./fromCssHsl.js'),
+  'css-rgb': require('./fromCssRgb.js'),
+  'hex': require('./fromHex.js'),
+  'hsl': require('./fromHsl.js'),
+  'hsv': require('./fromHsv.js'),
+  'rgb': require('./fromRgb.js'),
+  'yiq': require('./fromYiq.js'),
+  'XYZ': require('./fromXYZ.js'),
+  'LMS': require('./fromLMS.js')
 };
