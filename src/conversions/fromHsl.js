@@ -1,9 +1,5 @@
 function fromHsl( { conversions, operations, helpers }, to, value ) {
 	switch (to){
-		case "hex":
-			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
-			return operations.convert({ conversions, helpers }, "hex", rgb);
-			break;
 		case "rgb":
 			if (value.s == 0) {
 				var grey = (value.l / 100) * 255;
@@ -62,16 +58,8 @@ function fromHsl( { conversions, operations, helpers }, to, value ) {
 				}
 			}
 			break;
-		case "css-rgb":
-			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
-			return "rgb(" + Math.round(rgb.r) + "," + Math.round(rgb.g) + "," + Math.round(rgb.b) + ")";
-			break;
 		case "css-hsl":
 			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
-			break;
-		case "cmyk":
-			var rgb = operations.convert({ conversions, helpers }, "rgb", value);
-			return operations.convert({ conversions, helpers }, "cmyk", rgb);
 			break;
 		case "hsv":
 			value.s = value.s / 100;
@@ -84,13 +72,9 @@ function fromHsl( { conversions, operations, helpers }, to, value ) {
 
 			return {h: h, s: s*100, v: v*100};
 			break;
-		case "yiq":
-			var rgb = operations.convert({ conversions, helpers }, "rgb", value)
-			return operations.convert({ conversions, helpers }, "yiq", rgb);
-			break;
-		case "XYZ":
+		default:
       var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
-      return operations.convert({ conversions, operations, helpers }, "XYZ", rgb);
+      return operations.convert({ conversions, operations, helpers }, to, rgb);
 			break;
 	}
 }
