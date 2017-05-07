@@ -37,40 +37,60 @@ var newColour = chroma.convert( value ).hex;
 
 Value can be any colour in any of the supported colour modes. (See chart at bottom of README) This is more of an identity operation, as it just returns an object containing all of the available colour modes of the result.
 
+---
+
 ### Generate a complementary colour
 ```javascript
 var newColour = chroma.complementary( value ).rgb;
 ```
+
+---
 
 ### Generate an array of triad colours
 ```javascript
 var newColour = chroma.triad( value ).hsl;
 ```
 
+---
+
 ### Generate an array of tetrad colours
 ```javascript
 var newColour = chroma.tetrad( value ).cmyk;
 ```
+
+---
 
 ### Find the mid point between two colours
 ```javascript
 var newColour = chroma.mid( colourOne, colourTwo ).cssrgb;
 ```
 
+---
+
 ### Invert a colour
 ```javascript
 var newColour = chroma.invert( value ).hex;
 ```
+
+![Invert](https://toi.sh/cdn/chromatism/invert.png)
+
+---
 
 ### Invert a grey colour
 ```javascript
 var newColour = chroma.invertLightness( value ).hsl;
 ```
 
+![Invert Lightness](https://toi.sh/cdn/chromatism/invertLightness.png)
+
+---
+
 ### Blend two colours (Multiply)
 ```javascript
 var newColour = chroma.multiply( valueOne, valueTwo ).hsv;
 ```
+
+---
 
 ### Generate an array of adjacent hue-shifted colours (rainbow effect)
 ```javascript
@@ -79,12 +99,16 @@ var newColour = chroma.adjacent( shift, number-of-colours, value ).cmyk;
 
 Shift should be in degrees. It can be either positive and negative.
 
+---
+
 ### Generate an array of the fade between two colours
 ```javascript
 var newColour = chroma.fade( amount, from, to ).hsl;
 ```
 
 From and To must be in the same colour mode, as dictated by Mode.
+
+---
 
 ### Generate a new shade of a colour
 ```javascript
@@ -93,12 +117,16 @@ var newColour = chroma.shade( shift, value ).csshsl;
 
 Shift should be a number between -100 and 100.
 
-### Generate a new saturaton of a colour
+---
+
+### Generate a new saturation of a colour
 ```javascript
 var newColour = chroma.saturation( shift, value ).hex;
 ```
 
 Shift should be a number between -100 and 100.
+
+---
 
 ### Shift the hue of a colour
 ```javascript
@@ -107,6 +135,8 @@ var newColour = chroma.hue( shift, value ).hex;
 
 Hue shift is measured in degrees, using the HSL colour model.
 
+---
+
 ### Shift the contrast of a colour
 ```javascript
 var newColour = chroma.contrast( shift, value ).hsl;
@@ -114,22 +144,36 @@ var newColour = chroma.contrast( shift, value ).hsl;
 
 Contrast shift can be supplied in floating point form! You'll normally use a value between 0 and 4.
 
+---
+
 ### Greyscale version of the colour
 ```javascript
 var newColour = chroma.greyscale( value ).cmyk;
 ```
+
+![Greyscale](https://toi.sh/cdn/chromatism/greyscale.png)
+
+---
 
 ### Sepia version of the colour
 ```javascript
 var newColour = chroma.sepia( value ).hsv;
 ```
 
+![Sepia](https://toi.sh/cdn/chromatism/sepia.png)
+
+---
+
 ### Determine accessible colour for foreground text
 ```javascript
 var newColour = chroma.contrastRatio( value ).rgb;
 ```
 
+![Contrast Ratio](https://toi.sh/cdn/chromatism/contrastRatio.png)
+
 Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
+
+---
 
 ### Chromatic Adaptation (White point)
 ```javascript
