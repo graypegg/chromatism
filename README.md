@@ -124,28 +124,42 @@ var newColour = chroma.greyscale( value ).cmyk;
 var newColour = chroma.sepia( value ).hsv;
 ```
 
-### Determine accessible colour for foreground text.
+### Determine accessible colour for foreground text
 ```javascript
 var newColour = chroma.contrastRatio( value ).rgb;
 ```
 
 Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
 
+### Chromatic Adaptation (White point)
+```javascript
+var newColour = chroma.adapt( value, illuminant ).XYZ;
+```
+
+Shifts the Illuminant (white-point) on the supplied colour. Use the ILLUMINANTS constant (shown below) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, to match the sRGB standard, thus if you export in a RGB like colour mode from this function, you're probably going to get the same thing)
+
+## Constants:
+
+Chromatism has some useful constants built in!
+
+| Reference | Values | Description |
+| --------- | ------ | ----------- |
+| `chroma.ILLUMINANTS` | `.A`, `.B`, `.C`, `.D50`, `.D55`, `.D65`, `.D75`, `.E`, `.F2`, `.F7`, `.F11` | Standard CIE illuminants in XYZ format
 
 ## Colour Modes:
 
-| Mode    | Example Syntax                               |
-|---------|----------------------------------------------|
-| hex     | `"#FFC837"`                                  |
-| rgb     | `{ r:255, g: 200, b: 55 }`                   |
-| cssrgb  | `"rgb(255,200,55)"`                          |
-| hsl     | `{ h: 44, s: 100, l: 61 }`                   |
-| csshsl  | `"hsl(44,100,61)"`                           |
-| hsv     | `{h: 44, s: 78, v: 100}`                     |
-| cmyk    | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`            |
-| yiq     | `{ y: 0.132, i: 0.0222, q: 0.195 }`          |
-| XYZ     | `{ X: 41.24, Y: 21.26, Z: 1.93 }`            |
-| LMS     | `{ rho: 41.24, gamma: 21.26, beta: 1.93 }`   |
+| Mode    | Example Syntax                                 |
+|---------|------------------------------------------------|
+| hex     | `"#FFC837"`                                    |
+| rgb     | `{ r:255, g: 200, b: 55 }`                     |
+| cssrgb  | `"rgb(255,200,55)"`                            |
+| hsl     | `{ h: 44, s: 100, l: 61 }`                     |
+| csshsl  | `"hsl(44,100,61)"`                             |
+| hsv     | `{h: 44, s: 78, v: 100}`                       |
+| cmyk    | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`              |
+| yiq     | `{ y: 0.132, i: 0.0222, q: 0.195 }`            |
+| XYZ     | `{ X: 41.24, Y: 21.26, Z: 1.93 }`              |
+| LMS     | `{ rho: 42.266, gamma: 5.561, beta: 2.135 }`   |
 
 All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 
