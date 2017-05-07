@@ -3,11 +3,11 @@ function fromLMS( { conversions, operations, helpers }, to, value ) {
     case "XYZ":
       let valueArray = [ value.rho, value.gamma, value.beta ]
 
-      // Bradford Transformation
-      let Mb = [
-        [ 0.8951000, 0.2664000, -0.1614000 ],
-        [ -0.7502000, 1.7135000, 0.0367000 ],
-        [ 0.0389000, -0.0685000, 1.0296000 ]
+      // Inverse Bradford Transformation
+      let Mbi = [
+        [ 0.9869929, -0.1470543, 0.1599627 ],
+        [ 0.4323053, 0.5183603, 0.0492912 ],
+        [ -0.0085287, 0.0400428, 0.9684867 ]
       ]
 
       let resultArray = Mb.map((m) => {
