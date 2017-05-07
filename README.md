@@ -44,6 +44,8 @@ Value can be any colour in any of the supported colour modes. (See chart at bott
 var newColour = chroma.complementary( value ).rgb;
 ```
 
+![Complementary](https://toi.sh/cdn/chromatism/complementary.png)
+
 ---
 
 ### Generate an array of triad colours
@@ -124,6 +126,8 @@ Shift should be a number between -100 and 100.
 var newColour = chroma.saturation( shift, value ).hex;
 ```
 
+![Saturation](https://toi.sh/cdn/chromatism/saturation.png)
+
 Shift should be a number between -100 and 100.
 
 ---
@@ -132,6 +136,8 @@ Shift should be a number between -100 and 100.
 ```javascript
 var newColour = chroma.hue( shift, value ).hex;
 ```
+
+![Hue](https://toi.sh/cdn/chromatism/hue.png)
 
 Hue shift is measured in degrees, using the HSL colour model.
 
