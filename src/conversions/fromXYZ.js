@@ -24,7 +24,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         return 1.055 * Math.pow(C, 1 / 2.4) - 0.055
       }).map((o) => o * 255)
 
-      return { r, g, b }
+      return helpers.boundedRgb({ r, g, b })
 
       break;
     case "LMS":
@@ -51,7 +51,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
 
       break;
 		default:
-      var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
+      var rgb = helpers.boundedRgb(operations.convert({ conversions, operations, helpers }, "rgb", value));
       return operations.convert({ conversions, operations, helpers }, to, rgb);
       break;
 	}

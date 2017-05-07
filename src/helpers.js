@@ -49,6 +49,15 @@ var helpers = {
   	return val;
   },
 
+  boundedRgb( rgb ) {
+    let bounded = (val) => this.bounded(val, [0, 255])
+    return {
+      r: bounded(rgb.r),
+      g: bounded(rgb.g),
+      b: bounded(rgb.b)
+    }
+  },
+
   determineMode( colour ) {
   	switch (typeof colour) {
   		case "object":

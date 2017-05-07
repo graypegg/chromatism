@@ -205,6 +205,18 @@ var helpers = {
     }
     return val;
   },
+  boundedRgb: function boundedRgb(rgb) {
+    var _this = this;
+
+    var bounded = function bounded(val) {
+      return _this.bounded(val, [0, 255]);
+    };
+    return {
+      r: bounded(rgb.r),
+      g: bounded(rgb.g),
+      b: bounded(rgb.b)
+    };
+  },
   determineMode: function determineMode(colour) {
     switch (typeof colour === "undefined" ? "undefined" : _typeof(colour)) {
       case "object":
@@ -941,7 +953,7 @@ function fromXYZ(_ref, to, value) {
           g = _linear$map$map2[1],
           b = _linear$map$map2[2];
 
-      return { r: r, g: g, b: b };
+      return helpers.boundedRgb({ r: r, g: g, b: b });
 
       break;
     case "LMS":
@@ -964,7 +976,7 @@ function fromXYZ(_ref, to, value) {
 
       break;
     default:
-      var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+      var rgb = helpers.boundedRgb(operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value));
       return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
       break;
   }
