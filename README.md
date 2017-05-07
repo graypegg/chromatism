@@ -104,8 +104,10 @@ var newColour = chroma.multiply( valueOne, valueTwo ).hsv;
 
 ### Generate an array of adjacent hue-shifted colours (rainbow effect)
 ```javascript
-var newColour = chroma.adjacent( shift, number-of-colours, value ).cmyk;
+var newColour = chroma.adjacent( shift, sections, value ).cmyk;
 ```
+
+![Rainbow](https://toi.sh/cdn/chromatism/rainbow.png)
 
 Shift should be in degrees. It can be either positive and negative.
 
@@ -116,7 +118,7 @@ Shift should be in degrees. It can be either positive and negative.
 var newColour = chroma.fade( amount, from, to ).hsl;
 ```
 
-From and To must be in the same colour mode, as dictated by Mode.
+![Fade](https://toi.sh/cdn/chromatism/fade.png)
 
 ---
 
@@ -125,9 +127,9 @@ From and To must be in the same colour mode, as dictated by Mode.
 var newColour = chroma.shade( shift, value ).csshsl;
 ```
 
-Shift should be a number between -100 and 100.
-
 ![Shade](https://toi.sh/cdn/chromatism/shade.png)
+
+Shift should be a number between -100 and 100.
 
 ---
 
@@ -158,7 +160,11 @@ Hue shift is measured in degrees, using the HSL colour model.
 var newColour = chroma.contrast( shift, value ).hsl;
 ```
 
-Contrast shift can be supplied in floating point form! You'll normally use a value between 0 and 4.
+![Contrast](https://toi.sh/cdn/chromatism/contrast.png)
+
+Contrast shift is supplied in decimal form! You'll normally use a value between 0 and 4.
+
+Imagine increasing (shift > 1) the contrast as making lighter colours lighter, and darker colours darker. Decreasing (shift < 1) the contrast does the opposite.
 
 ---
 
