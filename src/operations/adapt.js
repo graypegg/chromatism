@@ -34,18 +34,6 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
   // Illuminant ratio matrix
   let M = _dep.helpers.matrixMultiply(MbiMir, Mb)
 
-  // console.log(_dep.operations.convert( _dep, "LMS", illuminantD), _dep.operations.convert( _dep, "LMS", illuminantS))
-  console.log(M)
-  console.log()
-
-  let IlS = [[ _dep.helpers.getIlluminant("D65").X ], [ _dep.helpers.getIlluminant("D65").Y ], [ _dep.helpers.getIlluminant("D65").Z ] ]
-  let IlD = [[ illuminantDRef.X ], [ illuminantDRef.Y ], [ illuminantDRef.Z ] ]
-
-  console.log('should be the same')
-  console.log(_dep.helpers.matrixMultiply(M, IlS))
-  console.log(IlD)
-  console.log('-------------------')
-
   let valueArray = [[ colour.X ], [ colour.Y ], [ colour.Z ] ]
   let resultArray = _dep.helpers.matrixMultiply(M, valueArray)
 

@@ -714,10 +714,10 @@ function fromLMS(_ref, to, value) {
     case "XYZ":
       var valueArray = [value.rho, value.gamma, value.beta];
 
-      // Bradford Transformation
-      var Mb = [[0.8951000, 0.2664000, -0.1614000], [-0.7502000, 1.7135000, 0.0367000], [0.0389000, -0.0685000, 1.0296000]];
+      // Inverse Bradford Transformation
+      var Mbi = [[0.9869929, -0.1470543, 0.1599627], [0.4323053, 0.5183603, 0.0492912], [-0.0085287, 0.0400428, 0.9684867]];
 
-      var resultArray = Mb.map(function (m) {
+      var resultArray = Mbi.map(function (m) {
         return valueArray.reduce(function (acc, v, key) {
           return m[key] * v + acc;
         }, 0);
@@ -947,10 +947,10 @@ function fromXYZ(_ref, to, value) {
     case "LMS":
       var valueArray = [value.X, value.Y, value.Z];
 
-      // Inverse Bradford Transformation
-      var Mbi = [[0.9869929, -0.1470543, 0.1599627], [0.4323053, 0.5183603, 0.0492912], [-0.0085287, 0.0400428, 0.9684867]];
+      // Bradford Transformation
+      var Mb = [[0.8951000, 0.2664000, -0.1614000], [-0.7502000, 1.7135000, 0.0367000], [0.0389000, -0.0685000, 1.0296000]];
 
-      var resultArray = Mbi.map(function (m) {
+      var resultArray = Mb.map(function (m) {
         return valueArray.reduce(function (acc, v, key) {
           return m[key] * v + acc;
         }, 0);
@@ -1037,18 +1037,6 @@ function adapt(_dep, colourRef, illuminantDRef, illuminantSRef) {
 
   // Illuminant ratio matrix
   var M = _dep.helpers.matrixMultiply(MbiMir, Mb);
-
-  // console.log(_dep.operations.convert( _dep, "LMS", illuminantD), _dep.operations.convert( _dep, "LMS", illuminantS))
-  console.log(M);
-  console.log();
-
-  var IlS = [[_dep.helpers.getIlluminant("D65").X], [_dep.helpers.getIlluminant("D65").Y], [_dep.helpers.getIlluminant("D65").Z]];
-  var IlD = [[illuminantDRef.X], [illuminantDRef.Y], [illuminantDRef.Z]];
-
-  console.log('should be the same');
-  console.log(_dep.helpers.matrixMultiply(M, IlS));
-  console.log(IlD);
-  console.log('-------------------');
 
   var valueArray = [[colour.X], [colour.Y], [colour.Z]];
   var resultArray = _dep.helpers.matrixMultiply(M, valueArray);
