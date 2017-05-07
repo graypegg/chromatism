@@ -53,6 +53,8 @@ var newColour = chroma.complementary( value ).rgb;
 var newColour = chroma.triad( value ).hsl;
 ```
 
+![Triad](https://toi.sh/cdn/chromatism/triad.png)
+
 ---
 
 ### Generate an array of tetrad colours
@@ -60,12 +62,16 @@ var newColour = chroma.triad( value ).hsl;
 var newColour = chroma.tetrad( value ).cmyk;
 ```
 
+![Tetrad](https://toi.sh/cdn/chromatism/tetrad.png)
+
 ---
 
 ### Find the mid point between two colours
 ```javascript
 var newColour = chroma.mid( colourOne, colourTwo ).cssrgb;
 ```
+
+![Mid](https://toi.sh/cdn/chromatism/mid.png)
 
 ---
 
@@ -91,6 +97,8 @@ var newColour = chroma.invertLightness( value ).hsl;
 ```javascript
 var newColour = chroma.multiply( valueOne, valueTwo ).hsv;
 ```
+
+![Blend](https://toi.sh/cdn/chromatism/blend.png)
 
 ---
 
@@ -118,6 +126,8 @@ var newColour = chroma.shade( shift, value ).csshsl;
 ```
 
 Shift should be a number between -100 and 100.
+
+![Shade](https://toi.sh/cdn/chromatism/shade.png)
 
 ---
 
