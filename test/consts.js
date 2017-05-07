@@ -83,7 +83,7 @@ const red = {
       cmyk: 1,
       yiq: 0,
       XYZ: 1,
-      LMS: 0.5
+      LMS: 0.2
     }
   },
   XYZ: {
@@ -102,7 +102,7 @@ const red = {
     }
   },
   LMS: {
-    value: { rho: 37.885940789, gamma: 28.943742566000005, beta: 2.3687656710000002 },
+    value: { rho: 42.26608600000001, gamma: 5.561593000000004, beta: 2.1350540000000002 },
     accuracy: {
       rgb: 1,
       cssrgb: null,

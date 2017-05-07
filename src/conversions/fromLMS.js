@@ -10,7 +10,7 @@ function fromLMS( { conversions, operations, helpers }, to, value ) {
         [ -0.0085287, 0.0400428, 0.9684867 ]
       ]
 
-      let resultArray = Mb.map((m) => {
+      let resultArray = Mbi.map((m) => {
         return valueArray.reduce((acc, v, key) => {
           return (m[key] * v) + acc
         }, 0)
