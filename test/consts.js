@@ -11,6 +11,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0,
+      xyY: 0,
       lms: 0.1,
       cielab: 0.25
     }
@@ -35,6 +36,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0,
+      xyY: 0,
       lms: 0.1,
       cielab: 0.25
     }
@@ -55,6 +57,7 @@ const red = {
       cmyk: 0.5,
       yiq: 0.25,
       XYZ: 0,
+      xyY: 0,
       lms: 0.1,
       cielab: 0.25
     }
@@ -71,6 +74,7 @@ const red = {
       cmyk: 0,
       yiq: 0.25,
       XYZ: 0,
+      xyY: 0,
       lms: 0.1,
       cielab: 0.25
     }
@@ -87,6 +91,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0,
       XYZ: 0.25,
+      xyY: 0.25,
       lms: 0.1,
       cielab: 0.25
     }
@@ -103,6 +108,24 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0,
+      xyY: 0,
+      lms: 0.5,
+      cielab: 0.5
+    }
+  },
+  xyY: {
+    value: { x: 0.6400744994567747, y: 0.3299705106316933, Y: 21.26 },
+    accuracy: {
+      rgb: 0.25,
+      cssrgb: null,
+      hex: null,
+      hsl: 0.25,
+      csshsl: null,
+      hsv: 0.25,
+      cmyk: 0.25,
+      yiq: 0.25,
+      XYZ: 0.0000000001, // God damn floating point numbers
+      xyY: 0,
       lms: 0.5,
       cielab: 0.5
     }
@@ -119,6 +142,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0.5,
+      xyY: 0.25,
       lms: 0,
       cielab: 0.5
     }
@@ -135,6 +159,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.5,
       XYZ: 0.25,
+      xyY: 0.25,
       lms: 0.5,
       cielab: 0
     }
