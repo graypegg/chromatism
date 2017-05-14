@@ -28,7 +28,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
 
       break;
     case "LMS":
-      let valueArray = [ value.X, value.Y, value.Z ]
+      let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
       // Bradford Transformation
       let Mb = [
@@ -50,7 +50,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       }
 
       break;
-    case "CIELAB":
+    case "cielab":
       const epsilon = 0.008856;
       const kappa = 903.3;
       const white = helpers.getIlluminant('D65');
@@ -63,7 +63,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       const Fx = toF(Xr), Fy = toF(Yr), Fz = toF(Zr);
 
       return {
-        L: (116 * Fy) − 16,
+        L: ((116 * Fy) - 16),
         a: 500 * (Fx - Fy),
         b: 200 * (Fy - Fz)
       };

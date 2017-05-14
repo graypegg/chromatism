@@ -102,7 +102,7 @@ const red = {
     }
   },
   LMS: {
-    value: { rho: 42.26608600000001, gamma: 5.561593000000004, beta: 2.1350540000000002 },
+    value: { rho: 0.42266086, gamma: 0.05561592999999999, beta: 0.02135054 },
     accuracy: {
       rgb: 1,
       cssrgb: null,

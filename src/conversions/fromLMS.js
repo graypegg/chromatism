@@ -17,9 +17,9 @@ function fromLMS( { conversions, operations, helpers }, to, value ) {
       })
 
       return {
-        X: resultArray[0],
-        Y: resultArray[1],
-        Z: resultArray[2]
+        X: resultArray[0] * 100,
+        Y: resultArray[1] * 100,
+        Z: resultArray[2] * 100
       }
 
       break;
