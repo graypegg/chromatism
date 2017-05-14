@@ -1,8 +1,13 @@
-# Chromatism
+# Chromatism :rainbow:
 
 A simple set of utility functions for colours.
 
 [![NPM](https://nodei.co/npm/chromatism.png?compact=true)](https://nodei.co/npm/chromatism/)
+
+**Awesome resources for colour stuff.**
+- [Bruce Lindbloom](http://www.brucelindbloom.com/)
+- [Colormine](http://colormine.org/)
+- [EasyRGB](http://www.easyrgb.com/en/math.php)
 
 ## Table of Contents
 - [Chromatism](#chromatism)
@@ -52,10 +57,13 @@ var chromatism = require("chromatism");
 <script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
 ```
 
-**_Note:_** The following examples return different types of values, (*hex*, *rgb*, *hsl*, etc) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.
 
 ## Functions
-### Colour Transformations
+All functions can take any colour type. **You can even mix colour types** if a function takes more than one. [A list of colour types are available here](#colour-modes). Return values are also not bound by the function. Any functions that return colours, return a colour object, which contains getters for each colour type. If you take the return value of one of these functions and get `returnValue.hex` for example, you will get the hexadecimal equivalent value.
+
+:warning: **_Note:_** The following examples return different types of values, (*hex*, *rgb*, *hsl*, etc) but you can use any of the available colour modes as seen in the colour modes table at the [bottom of this README.](#colour-modes)
+
+### :currency_exchange: Colour Transformations
 The following functions return a Colour Object, which contains getters to get a return value of any colour mode. See [Colour Mode](#Colour Modes) table for a list of all the available colour modes.
 
 #### Convert colour types
@@ -63,7 +71,7 @@ The following functions return a Colour Object, which contains getters to get a 
 var newColour = chromatism.convert( value ).hex;
 ```
 
-Value can be any colour in any of the supported colour modes. (See chart at bottom of README) This is more of an identity operation, as it just returns an object containing all of the available colour modes of the result.
+Value can be any colour in any of the supported colour modes. [(See chart at bottom of README)](#colour-modes) **This is an identity operation**, as it just returns an object containing all of the available colour modes of the result.
 
 All colour modes supported can be converted to any other. This does however mean that some conversions will have intermediate values, which can cause small inconsistencies, especially when changing colour spaces. The path for each conversion is optimised as much as possible to avoid loss of colour information.
 
@@ -223,7 +231,7 @@ var newColour = chromatism.contrastRatio( value ).rgb;
 
 ![Contrast Ratio](https://toi.sh/cdn/chromatism/contrastRatio.png)
 
-Use this function to determine the colour of text needed to create a high contrast. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
+Use this function to determine the colour of text needed create a high contrast between text and a solid background of the supplied colour. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
 
 ---
 
@@ -234,11 +242,11 @@ var newColour = chromatism.adapt( value, illuminant, [source illuminant] ).XYZ;
 
 ![Illuminant Adaptation](https://toi.sh/cdn/chromatism/adapt.png)
 
-Shifts the Illuminant (white-point) on the supplied colour. Use the ILLUMINANTS constant (shown below) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65` in XYZ format.)
+Shifts the Illuminant (white-point) on the supplied colour. Supply a value from the [ILLUMINANTS constant](#constants) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65` in XYZ format.)
 
 ---
 
-### Colour Metering Functions
+### :1234: Colour Metering Functions
 These functions do not return a colour, but instead return some aspect or measure of the colour(s).
 
 #### Colour Difference
