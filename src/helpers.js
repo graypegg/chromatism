@@ -24,6 +24,15 @@ var helpers = {
     return result;
   },
 
+  function cbrt(x) {
+    if (!Math.cbrt) {
+      var y = Math.pow(Math.abs(x), 1/3);
+      return x < 0 ? -y : y;
+    } else {
+      return Math.cbrt(x)
+    }
+  }
+
   negMod( n, m ) {
   	return ((n % m) + m) % m;
   },
