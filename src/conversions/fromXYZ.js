@@ -27,7 +27,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       return helpers.boundedRgb({ r, g, b })
 
       break;
-    case "LMS":
+    case "lms":
       let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
       // Bradford Transformation

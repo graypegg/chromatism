@@ -137,7 +137,7 @@ module.exports = {
   'rgb': __webpack_require__(12),
   'yiq': __webpack_require__(14),
   'XYZ': __webpack_require__(13),
-  'LMS': __webpack_require__(11),
+  'lms': __webpack_require__(34),
   'cielab': __webpack_require__(4)
 };
 
@@ -242,7 +242,7 @@ var helpers = {
         } else if (typeof colour.X != "undefined") {
           return "XYZ";
         } else if (typeof colour.gamma != "undefined") {
-          return "LMS";
+          return "lms";
         } else if (typeof colour.L != "undefined") {
           return "cielab";
         } else {
@@ -302,8 +302,8 @@ var helpers = {
           get XYZ() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", this.colour);
           },
-          get LMS() {
-            return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "LMS", this.colour);
+          get lms() {
+            return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "lms", this.colour);
           },
           get cielab() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "cielab", this.colour);
@@ -358,9 +358,9 @@ var helpers = {
               return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", colour);
             });
           },
-          get LMS() {
+          get lms() {
             return this.colours.map(function (colour) {
-              return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "LMS", colour);
+              return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "lms", colour);
             });
           },
           get cielab() {
@@ -773,47 +773,7 @@ function fromHsv(_ref, to, value) {
 module.exports = fromHsv;
 
 /***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-function fromLMS(_ref, to, value) {
-  var conversions = _ref.conversions,
-      operations = _ref.operations,
-      helpers = _ref.helpers;
-
-  switch (to) {
-    case "XYZ":
-      var valueArray = [value.rho, value.gamma, value.beta];
-
-      // Inverse Bradford Transformation
-      var Mbi = [[0.9869929, -0.1470543, 0.1599627], [0.4323053, 0.5183603, 0.0492912], [-0.0085287, 0.0400428, 0.9684867]];
-
-      var resultArray = Mbi.map(function (m) {
-        return valueArray.reduce(function (acc, v, key) {
-          return m[key] * v + acc;
-        }, 0);
-      });
-
-      return {
-        X: resultArray[0] * 100,
-        Y: resultArray[1] * 100,
-        Z: resultArray[2] * 100
-      };
-
-      break;
-    default:
-      var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
-      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
-      break;
-  }
-}
-
-module.exports = fromLMS;
-
-/***/ }),
+/* 11 */,
 /* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -978,7 +938,7 @@ function fromRgb(_ref, to, value) {
 		/**
    * XYZ dependants
    */
-		case "LMS":
+		case "lms":
 		case "cielab":
 			var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
 			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
@@ -1034,7 +994,7 @@ function fromXYZ(_ref, to, value) {
       return helpers.boundedRgb({ r: r, g: g, b: b });
 
       break;
-    case "LMS":
+    case "lms":
       var valueArray = [value.X, value.Y, value.Z].map(function (x) {
         return x / 100;
       });
@@ -1129,11 +1089,11 @@ module.exports = fromYiq;
 
 function adapt(_dep, colourRef, illuminantDRef, illuminantSRef) {
   var colour = _dep.operations.convert(_dep, "XYZ", colourRef);
-  var illuminantD = _dep.operations.convert(_dep, "LMS", illuminantDRef);
+  var illuminantD = _dep.operations.convert(_dep, "lms", illuminantDRef);
   if (illuminantSRef) {
-    var illuminantS = _dep.operations.convert(_dep, "LMS", illuminantSRef);
+    var illuminantS = _dep.operations.convert(_dep, "lms", illuminantSRef);
   } else {
-    var illuminantS = _dep.operations.convert(_dep, "LMS", _dep.helpers.getIlluminant("D65"));
+    var illuminantS = _dep.operations.convert(_dep, "lms", _dep.helpers.getIlluminant("D65"));
   }
 
   // Bradford Transformation
@@ -1269,7 +1229,7 @@ module.exports = contrastRatio;
 
 
 function convert(_dep, to, value) {
-	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ" || to == "LMS" || to == "cielab") {
+	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ" || to == "lms" || to == "cielab") {
 		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			return _dep.conversions[from](_dep, to, value);
@@ -1573,6 +1533,47 @@ var api = Object.keys(dependencies.operations).reduce(function (acc, key) {
 api = Object.assign(api, constants);
 
 module.exports = api;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function fromLms(_ref, to, value) {
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
+
+  switch (to) {
+    case "XYZ":
+      var valueArray = [value.rho, value.gamma, value.beta];
+
+      // Inverse Bradford Transformation
+      var Mbi = [[0.9869929, -0.1470543, 0.1599627], [0.4323053, 0.5183603, 0.0492912], [-0.0085287, 0.0400428, 0.9684867]];
+
+      var resultArray = Mbi.map(function (m) {
+        return valueArray.reduce(function (acc, v, key) {
+          return m[key] * v + acc;
+        }, 0);
+      });
+
+      return {
+        X: resultArray[0] * 100,
+        Y: resultArray[1] * 100,
+        Z: resultArray[2] * 100
+      };
+
+      break;
+    default:
+      var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
+      break;
+  }
+}
+
+module.exports = fromLms;
 
 /***/ })
 /******/ ]);

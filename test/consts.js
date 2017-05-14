@@ -11,7 +11,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0,
-      LMS: 0.1,
+      lms: 0.1,
       cielab: 0.25
     }
   },
@@ -35,7 +35,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0,
-      LMS: 0.1,
+      lms: 0.1,
       cielab: 0.25
     }
   },
@@ -55,7 +55,7 @@ const red = {
       cmyk: 0.5,
       yiq: 0.25,
       XYZ: 0,
-      LMS: 0.1,
+      lms: 0.1,
       cielab: 0.25
     }
   },
@@ -71,7 +71,7 @@ const red = {
       cmyk: 0,
       yiq: 0.25,
       XYZ: 0,
-      LMS: 0.1,
+      lms: 0.1,
       cielab: 0.25
     }
   },
@@ -87,7 +87,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0,
       XYZ: 0.25,
-      LMS: 0.1,
+      lms: 0.1,
       cielab: 0.25
     }
   },
@@ -103,11 +103,11 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0,
-      LMS: 0.5,
+      lms: 0.5,
       cielab: 0.5
     }
   },
-  LMS: {
+  lms: {
     value: { rho: 0.42266086, gamma: 0.05561592999999999, beta: 0.02135054 },
     accuracy: {
       rgb: 0.25,
@@ -119,7 +119,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.25,
       XYZ: 0.5,
-      LMS: 0,
+      lms: 0,
       cielab: 0.5
     }
   },
@@ -135,7 +135,7 @@ const red = {
       cmyk: 0.25,
       yiq: 0.5,
       XYZ: 0.25,
-      LMS: 0.5,
+      lms: 0.5,
       cielab: 0
     }
   },

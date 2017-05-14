@@ -1,4 +1,4 @@
-function fromLMS( { conversions, operations, helpers }, to, value ) {
+function fromLms( { conversions, operations, helpers }, to, value ) {
 	switch (to){
     case "XYZ":
       let valueArray = [ value.rho, value.gamma, value.beta ]
@@ -30,4 +30,4 @@ function fromLMS( { conversions, operations, helpers }, to, value ) {
 	}
 }
 
-module.exports = fromLMS;
+module.exports = fromLms;

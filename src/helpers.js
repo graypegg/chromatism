@@ -83,7 +83,7 @@ var helpers = {
   			} else if (typeof colour.X != "undefined") {
   				return "XYZ";
   			} else if (typeof colour.gamma != "undefined") {
-  				return "LMS";
+  				return "lms";
         } else if (typeof colour.L != "undefined") {
           return "cielab";
   			} else {
@@ -122,7 +122,7 @@ var helpers = {
   				get hsv() { return operations.convert({ conversions, operations, helpers }, "hsv", this.colour) },
   				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) },
   				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) },
-  				get LMS() { return operations.convert({ conversions, operations, helpers }, "LMS", this.colour) },
+  				get lms() { return operations.convert({ conversions, operations, helpers }, "lms", this.colour) },
   				get cielab() { return operations.convert({ conversions, operations, helpers }, "cielab", this.colour) }
   			}
   			break;
@@ -156,8 +156,8 @@ var helpers = {
   				get XYZ() { return this.colours.map( function(colour) {
   					return operations.convert({ conversions, operations, helpers }, "XYZ", colour)
   				}) },
-  				get LMS() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "LMS", colour)
+  				get lms() { return this.colours.map( function(colour) {
+  					return operations.convert({ conversions, operations, helpers }, "lms", colour)
   				}) },
   				get cielab() { return this.colours.map( function(colour) {
   					return operations.convert({ conversions, operations, helpers }, "cielab", colour)

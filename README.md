@@ -211,35 +211,35 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `chromatism.ILLUMINANTS` | `.A`, `.B`, `.C`, `.D50`, `.D55`, `.D65`, `.D75`, `.E`, `.F2`, `.F7`, `.F11` | Standard CIE illuminants in XYZ format
 
 ## Scales + Colour Spaces
-| Mode            | Scale                       | Colour Space |
-| --------------- | --------------------------- | ------------ |
-| hex             | #000000 - #FFFFFF              | sRGB         |
-| rgb             | (r, g, b) 0 - 255              | sRGB         |
-| cssrgb          | (r, g, b) 0 - 255              | sRGB         |
-| hsl             | (h) 0 - 365, (s, l) 0 - 100    | sRGB         |
-| csshsl          | (h) 0 - 365, (s, l) 0 - 100    | sRGB         |
-| hsv             | (h) 0 - 365, (s, v) 0 - 100    | sRGB         |
-| cmyk            | (c, m, y, k) 0 - 1             | CMYK         |
-| yiq             | (y, i, q) 0 - 1                | YUV          |
-| XYZ             | (Y) 0 - 100, (X, Z) derived    | XYZ          |
-| LMS             | (⍴, γ, β) 0 - 1                | XYZ          |
-| cielab (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128 | CIE          |
+| Mode                 | Scale                             | Colour Space |
+| -------------------- | --------------------------------- | ------------ |
+| `.hex`                | #000000 - #FFFFFF                 | sRGB         |
+| `.rgb`                | (r, g, b) 0 - 255                 | sRGB         |
+| `.cssrgb`             | (r, g, b) 0 - 255                 | sRGB         |
+| `.hsl`                | (h) 0 - 365, (s, l) 0 - 100       | sRGB         |
+| `.csshsl`             | (h) 0 - 365, (s, l) 0 - 100       | sRGB         |
+| `.hsv`                | (h) 0 - 365, (s, v) 0 - 100       | sRGB         |
+| `.cmyk`               | (c, m, y, k) 0 - 1                | CMYK         |
+| `.yiq`                | (y, i, q) 0 - 1                   | YUV          |
+| `.XYZ`                | (Y) 0 - 100, (X, Z) derived       | XYZ          |
+| `.lms`                | (⍴, γ, β) 0 - 1                   | XYZ          |
+| `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128 | CIE          |
 
 ## Colour Modes:
 
-| Mode            | Example Syntax                                 |
-| --------------- | ---------------------------------------------- |
-| hex             | `"#FFC837"`                                    |
-| rgb             | `{ r:255, g: 200, b: 55 }`                     |
-| cssrgb          | `"rgb(255,200,55)"`                            |
-| hsl             | `{ h: 44, s: 100, l: 61 }`                     |
-| csshsl          | `"hsl(44,100,61)"`                             |
-| hsv             | `{h: 44, s: 78, v: 100}`                       |
-| cmyk            | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`              |
-| yiq             | `{ y: 0.132, i: 0.0222, q: 0.195 }`            |
-| XYZ             | `{ X: 41.24, Y: 21.26, Z: 1.93 }`              |
-| LMS             | `{ rho: 42.266, gamma: 5.561, beta: 2.135 }`   |
-| cielab (L\*a\*b\*) | `{ L: 53.23, a: 80.11, b: 67.22 }`             |
+| Mode                 | Example Syntax                                    |
+| -------------------- | ------------------------------------------------- |
+| `.hex`                | `"#FFC837"`                                       |
+| `.rgb`                | `{ r:255, g: 200, b: 55 }`                        |
+| `.cssrgb`             | `"rgb(255,200,55)"`                               |
+| `.hsl`                | `{ h: 44, s: 100, l: 61 }`                        |
+| `.csshsl`             | `"hsl(44,100,61)"`                                |
+| `.hsv`                | `{h: 44, s: 78, v: 100}`                          |
+| `.cmyk`               | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`                 |
+| `.yiq`                | `{ y: 0.132, i: 0.0222, q: 0.195 }`               |
+| `.XYZ`                | `{ X: 41.24, Y: 21.26, Z: 1.93 }`                 |
+| `.lms`                | `{ rho: 42.266, gamma: 5.561, beta: 2.135 }`      |
+| `.cielab (L\*a\*b\*)` | `{ L: 53.23, a: 80.11, b: 67.22 }`             |
 
 All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 

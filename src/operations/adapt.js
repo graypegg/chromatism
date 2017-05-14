@@ -1,10 +1,10 @@
 function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
 	var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
-	var illuminantD = _dep.operations.convert( _dep, "LMS", illuminantDRef );
+	var illuminantD = _dep.operations.convert( _dep, "lms", illuminantDRef );
   if (illuminantSRef) {
-	  var illuminantS = _dep.operations.convert( _dep, "LMS", illuminantSRef );
+	  var illuminantS = _dep.operations.convert( _dep, "lms", illuminantSRef );
   } else {
-    var illuminantS = _dep.operations.convert( _dep, "LMS", _dep.helpers.getIlluminant("D65") );
+    var illuminantS = _dep.operations.convert( _dep, "lms", _dep.helpers.getIlluminant("D65") );
   }
 
   // Bradford Transformation
