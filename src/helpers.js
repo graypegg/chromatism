@@ -24,14 +24,14 @@ var helpers = {
     return result;
   },
 
-  function cbrt(x) {
+  cbrt(x) {
     if (!Math.cbrt) {
       var y = Math.pow(Math.abs(x), 1/3);
       return x < 0 ? -y : y;
     } else {
       return Math.cbrt(x)
     }
-  }
+  },
 
   negMod( n, m ) {
   	return ((n % m) + m) % m;
@@ -84,6 +84,8 @@ var helpers = {
   				return "XYZ";
   			} else if (typeof colour.gamma != "undefined") {
   				return "LMS";
+        } else if (typeof colour.L != "undefined") {
+          return "cielab";
   			} else {
   				return null;
   			}
@@ -120,7 +122,8 @@ var helpers = {
   				get hsv() { return operations.convert({ conversions, operations, helpers }, "hsv", this.colour) },
   				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) },
   				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) },
-  				get LMS() { return operations.convert({ conversions, operations, helpers }, "LMS", this.colour) }
+  				get LMS() { return operations.convert({ conversions, operations, helpers }, "LMS", this.colour) },
+  				get cielab() { return operations.convert({ conversions, operations, helpers }, "cielab", this.colour) }
   			}
   			break;
   		case "[object Array]":
@@ -155,6 +158,9 @@ var helpers = {
   				}) },
   				get LMS() { return this.colours.map( function(colour) {
   					return operations.convert({ conversions, operations, helpers }, "LMS", colour)
+  				}) },
+  				get cielab() { return this.colours.map( function(colour) {
+  					return operations.convert({ conversions, operations, helpers }, "cielab", colour)
   				}) }
   			}
   			break;

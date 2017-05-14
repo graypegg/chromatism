@@ -73,7 +73,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 32);
+/******/ 	return __webpack_require__(__webpack_require__.s = 33);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -86,37 +86,37 @@ return /******/ (function(modules) { // webpackBootstrap
 module.exports = {
   ILLUMINANTS: {
     // From ASTM E308-01
-    A: { X: 1.09850, Y: 1.00000, Z: 0.35585 },
+    A: { X: 1.09850 * 100, Y: 1.00000 * 100, Z: 0.35585 * 100 },
 
     // From Wyszecki & Stiles, p. 769
-    B: { X: 0.99072, Y: 1.00000, Z: 0.85223 },
+    B: { X: 0.99072 * 100, Y: 1.00000 * 100, Z: 0.85223 * 100 },
 
     // From ASTM E308-01
-    C: { X: 0.98074, Y: 1.00000, Z: 1.18232 },
+    C: { X: 0.98074 * 100, Y: 1.00000 * 100, Z: 1.18232 * 100 },
 
     // From ASTM E308-01
-    D50: { X: 0.96422, Y: 1.00000, Z: 0.82521 },
+    D50: { X: 0.96422 * 100, Y: 1.00000 * 100, Z: 0.82521 * 100 },
 
     // From ASTM E308-01
-    D55: { X: 0.95682, Y: 1.00000, Z: 0.92149 },
+    D55: { X: 0.95682 * 100, Y: 1.00000 * 100, Z: 0.92149 * 100 },
 
     // From ASTM E308-01
-    D65: { X: 0.95047, Y: 1.00000, Z: 1.08883 },
+    D65: { X: 0.95047 * 100, Y: 1.00000 * 100, Z: 1.08883 * 100 },
 
     // From ASTM E308-01
-    D75: { X: 0.94972, Y: 1.00000, Z: 1.22638 },
+    D75: { X: 0.94972 * 100, Y: 1.00000 * 100, Z: 1.22638 * 100 },
 
     // From ASTM E308-01
-    E: { X: 1.00000, Y: 1.00000, Z: 1.00000 },
+    E: { X: 1.00000 * 100, Y: 1.00000 * 100, Z: 1.00000 * 100 },
 
     // From ASTM E308-01
-    F2: { X: 0.99186, Y: 1.00000, Z: 0.67393 },
+    F2: { X: 0.99186 * 100, Y: 1.00000 * 100, Z: 0.67393 * 100 },
 
     // From ASTM E308-01
-    F7: { X: 0.95041, Y: 1.00000, Z: 1.08747 },
+    F7: { X: 0.95041 * 100, Y: 1.00000 * 100, Z: 1.08747 * 100 },
 
     // From ASTM E308-01
-    F11: { X: 1.00962, Y: 1.00000, Z: 0.64350 }
+    F11: { X: 1.00962 * 100, Y: 1.00000 * 100, Z: 0.64350 * 100 }
   }
 };
 
@@ -128,16 +128,17 @@ module.exports = {
 
 
 module.exports = {
-  'cmyk': __webpack_require__(4),
-  'css-hsl': __webpack_require__(5),
-  'css-rgb': __webpack_require__(6),
-  'hex': __webpack_require__(7),
-  'hsl': __webpack_require__(8),
-  'hsv': __webpack_require__(9),
-  'rgb': __webpack_require__(11),
-  'yiq': __webpack_require__(13),
-  'XYZ': __webpack_require__(12),
-  'LMS': __webpack_require__(10)
+  'cmyk': __webpack_require__(5),
+  'css-hsl': __webpack_require__(6),
+  'css-rgb': __webpack_require__(7),
+  'hex': __webpack_require__(8),
+  'hsl': __webpack_require__(9),
+  'hsv': __webpack_require__(10),
+  'rgb': __webpack_require__(12),
+  'yiq': __webpack_require__(14),
+  'XYZ': __webpack_require__(13),
+  'LMS': __webpack_require__(11),
+  'cielab': __webpack_require__(4)
 };
 
 /***/ }),
@@ -172,6 +173,14 @@ var helpers = {
       }
     }
     return result;
+  },
+  cbrt: function cbrt(x) {
+    if (!Math.cbrt) {
+      var y = Math.pow(Math.abs(x), 1 / 3);
+      return x < 0 ? -y : y;
+    } else {
+      return Math.cbrt(x);
+    }
   },
   negMod: function negMod(n, m) {
     return (n % m + m) % m;
@@ -234,6 +243,8 @@ var helpers = {
           return "XYZ";
         } else if (typeof colour.gamma != "undefined") {
           return "LMS";
+        } else if (typeof colour.L != "undefined") {
+          return "cielab";
         } else {
           return null;
         }
@@ -293,6 +304,9 @@ var helpers = {
           },
           get LMS() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "LMS", this.colour);
+          },
+          get cielab() {
+            return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "cielab", this.colour);
           }
         };
         break;
@@ -348,6 +362,11 @@ var helpers = {
             return this.colours.map(function (colour) {
               return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "LMS", colour);
             });
+          },
+          get cielab() {
+            return this.colours.map(function (colour) {
+              return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "cielab", colour);
+            });
           }
         };
         break;
@@ -368,28 +387,71 @@ module.exports = helpers;
 
 
 module.exports = {
-  adapt: __webpack_require__(14),
-  adjacent: __webpack_require__(15),
-  complementary: __webpack_require__(16),
-  contrast: __webpack_require__(17),
-  contrastRatio: __webpack_require__(18),
-  convert: __webpack_require__(19),
-  fade: __webpack_require__(20),
-  greyscale: __webpack_require__(21),
-  hue: __webpack_require__(22),
-  invert: __webpack_require__(23),
-  invertLightness: __webpack_require__(24),
-  mid: __webpack_require__(25),
-  multiply: __webpack_require__(26),
-  saturation: __webpack_require__(27),
-  sepia: __webpack_require__(28),
-  shade: __webpack_require__(29),
-  tetrad: __webpack_require__(30),
-  triad: __webpack_require__(31)
+  adapt: __webpack_require__(15),
+  adjacent: __webpack_require__(16),
+  complementary: __webpack_require__(17),
+  contrast: __webpack_require__(18),
+  contrastRatio: __webpack_require__(19),
+  convert: __webpack_require__(20),
+  fade: __webpack_require__(21),
+  greyscale: __webpack_require__(22),
+  hue: __webpack_require__(23),
+  invert: __webpack_require__(24),
+  invertLightness: __webpack_require__(25),
+  mid: __webpack_require__(26),
+  multiply: __webpack_require__(27),
+  saturation: __webpack_require__(28),
+  sepia: __webpack_require__(29),
+  shade: __webpack_require__(30),
+  tetrad: __webpack_require__(31),
+  triad: __webpack_require__(32)
 };
 
 /***/ }),
 /* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function fromCieLab(_ref, to, value) {
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
+
+  switch (to) {
+    case "XYZ":
+      var epsilon = 0.008856;
+      var kappa = 903.3;
+      var white = helpers.getIlluminant('D65');
+
+      var Fy = (value.L + 16) / 116;
+      var Fx = value.a / 500 + Fy;
+      var Fz = Fy - value.b / 200;
+
+      var toR = function toR(f) {
+        return Math.pow(f, 3) > epsilon ? Math.pow(f, 3) : (116 * f - 16) / kappa;
+      };
+      var Xr = toR(Fx),
+          Zr = toR(Fz);
+      var Yr = value.L > kappa * epsilon ? Math.pow(Fy, 3) : value.L / kappa;
+
+      return {
+        X: Xr * white.X,
+        Y: Yr * white.Y,
+        Z: Zr * white.Z
+      };
+    default:
+      var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
+      break;
+  }
+}
+
+module.exports = fromCieLab;
+
+/***/ }),
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -423,7 +485,7 @@ function fromCmyk(_ref, to, value) {
 module.exports = fromCmyk;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -460,7 +522,7 @@ function fromCssHsl(_ref, to, value) {
 module.exports = fromCssHsl;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -497,7 +559,7 @@ function fromCssRgb(_ref, to, value) {
 module.exports = fromCssRgb;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -534,7 +596,7 @@ function fromHex(_ref, to, value) {
 module.exports = fromHex;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -628,7 +690,7 @@ function fromHsl(_ref, to, value) {
 module.exports = fromHsl;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -711,7 +773,7 @@ function fromHsv(_ref, to, value) {
 module.exports = fromHsv;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -736,9 +798,9 @@ function fromLMS(_ref, to, value) {
       });
 
       return {
-        X: resultArray[0],
-        Y: resultArray[1],
-        Z: resultArray[2]
+        X: resultArray[0] * 100,
+        Y: resultArray[1] * 100,
+        Z: resultArray[2] * 100
       };
 
       break;
@@ -752,7 +814,7 @@ function fromLMS(_ref, to, value) {
 module.exports = fromLMS;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -766,6 +828,7 @@ function fromRgb(_ref, to, value) {
 	    helpers = _ref.helpers;
 
 	switch (to) {
+
 		case "hex":
 			var r = Math.round(value['r']).toString(16);
 			if (r.length == 1) r = "0" + r;
@@ -775,9 +838,11 @@ function fromRgb(_ref, to, value) {
 			if (b.length == 1) b = "0" + b;
 			return "#" + r + g + b;
 			break;
+
 		case "css-rgb":
 			return "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")";
 			break;
+
 		case "hsl":
 			var r = value['r'] / 255;
 			var g = value['g'] / 255;
@@ -813,10 +878,12 @@ function fromRgb(_ref, to, value) {
 				l: l
 			};
 			break;
+
 		case "css-hsl":
 			var hsl = operations.convert({ conversions: conversions, helpers: helpers }, "hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
+
 		case "cmyk":
 			var tempR = value['r'] / 255;
 			var tempG = value['g'] / 255;
@@ -833,6 +900,7 @@ function fromRgb(_ref, to, value) {
 			}
 			return { c: c, m: m, y: y, k: k };
 			break;
+
 		case "hsv":
 			var r = value.r / 255;
 			var g = value.g / 255;
@@ -862,6 +930,7 @@ function fromRgb(_ref, to, value) {
 			}
 			return { h: h * 360, s: s * 100, v: v * 100 };
 			break;
+
 		case "yiq":
 			var y = 0.299 * (value.r / 255) + 0.587 * (value.g / 255) + 0.114 * (value.b / 255);
 			var i = 0.596 * (value.r / 255) + -0.274 * (value.g / 255) + -0.322 * (value.b / 255);
@@ -871,6 +940,10 @@ function fromRgb(_ref, to, value) {
 			q = helpers.bounded(q, [-0.5226, 0.5226]);
 			return { y: y, i: i, q: q };
 			break;
+
+		/**
+   * XYZ, used for XYZ dependants below as well
+   */
 		case "XYZ":
 			var normalized = [value.r, value.g, value.b].map(function (v) {
 				return v / 255;
@@ -901,7 +974,12 @@ function fromRgb(_ref, to, value) {
 
 			return { X: X, Y: Y, Z: Z };
 			break;
+
+		/**
+   * XYZ dependants
+   */
 		case "LMS":
+		case "cielab":
 			var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
 			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
 			break;
@@ -911,7 +989,7 @@ function fromRgb(_ref, to, value) {
 module.exports = fromRgb;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -957,7 +1035,9 @@ function fromXYZ(_ref, to, value) {
 
       break;
     case "LMS":
-      var valueArray = [value.X, value.Y, value.Z];
+      var valueArray = [value.X, value.Y, value.Z].map(function (x) {
+        return x / 100;
+      });
 
       // Bradford Transformation
       var Mb = [[0.8951000, 0.2664000, -0.1614000], [-0.7502000, 1.7135000, 0.0367000], [0.0389000, -0.0685000, 1.0296000]];
@@ -975,6 +1055,27 @@ function fromXYZ(_ref, to, value) {
       };
 
       break;
+    case "cielab":
+      var epsilon = 0.008856;
+      var kappa = 903.3;
+      var white = helpers.getIlluminant('D65');
+
+      var Xr = value.X / white.X;
+      var Yr = value.Y / white.Y;
+      var Zr = value.Z / white.Z;
+
+      var toF = function toF(x) {
+        return x > epsilon ? helpers.cbrt(x) : (kappa * x + 16) / 116;
+      };
+      var Fx = toF(Xr),
+          Fy = toF(Yr),
+          Fz = toF(Zr);
+
+      return {
+        L: 116 * Fy - 16,
+        a: 500 * (Fx - Fy),
+        b: 200 * (Fy - Fz)
+      };
     default:
       var rgb = helpers.boundedRgb(operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value));
       return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
@@ -985,7 +1086,7 @@ function fromXYZ(_ref, to, value) {
 module.exports = fromXYZ;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1020,7 +1121,7 @@ function fromYiq(_ref, to, value) {
 module.exports = fromYiq;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1065,7 +1166,7 @@ function adapt(_dep, colourRef, illuminantDRef, illuminantSRef) {
 module.exports = adapt;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1086,7 +1187,7 @@ function adjacent(_dep, deg, amount, colourRef) {
 module.exports = adjacent;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1103,7 +1204,7 @@ function complementary(_dep, colourRef) {
 module.exports = complementary;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1139,7 +1240,7 @@ function contrast(_dep, shift, colourRef) {
 module.exports = contrast;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1161,14 +1262,14 @@ function contrastRatio(_dep, colourRef) {
 module.exports = contrastRatio;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 function convert(_dep, to, value) {
-	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ" || to == "LMS") {
+	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ" || to == "LMS" || to == "cielab") {
 		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			return _dep.conversions[from](_dep, to, value);
@@ -1183,7 +1284,7 @@ function convert(_dep, to, value) {
 module.exports = convert;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1216,7 +1317,7 @@ function fade(_dep, amount, fromRef, toRef) {
 module.exports = fade;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1234,7 +1335,7 @@ function greyscale(_dep, colourRef) {
 module.exports = greyscale;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1251,7 +1352,7 @@ function hue(_dep, shift, colourRef) {
 module.exports = hue;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1270,7 +1371,7 @@ function invert(_dep, colourRef) {
 module.exports = invert;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1287,7 +1388,7 @@ function invertLightness(_dep, colourRef) {
 module.exports = invertLightness;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1308,7 +1409,7 @@ function mid(_dep, colourOneRef, colourTwoRef) {
 module.exports = mid;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1328,7 +1429,7 @@ function multiply(_dep, colourRefOne, colourRefTwo) {
 module.exports = multiply;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1350,7 +1451,7 @@ function saturation(_dep, shift, colourRef) {
 module.exports = saturation;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1370,7 +1471,7 @@ function sepia(_dep, colourRef) {
 module.exports = sepia;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1392,7 +1493,7 @@ function shade(_dep, shift, colourRef) {
 module.exports = shade;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1413,7 +1514,7 @@ function tetrad(_dep, colourRef) {
 module.exports = tetrad;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1434,7 +1535,7 @@ function triad(_dep, colourRef) {
 module.exports = triad;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -1,5 +1,6 @@
 function fromRgb( { conversions, operations, helpers }, to, value ) {
 	switch (to){
+
 		case "hex":
 			var r = Math.round(value['r']).toString(16);
 			if (r.length == 1) r = "0"+r;
@@ -9,9 +10,11 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			if (b.length == 1) b = "0"+b;
 			return "#"+r+g+b;
 			break;
+
 		case "css-rgb":
 			return "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")";
 			break;
+
 		case "hsl":
 			var r = value['r'] / 255;
 			var g = value['g'] / 255;
@@ -47,10 +50,12 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 				l: l
 			};
 			break;
+
 		case "css-hsl":
 			var hsl = operations.convert({ conversions, helpers }, "hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;
+
 		case "cmyk":
 			var tempR = value['r']/255;
 			var tempG = value['g']/255;
@@ -67,6 +72,7 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			}
 			return {c: c, m: m, y: y, k: k};
 			break;
+
 		case "hsv":
 			var r = ( value.r / 255 );
 			var g = ( value.g / 255 );
@@ -98,6 +104,7 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			}
 			return {h: h*360, s: s*100, v: v*100};
 			break;
+
 		case "yiq":
 			var y = (0.299 * (value.r / 255)) + (0.587 * (value.g / 255)) + (0.114 * (value.b / 255));
 			var i = (0.596 * (value.r / 255)) + (-0.274 * (value.g / 255)) + (-0.322 * (value.b / 255));
@@ -107,6 +114,10 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			q = helpers.bounded(q, [-0.5226, 0.5226]);
 			return {y:y, i:i, q:q};
 			break;
+
+    /**
+     * XYZ, used for XYZ dependants below as well
+     */
 		case "XYZ":
       let normalized = [value.r, value.g, value.b].map((v) => v / 255);
 
@@ -133,7 +144,12 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 
       return { X, Y, Z }
 			break;
+
+    /**
+     * XYZ dependants
+     */
     case "LMS":
+    case "cielab":
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
       return operations.convert({ conversions, operations, helpers }, to, XYZ);
       break;

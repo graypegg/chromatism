@@ -5,17 +5,18 @@ function fromCieLab( { conversions, operations, helpers }, to, value ) {
       const kappa = 903.3;
       const white = helpers.getIlluminant('D65');
 
-      const Xr = value.X / white.X;
-      const Yr = value.Y / white.Y;
-      const Zr = value.Z / white.Z;
+      const Fy = (value.L + 16) / 116;
+      const Fx = (value.a / 500) + Fy;
+      const Fz = Fy - (value.b / 200);
 
-      const toF = (x) => x > epsilon ? helpers.cbrt(x) : (kappa * x + 16) / 116;
-      const Fx = toF(Xr), Fy = toF(Yr), Fz = toF(Zr);
+      const toR = (f) => Math.pow(f, 3) > epsilon ? Math.pow(f, 3) : ((116 * f) - 16) / kappa;
+      const Xr = toR(Fx), Zr = toR(Fz);
+      const Yr = value.L > (kappa * epsilon) ? Math.pow(Fy, 3) : value.L / kappa;
 
       return {
-        L: (116 * Fy) − 16,
-        a: 500 * (Fx - Fy),
-        b: 200 * (Fy - Fz)
+        X: Xr * white.X,
+        Y: Yr * white.Y,
+        Z: Zr * white.Z
       };
 		default:
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
@@ -24,4 +25,4 @@ function fromCieLab( { conversions, operations, helpers }, to, value ) {
 	}
 }
 
-module.exports = fromXYZ;
+module.exports = fromCieLab;
