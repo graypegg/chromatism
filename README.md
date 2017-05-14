@@ -253,7 +253,7 @@ These functions do not return a colour, but instead return some aspect or measur
 ```javascript
 var diff = chromatism.difference( colour 1, colour 2, [luminance weight], [chroma weight] );
 ```
-Returns a measure of how different the two supplied colours are. Luminance and Chroma weight are equal to *l* and *c* in the [CMC l:c](http://www.brucelindbloom.com/index.html?Eqn_XYZ_to_Lab.html) Delta-E equation. By default they are both set to 1. (Thus testing imperceptibility)
+Returns a measure of how different the two supplied colours are. Luminance and Chroma weight are equal to *l* and *c* in the [CMC l:c](http://www.brucelindbloom.com/index.html?Eqn_DeltaE_CMC.html) Delta-E equation. By default they are both set to 1. (Thus testing imperceptibility)
 
 ## Constants
 
