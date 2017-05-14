@@ -4,6 +4,38 @@ A simple set of utility functions for colours.
 
 [![NPM](https://nodei.co/npm/chromatism.png?compact=true)](https://nodei.co/npm/chromatism/)
 
+## Table of Contents
+- [Chromatism](#chromatism)
+  * [Table of Contents](#table-of-contents)
+  * [Installation](#installation)
+      - [CommonJS](#commonjs)
+      - [Browser without bundling](#browser-without-bundling)
+  * [Functions](#functions)
+	    + [Colour Transformations](#colour-transformations)
+	      - [Convert colour types](#convert-colour-types)
+	      - [Generate a complementary colour](#generate-a-complementary-colour)
+	      - [Generate an array of triad colours](#generate-an-array-of-triad-colours)
+	      - [Generate an array of tetrad colours](#generate-an-array-of-tetrad-colours)
+	      - [Find the mid point between two colours](#find-the-mid-point-between-two-colours)
+	      - [Invert a colour](#invert-a-colour)
+	      - [Invert a grey colour](#invert-a-grey-colour)
+	      - [Blend two colours (Multiply)](#blend-two-colours-multiply)
+	      - [Generate an array of adjacent hue-shifted colours (rainbow effect)](#generate-an-array-of-adjacent-hue-shifted-colours-rainbow-effect)
+	      - [Generate an array of the fade between two colours](#generate-an-array-of-the-fade-between-two-colours)
+	      - [Generate a new shade of a colour](#generate-a-new-shade-of-a-colour)
+	      - [Generate a new saturation of a colour](#generate-a-new-saturation-of-a-colour)
+	      - [Shift the hue of a colour](#shift-the-hue-of-a-colour)
+	      - [Shift the contrast of a colour](#shift-the-contrast-of-a-colour)
+	      - [Greyscale version of the colour](#greyscale-version-of-the-colour)
+	      - [Sepia version of the colour](#sepia-version-of-the-colour)
+	      - [Determine accessible colour for foreground text](#determine-accessible-colour-for-foreground-text)
+	      - [Chromatic Adaptation (White point)](#chromatic-adaptation-white-point)
+	    + [Colour Metering Functions](#colour-metering-functions)
+	      - [Colour Difference](#colour-difference)
+  * [Constants](#constants)
+  * [Scales + Colour Spaces](#scales--colour-spaces)
+  * [Colour Modes](#colour-modes)
+
 ## Installation
 
 ```bash
@@ -22,9 +54,11 @@ var chromatism = require("chromatism");
 
 **_Note:_** The following examples return different types of values, (*hex*, *rgb*, *hsl*, etc) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.
 
-## Colour Functions
+## Functions
+### Colour Transformations
+The following functions return a Colour Object, which contains getters to get a return value of any colour mode. See [Colour Mode](#Colour Modes) table for a list of all the available colour modes.
 
-### Convert colour types
+#### Convert colour types
 ```javascript
 var newColour = chromatism.convert( value ).hex;
 ```
@@ -35,7 +69,7 @@ All colour modes supported can be converted to any other. This does however mean
 
 ---
 
-### Generate a complementary colour
+#### Generate a complementary colour
 ```javascript
 var newColour = chromatism.complementary( value ).rgb;
 ```
@@ -44,7 +78,7 @@ var newColour = chromatism.complementary( value ).rgb;
 
 ---
 
-### Generate an array of triad colours
+#### Generate an array of triad colours
 ```javascript
 var newColour = chromatism.triad( value ).hsl;
 ```
@@ -53,7 +87,7 @@ var newColour = chromatism.triad( value ).hsl;
 
 ---
 
-### Generate an array of tetrad colours
+#### Generate an array of tetrad colours
 ```javascript
 var newColour = chromatism.tetrad( value ).cmyk;
 ```
@@ -62,7 +96,7 @@ var newColour = chromatism.tetrad( value ).cmyk;
 
 ---
 
-### Find the mid point between two colours
+#### Find the mid point between two colours
 ```javascript
 var newColour = chromatism.mid( colourOne, colourTwo ).cssrgb;
 ```
@@ -71,7 +105,7 @@ var newColour = chromatism.mid( colourOne, colourTwo ).cssrgb;
 
 ---
 
-### Invert a colour
+#### Invert a colour
 ```javascript
 var newColour = chromatism.invert( value ).hex;
 ```
@@ -80,7 +114,7 @@ var newColour = chromatism.invert( value ).hex;
 
 ---
 
-### Invert a grey colour
+#### Invert a grey colour
 ```javascript
 var newColour = chromatism.invertLightness( value ).hsl;
 ```
@@ -89,7 +123,7 @@ var newColour = chromatism.invertLightness( value ).hsl;
 
 ---
 
-### Blend two colours (Multiply)
+#### Blend two colours (Multiply)
 ```javascript
 var newColour = chromatism.multiply( valueOne, valueTwo ).hsv;
 ```
@@ -98,7 +132,7 @@ var newColour = chromatism.multiply( valueOne, valueTwo ).hsv;
 
 ---
 
-### Generate an array of adjacent hue-shifted colours (rainbow effect)
+#### Generate an array of adjacent hue-shifted colours (rainbow effect)
 ```javascript
 var newColour = chromatism.adjacent( shift, sections, value ).cmyk;
 ```
@@ -109,7 +143,7 @@ Shift should be in degrees. It can be either positive and negative.
 
 ---
 
-### Generate an array of the fade between two colours
+#### Generate an array of the fade between two colours
 ```javascript
 var newColour = chromatism.fade( amount, from, to ).hsl;
 ```
@@ -118,7 +152,7 @@ var newColour = chromatism.fade( amount, from, to ).hsl;
 
 ---
 
-### Generate a new shade of a colour
+#### Generate a new shade of a colour
 ```javascript
 var newColour = chromatism.shade( shift, value ).csshsl;
 ```
@@ -129,7 +163,7 @@ Shift should be a number between -100 and 100.
 
 ---
 
-### Generate a new saturation of a colour
+#### Generate a new saturation of a colour
 ```javascript
 var newColour = chromatism.saturation( shift, value ).hex;
 ```
@@ -140,7 +174,7 @@ Shift should be a number between -100 and 100.
 
 ---
 
-### Shift the hue of a colour
+#### Shift the hue of a colour
 ```javascript
 var newColour = chromatism.hue( shift, value ).hex;
 ```
@@ -151,7 +185,7 @@ Hue shift is measured in degrees, using the HSL colour model.
 
 ---
 
-### Shift the contrast of a colour
+#### Shift the contrast of a colour
 ```javascript
 var newColour = chromatism.contrast( shift, value ).hsl;
 ```
@@ -164,7 +198,7 @@ Imagine increasing (shift > 1) the contrast as making lighter colours lighter, a
 
 ---
 
-### Greyscale version of the colour
+#### Greyscale version of the colour
 ```javascript
 var newColour = chromatism.greyscale( value ).cmyk;
 ```
@@ -173,7 +207,7 @@ var newColour = chromatism.greyscale( value ).cmyk;
 
 ---
 
-### Sepia version of the colour
+#### Sepia version of the colour
 ```javascript
 var newColour = chromatism.sepia( value ).hsv;
 ```
@@ -182,7 +216,7 @@ var newColour = chromatism.sepia( value ).hsv;
 
 ---
 
-### Determine accessible colour for foreground text
+#### Determine accessible colour for foreground text
 ```javascript
 var newColour = chromatism.contrastRatio( value ).rgb;
 ```
@@ -193,7 +227,7 @@ Use this function to determine the colour of text needed to create a high contra
 
 ---
 
-### Chromatic Adaptation (White point)
+#### Chromatic Adaptation (White point)
 ```javascript
 var newColour = chromatism.adapt( value, illuminant, [source illuminant] ).XYZ;
 ```
@@ -202,7 +236,18 @@ var newColour = chromatism.adapt( value, illuminant, [source illuminant] ).XYZ;
 
 Shifts the Illuminant (white-point) on the supplied colour. Use the ILLUMINANTS constant (shown below) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65` in XYZ format.)
 
-## Constants:
+---
+
+### Colour Metering Functions
+These functions do not return a colour, but instead return some aspect or measure of the colour(s).
+
+#### Colour Difference
+```javascript
+var diff = chromatism.difference( colour 1, colour 2, [luminance weight], [chroma weight] );
+```
+Returns a measure of how different the two supplied colours are. Luminance and Chroma weight are equal to *l* and *c* in the [CMC l:c](http://www.brucelindbloom.com/index.html?Eqn_XYZ_to_Lab.html) Delta-E equation. By default they are both set to 1. (Thus testing imperceptibility)
+
+## Constants
 
 Chromatism has some useful constants built in, you can access them using the imported chromatism object.
 
@@ -225,7 +270,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.lms`                | (⍴, γ, β) 0 - 1                   | XYZ          |
 | `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128 | CIE          |
 
-## Colour Modes:
+## Colour Modes
 
 | Mode                 | Example Syntax                                    |
 | -------------------- | ------------------------------------------------- |
@@ -239,7 +284,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.yiq`                | `{ y: 0.132, i: 0.0222, q: 0.195 }`               |
 | `.XYZ`                | `{ X: 41.24, Y: 21.26, Z: 1.93 }`                 |
 | `.lms`                | `{ rho: 42.266, gamma: 5.561, beta: 2.135 }`      |
-| `.cielab (L\*a\*b\*)` | `{ L: 53.23, a: 80.11, b: 67.22 }`             |
+| `.cielab` (L\*a\*b\*) | `{ L: 53.23, a: 80.11, b: 67.22 }`             |
 
 All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 

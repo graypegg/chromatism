@@ -182,6 +182,12 @@ var helpers = {
       return Math.cbrt(x);
     }
   },
+  toRad: function toRad(angle) {
+    return angle * (Math.PI / 180);
+  },
+  toDeg: function toDeg(angle) {
+    return angle * (180 / Math.PI);
+  },
   negMod: function negMod(n, m) {
     return (n % m + m) % m;
   },
@@ -393,6 +399,7 @@ module.exports = {
   contrast: __webpack_require__(18),
   contrastRatio: __webpack_require__(19),
   convert: __webpack_require__(20),
+  difference: __webpack_require__(36),
   fade: __webpack_require__(21),
   greyscale: __webpack_require__(22),
   hue: __webpack_require__(23),
@@ -1574,6 +1581,51 @@ function fromLms(_ref, to, value) {
 }
 
 module.exports = fromLms;
+
+/***/ }),
+/* 35 */,
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function difference(_dep, colourRefOne, colourRefTwo, l, c) {
+  l = l || 1;
+  c = c || 1;
+
+  var Lab1 = _dep.operations.convert(_dep, "cielab", colourRefOne);
+  var Lab2 = _dep.operations.convert(_dep, "cielab", colourRefTwo);
+
+  var C1 = Math.sqrt(Math.pow(Lab1.a, 2) + Math.pow(Lab1.b, 2));
+  var C2 = Math.sqrt(Math.pow(Lab2.a, 2) + Math.pow(Lab2.b, 2));
+  var dC = C1 - C2;
+
+  var dL = Lab1.L - Lab2.L;
+  var da = Lab1.a - Lab2.a;
+  var db = Lab1.b - Lab2.b;
+
+  var dH = Math.sqrt(Math.pow(da, 2) + Math.pow(db, 2) - Math.pow(dC, 2));
+
+  var SL = Lab1.L < 16 ? 0.511 : 0.040975 * Lab1.L / (1.01765 * Lab1.L);
+  var SC = 0.0638 * C1 / (1.0131 * C1);
+
+  var H = Math.atan2(Lab1.b, Lab1.a);
+  var H1 = H >= 0 ? H : H + 360;
+
+  var T = 164 <= H1 && H1 <= 345 ? 0.56 + Math.abs(0.2 * Math.cos(_dep.helpers.toRad(H1 + 168))) : 0.36 + Math.abs(0.4 * Math.cos(_dep.helpers.toRad(H1 + 35)));
+  var F = Math.pow(C1, 4) / (Math.pow(C1, 4) + 1900);
+
+  var SH = SC * (F * T + 1 - F);
+
+  var EqPrt1 = Math.pow(dL / (l * SL), 2);
+  var EqPrt2 = Math.pow(dC / (c * SC), 2);
+  var EqPrt3 = Math.pow(dH / SH, 2);
+
+  return Math.sqrt(EqPrt1 + EqPrt1 + EqPrt1);
+}
+
+module.exports = difference;
 
 /***/ })
 /******/ ]);

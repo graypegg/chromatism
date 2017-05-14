@@ -5,6 +5,7 @@ module.exports = {
   contrast: require('./contrast.js'),
   contrastRatio: require('./contrastRatio.js'),
   convert: require('./convert.js'),
+  difference: require('./difference.js'),
   fade: require('./fade.js'),
   greyscale: require('./greyscale.js'),
   hue: require('./hue.js'),

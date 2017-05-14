@@ -33,6 +33,14 @@ var helpers = {
     }
   },
 
+  toRad(angle) {
+    return angle * (Math.PI / 180);
+  },
+
+  toDeg(angle) {
+    return angle * (180 / Math.PI);
+  },
+
   negMod( n, m ) {
   	return ((n % m) + m) % m;
   },
