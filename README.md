@@ -219,7 +219,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | cmyk    | (c, m, y, k) 0 - 1          | CMYK         |
 | yiq     | (y, i, q) 0 - 1             | YUV          |
 | XYZ     | (Y) 0 - 100, (X, Z) derived | XYZ          |
-| LMS     | (⍴, γ, β) 0 - 100           | XYZ          |
+| LMS     | (⍴, γ, β) 0 - 1             | XYZ          |
 
 ## Colour Modes:
 
