@@ -8,10 +8,11 @@ const red = {
       hsl: 0,
       csshsl: null,
       hsv: 0,
-      cmyk: 0.5,
-      yiq: 1,
+      cmyk: 0.25,
+      yiq: 0.25,
       XYZ: 0,
-      LMS: 0.5
+      LMS: 0.1,
+      cielab: 0.25
     }
   },
   hex: {
@@ -31,10 +32,11 @@ const red = {
       hsl: 0,
       csshsl: null,
       hsv: 0,
-      cmyk: 0.5,
-      yiq: 1,
+      cmyk: 0.25,
+      yiq: 0.25,
       XYZ: 0,
-      LMS: 0.5
+      LMS: 0.1,
+      cielab: 0.25
     }
   },
   csshsl: {
@@ -51,9 +53,10 @@ const red = {
       csshsl: null,
       hsv: 0,
       cmyk: 0.5,
-      yiq: 1,
+      yiq: 0.25,
       XYZ: 0,
-      LMS: 0.5
+      LMS: 0.1,
+      cielab: 0.25
     }
   },
   cmyk: {
@@ -66,54 +69,74 @@ const red = {
       csshsl: null,
       hsv: 0,
       cmyk: 0,
-      yiq: 1,
+      yiq: 0.25,
       XYZ: 0,
-      LMS: 0.5
+      LMS: 0.1,
+      cielab: 0.25
     }
   },
   yiq: {
     value: { y: 0.299, i: 0.5957, q: 0.211 },
     accuracy: {
-      rgb: 1,
+      rgb: 0.25,
       cssrgb: null,
       hex: null,
-      hsl: 1,
+      hsl: 0.25,
       csshsl: null,
-      hsv: 1,
-      cmyk: 1,
+      hsv: 0.25,
+      cmyk: 0.25,
       yiq: 0,
-      XYZ: 1,
-      LMS: 0.2
+      XYZ: 0.25,
+      LMS: 0.1,
+      cielab: 0.25
     }
   },
   XYZ: {
     value: { X: 41.24, Y: 21.26, Z: 1.9300000000000002 },
     accuracy: {
-      rgb: 1,
+      rgb: 0.25,
       cssrgb: null,
       hex: null,
-      hsl: 1,
+      hsl: 0.25,
       csshsl: null,
-      hsv: 1,
-      cmyk: 1,
-      yiq: 1,
+      hsv: 0.25,
+      cmyk: 0.25,
+      yiq: 0.25,
       XYZ: 0,
-      LMS: 0.5
+      LMS: 0.5,
+      cielab: 0.5
     }
   },
   LMS: {
     value: { rho: 0.42266086, gamma: 0.05561592999999999, beta: 0.02135054 },
     accuracy: {
-      rgb: 1,
+      rgb: 0.25,
       cssrgb: null,
       hex: null,
-      hsl: 1,
+      hsl: 0.25,
       csshsl: null,
-      hsv: 1,
-      cmyk: 1,
-      yiq: 1,
+      hsv: 0.25,
+      cmyk: 0.25,
+      yiq: 0.25,
       XYZ: 0.5,
-      LMS: 0
+      LMS: 0,
+      cielab: 0.5
+    }
+  },
+  cielab: {
+    value: { L: 53.23288178584244, a: 80.10930952982204, b: 67.22006831026425 },
+    accuracy: {
+      rgb: 0.25,
+      cssrgb: null,
+      hex: null,
+      hsl: 0.25,
+      csshsl: null,
+      hsv: 0.25,
+      cmyk: 0.25,
+      yiq: 0.5,
+      XYZ: 0.25,
+      LMS: 0.5,
+      cielab: 0
     }
   },
 }
