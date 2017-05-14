@@ -275,7 +275,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.cmyk`               | (c, m, y, k) 0 - 1                | CMYK         |
 | `.yiq`                | (y, i, q) 0 - 1                   | YUV          |
 | `.XYZ`                | (Y) 0 - 100, (X, Z) derived       | XYZ          |
-| `.XYZ`                | (Y) 0 - 100, (x, y) 0 - 1         | XYZ          |
+| `.xyY`                | (Y) 0 - 100, (x, y) 0 - 1         | XYZ          |
 | `.lms`                | (⍴, γ, β) 0 - 1                   | XYZ          |
 | `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128    | CIE          |
 
@@ -292,6 +292,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.cmyk`               | `{c: 0.5, m: 1, y: 0.2, k: 0.45}`                 |
 | `.yiq`                | `{ y: 0.132, i: 0.0222, q: 0.195 }`               |
 | `.XYZ`                | `{ X: 41.24, Y: 21.26, Z: 1.93 }`                 |
+| `.xyY`                | `{ x: 0.64, y: 0.33, Y: 21.26 }`                  |
 | `.lms`                | `{ rho: 42.266, gamma: 5.561, beta: 2.135 }`      |
 | `.cielab` (L\*a\*b\*) | `{ L: 53.23, a: 80.11, b: 67.22 }`                |
 
