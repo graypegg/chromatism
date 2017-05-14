@@ -196,6 +196,8 @@ Use this function to determine the colour of text needed to create a high contra
 var newColour = chromatism.adapt( value, illuminant, [source illuminant] ).XYZ;
 ```
 
+![Illuminant Adaptation](https://toi.sh/cdn/chromatism/adapt.png)
+
 Shifts the Illuminant (white-point) on the supplied colour. Use the ILLUMINANTS constant (shown below) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65` in XYZ format.)
 
 ## Constants:
