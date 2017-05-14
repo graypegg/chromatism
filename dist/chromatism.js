@@ -137,6 +137,7 @@ module.exports = {
   'rgb': __webpack_require__(12),
   'yiq': __webpack_require__(14),
   'XYZ': __webpack_require__(13),
+  'xyY': __webpack_require__(37),
   'lms': __webpack_require__(34),
   'cielab': __webpack_require__(4)
 };
@@ -247,6 +248,8 @@ var helpers = {
           return "yiq";
         } else if (typeof colour.X != "undefined") {
           return "XYZ";
+        } else if (typeof colour.x != "undefined") {
+          return "xyY";
         } else if (typeof colour.gamma != "undefined") {
           return "lms";
         } else if (typeof colour.L != "undefined") {
@@ -308,6 +311,9 @@ var helpers = {
           get XYZ() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", this.colour);
           },
+          get xyY() {
+            return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "xyY", this.colour);
+          },
           get lms() {
             return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "lms", this.colour);
           },
@@ -362,6 +368,11 @@ var helpers = {
           get XYZ() {
             return this.colours.map(function (colour) {
               return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", colour);
+            });
+          },
+          get xyY() {
+            return this.colours.map(function (colour) {
+              return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "xyY", colour);
             });
           },
           get lms() {
@@ -947,6 +958,7 @@ function fromRgb(_ref, to, value) {
    */
 		case "lms":
 		case "cielab":
+		case "xyY":
 			var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
 			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
 			break;
@@ -1042,6 +1054,15 @@ function fromXYZ(_ref, to, value) {
         L: 116 * Fy - 16,
         a: 500 * (Fx - Fy),
         b: 200 * (Fy - Fz)
+      };
+    case "xyY":
+      var x = value.X / (value.X + value.Y + value.Z);
+      var y = value.Y / (value.X + value.Y + value.Z);
+
+      return {
+        x: x,
+        y: y,
+        Y: value.Y
       };
     default:
       var rgb = helpers.boundedRgb(operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value));
@@ -1236,7 +1257,7 @@ module.exports = contrastRatio;
 
 
 function convert(_dep, to, value) {
-	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ" || to == "lms" || to == "cielab") {
+	if (to == "rgb" || to == "hsl" || to == "css-rgb" || to == "css-hsl" || to == "hex" || to == "cmyk" || to == "hsv" || to == "yiq" || to == "XYZ" || to == "xyY" || to == "lms" || to == "cielab") {
 		var from = _dep.helpers.determineMode(value);
 		if (from != to) {
 			return _dep.conversions[from](_dep, to, value);
@@ -1626,6 +1647,42 @@ function difference(_dep, colourRefOne, colourRefTwo, l, c) {
 }
 
 module.exports = difference;
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function fromxyY(_ref, to, value) {
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
+
+  switch (to) {
+
+    /**
+     * xyY is really just XYZ without tristimulus values.
+     * Instead, the chroma. coords. are used in conjuction with the luminance from XYZ
+     */
+    case "XYZ":
+      var X = value.Y / value.y * value.x;
+      var Z = value.Y / value.y * (1 - value.x - value.y);
+
+      return {
+        X: X,
+        Y: value.Y,
+        Z: Z
+      };
+    default:
+      var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
+      break;
+  }
+}
+
+module.exports = fromxyY;
 
 /***/ })
 /******/ ]);

@@ -67,6 +67,15 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         a: 500 * (Fx - Fy),
         b: 200 * (Fy - Fz)
       };
+    case "xyY":
+      const x = value.X / (value.X + value.Y + value.Z);
+      const y = value.Y / (value.X + value.Y + value.Z);
+
+      return {
+        x,
+        y,
+        Y: value.Y
+      };
 		default:
       var rgb = helpers.boundedRgb(operations.convert({ conversions, operations, helpers }, "rgb", value));
       return operations.convert({ conversions, operations, helpers }, to, rgb);

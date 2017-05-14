@@ -8,6 +8,7 @@ module.exports = {
   'rgb': require('./fromRgb.js'),
   'yiq': require('./fromYiq.js'),
   'XYZ': require('./fromXYZ.js'),
+  'xyY': require('./fromxyY.js'),
   'lms': require('./fromLms.js'),
   'cielab': require('./fromCieLab.js')
 };

@@ -8,6 +8,7 @@ function convert( _dep, to, value ) {
 		to == "hsv" ||
 		to == "yiq" ||
 		to == "XYZ" ||
+		to == "xyY" ||
 		to == "lms" ||
 		to == "cielab") {
 		let from = _dep.helpers.determineMode(value);
