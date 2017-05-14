@@ -20,10 +20,9 @@ var chromatism = require("chromatism");
 <script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
 ```
 
+**_Note:_** The following examples return different types of values, (*hex*, *rgb*, *hsl*, etc) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.
 
 ## Colour Functions
-
-**_Note:_ The following examples return different types of values, (hex, rgb, hsl) but you can use any of the available colour modes as seen in the colour modes table at the bottom of this README.**
 
 ### Convert colour types
 ```javascript
@@ -194,10 +193,10 @@ Use this function to determine the colour of text needed to create a high contra
 
 ### Chromatic Adaptation (White point)
 ```javascript
-var newColour = chromatism.adapt( value, illuminant ).XYZ;
+var newColour = chromatism.adapt( value, illuminant, [source illuminant] ).XYZ;
 ```
 
-Shifts the Illuminant (white-point) on the supplied colour. Use the ILLUMINANTS constant (shown below) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, to match the sRGB standard, thus if you export in a RGB like colour mode from this function, you're probably going to get the same thing)
+Shifts the Illuminant (white-point) on the supplied colour. Use the ILLUMINANTS constant (shown below) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65` in XYZ format.)
 
 ## Constants:
 
