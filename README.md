@@ -68,7 +68,7 @@ The following functions return a Colour Object, which contains getters to get a 
 
 #### Convert colour types
 ```javascript
-var newColour = chromatism.convert( value ).hex;
+var newColour = chromatism.convert( colour ).hex;
 ```
 
 Value can be any colour in any of the supported colour modes. [(See chart at bottom of README)](#colour-modes) **This is an identity operation**, as it just returns an object containing all of the available colour modes of the result.
@@ -79,7 +79,7 @@ All colour modes supported can be converted to any other. This does however mean
 
 #### Generate a complementary colour
 ```javascript
-var newColour = chromatism.complementary( value ).rgb;
+var newColour = chromatism.complementary( colour ).rgb;
 ```
 
 ![Complementary](https://toi.sh/cdn/chromatism/complementary.png)
@@ -88,7 +88,7 @@ var newColour = chromatism.complementary( value ).rgb;
 
 #### Generate an array of triad colours
 ```javascript
-var newColour = chromatism.triad( value ).hsl;
+var newColour = chromatism.triad( colour ).hsl;
 ```
 
 ![Triad](https://toi.sh/cdn/chromatism/triad.png)
@@ -97,7 +97,7 @@ var newColour = chromatism.triad( value ).hsl;
 
 #### Generate an array of tetrad colours
 ```javascript
-var newColour = chromatism.tetrad( value ).cmyk;
+var newColour = chromatism.tetrad( colour ).cmyk;
 ```
 
 ![Tetrad](https://toi.sh/cdn/chromatism/tetrad.png)
@@ -115,7 +115,7 @@ var newColour = chromatism.mid( colourOne, colourTwo ).cssrgb;
 
 #### Invert a colour
 ```javascript
-var newColour = chromatism.invert( value ).hex;
+var newColour = chromatism.invert( colour ).hex;
 ```
 
 ![Invert](https://toi.sh/cdn/chromatism/invert.png)
@@ -124,7 +124,7 @@ var newColour = chromatism.invert( value ).hex;
 
 #### Invert a grey colour
 ```javascript
-var newColour = chromatism.invertLightness( value ).hsl;
+var newColour = chromatism.invertLightness( colour ).hsl;
 ```
 
 ![Invert Lightness](https://toi.sh/cdn/chromatism/invertLightness.png)
@@ -133,7 +133,7 @@ var newColour = chromatism.invertLightness( value ).hsl;
 
 #### Blend two colours (Multiply)
 ```javascript
-var newColour = chromatism.multiply( valueOne, valueTwo ).hsv;
+var newColour = chromatism.multiply( colourOne, colourTwo ).hsv;
 ```
 
 ![Blend](https://toi.sh/cdn/chromatism/blend.png)
@@ -142,7 +142,7 @@ var newColour = chromatism.multiply( valueOne, valueTwo ).hsv;
 
 #### Generate an array of adjacent hue-shifted colours (rainbow effect)
 ```javascript
-var newColour = chromatism.adjacent( shift, sections, value ).cmyk;
+var newColour = chromatism.adjacent( degrees, sections, colour ).cmyk;
 ```
 
 ![Rainbow](https://toi.sh/cdn/chromatism/rainbow.png)
@@ -153,7 +153,7 @@ Shift should be in degrees. It can be either positive and negative.
 
 #### Generate an array of the fade between two colours
 ```javascript
-var newColour = chromatism.fade( amount, from, to ).hsl;
+var newColour = chromatism.fade( amount, colourFrom, colourTo ).hsl;
 ```
 
 ![Fade](https://toi.sh/cdn/chromatism/fade.png)
@@ -162,7 +162,7 @@ var newColour = chromatism.fade( amount, from, to ).hsl;
 
 #### Generate a new shade of a colour
 ```javascript
-var newColour = chromatism.shade( shift, value ).csshsl;
+var newColour = chromatism.shade( percent, colour ).csshsl;
 ```
 
 ![Shade](https://toi.sh/cdn/chromatism/shade.png)
@@ -173,7 +173,7 @@ Shift should be a number between -100 and 100.
 
 #### Generate a new saturation of a colour
 ```javascript
-var newColour = chromatism.saturation( shift, value ).hex;
+var newColour = chromatism.saturation( percent, colour ).hex;
 ```
 
 ![Saturation](https://toi.sh/cdn/chromatism/saturation.png)
@@ -184,7 +184,7 @@ Shift should be a number between -100 and 100.
 
 #### Shift the hue of a colour
 ```javascript
-var newColour = chromatism.hue( shift, value ).hex;
+var newColour = chromatism.hue( degrees, colour ).hex;
 ```
 
 ![Hue](https://toi.sh/cdn/chromatism/hue.png)
@@ -195,20 +195,20 @@ Hue shift is measured in degrees, using the HSL colour model.
 
 #### Shift the contrast of a colour
 ```javascript
-var newColour = chromatism.contrast( shift, value ).hsl;
+var newColour = chromatism.contrast( contrastCoeff, colour ).hsl;
 ```
 
 ![Contrast](https://toi.sh/cdn/chromatism/contrast.png)
 
-Contrast shift is supplied in decimal form! You'll normally use a value between 0 and 4.
+Contrast coefficient is supplied in decimal form! You'll normally use a value between 0 and 4.
 
-Imagine increasing (shift > 1) the contrast as making lighter colours lighter, and darker colours darker. Decreasing (shift < 1) the contrast does the opposite.
+Imagine increasing the contrast *(shift > 1)* as making lighter colours lighter, and darker colours darker. Decreasing *(shift < 1)* makes all colours more similar.
 
 ---
 
 #### Greyscale version of the colour
 ```javascript
-var newColour = chromatism.greyscale( value ).cmyk;
+var newColour = chromatism.greyscale( colour ).cmyk;
 ```
 
 ![Greyscale](https://toi.sh/cdn/chromatism/greyscale.png)
@@ -217,7 +217,7 @@ var newColour = chromatism.greyscale( value ).cmyk;
 
 #### Sepia version of the colour
 ```javascript
-var newColour = chromatism.sepia( value ).hsv;
+var newColour = chromatism.sepia( colour ).hsv;
 ```
 
 ![Sepia](https://toi.sh/cdn/chromatism/sepia.png)
@@ -226,7 +226,7 @@ var newColour = chromatism.sepia( value ).hsv;
 
 #### Determine accessible colour for foreground text
 ```javascript
-var newColour = chromatism.contrastRatio( value ).rgb;
+var newColour = chromatism.contrastRatio( colour ).rgb;
 ```
 
 ![Contrast Ratio](https://toi.sh/cdn/chromatism/contrastRatio.png)
@@ -237,7 +237,7 @@ Use this function to determine the colour of text needed create a high contrast 
 
 #### Chromatic Adaptation (White point)
 ```javascript
-var newColour = chromatism.adapt( value, illuminant, [source illuminant] ).XYZ;
+var newColour = chromatism.adapt( colour, illuminantColour, [source illuminant] ).XYZ;
 ```
 
 ![Illuminant Adaptation](https://toi.sh/cdn/chromatism/adapt.png)
@@ -251,7 +251,7 @@ These functions do not return a colour, but instead return some aspect or measur
 
 #### Colour Difference
 ```javascript
-var diff = chromatism.difference( colour 1, colour 2, [luminance weight], [chroma weight] );
+var diff = chromatism.difference( colourOne, colourTwo, [luminance weight], [chroma weight] );
 ```
 Returns a measure of how different the two supplied colours are. Luminance and Chroma weight are equal to *l* and *c* in the [CMC l:c](http://www.brucelindbloom.com/index.html?Eqn_DeltaE_CMC.html) Delta-E equation. By default they are both set to 1. (Thus testing imperceptibility)
 
@@ -264,8 +264,8 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `chromatism.ILLUMINANTS` | `.A`, `.B`, `.C`, `.D50`, `.D55`, `.D65`, `.D75`, `.E`, `.F2`, `.F7`, `.F11` | Standard CIE illuminants in XYZ format
 
 ## Scales + Colour Spaces
-| Mode                 | Scale                             | Colour Space |
-| -------------------- | --------------------------------- | ------------ |
+| Mode                  | Scale                             | Colour Space |
+| --------------------- | --------------------------------- | ------------ |
 | `.hex`                | #000000 - #FFFFFF                 | sRGB         |
 | `.rgb`                | (r, g, b) 0 - 255                 | sRGB         |
 | `.cssrgb`             | (r, g, b) 0 - 255                 | sRGB         |
