@@ -43,28 +43,28 @@ var helpers = {
   },
 
   negMod( n, m ) {
-  	return ((n % m) + m) % m;
+    return ((n % m) + m) % m;
   },
 
   slopeMod( n, m ) {
-  	if (n > (m*2)) {
-  		return slopeMod( n-(m*2), m );
-  	} else if (n > m){
-  		return (m*2) - n;
-  	} else if (n < 0){
-  		return slopeMod( n+(m*2), m );
-  	} else {
-  		return n;
-  	}
+    if (n > (m*2)) {
+      return slopeMod( n-(m*2), m );
+    } else if (n > m){
+      return (m*2) - n;
+    } else if (n < 0){
+      return slopeMod( n+(m*2), m );
+    } else {
+      return n;
+    }
   },
 
   bounded( val, range ) {
-  	if (val < range[0]) {
-  		val = range[0]
-  	} else if (val > range[1]) {
-  		val = range[1]
-  	}
-  	return val;
+    if (val < range[0]) {
+      val = range[0]
+    } else if (val > range[1]) {
+      val = range[1]
+    }
+    return val;
   },
 
   boundedRgb( rgb ) {
@@ -87,10 +87,10 @@ var helpers = {
   ready( { conversions, operations, helpers }, colour ) {
     let out = {};
 
-  	switch (Object.prototype.toString.call(colour)) {
+    switch (Object.prototype.toString.call(colour)) {
 
-  		case "[object Object]":
-  		case "[object String]":
+      case "[object Object]":
+      case "[object String]":
         out['colour'] = colour;
         for (model in conversions) {
           if (!conversions.hasOwnProperty(model)) continue;
@@ -104,9 +104,9 @@ var helpers = {
             })
           })(model)
         }
-  			return out;
+        return out;
 
-  		case "[object Array]":
+      case "[object Array]":
         out['colours'] = colour;
         for (model in conversions) {
           if (!conversions.hasOwnProperty(model)) continue;
@@ -123,10 +123,10 @@ var helpers = {
         }
         return out;
 
-  		default:
-  			return null;
+      default:
+        return null;
 
-  	}
+    }
   }
 }
 

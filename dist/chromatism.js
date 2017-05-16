@@ -441,28 +441,28 @@ module.exports = fromCieLab;
 
 
 function fromCmyk(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	switch (to) {
+  switch (to) {
 
-		case "rgb":
-			var r = 255 * (1 - value.c) * (1 - value.k);
-			var g = 255 * (1 - value.m) * (1 - value.k);
-			var b = 255 * (1 - value.y) * (1 - value.k);
-			return { r: r, g: g, b: b };
+    case "rgb":
+      var r = 255 * (1 - value.c) * (1 - value.k);
+      var g = 255 * (1 - value.m) * (1 - value.k);
+      var b = 255 * (1 - value.y) * (1 - value.k);
+      return { r: r, g: g, b: b };
 
-		case "cssrgb":
-			var r = 255 * (1 - value.c) * (1 - value.k);
-			var g = 255 * (1 - value.m) * (1 - value.k);
-			var b = 255 * (1 - value.y) * (1 - value.k);
-			return "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
+    case "cssrgb":
+      var r = 255 * (1 - value.c) * (1 - value.k);
+      var g = 255 * (1 - value.m) * (1 - value.k);
+      var b = 255 * (1 - value.y) * (1 - value.k);
+      return "rgb(" + Math.round(r) + "," + Math.round(g) + "," + Math.round(b) + ")";
 
-		default:
-			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
-	}
+    default:
+      var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
+  }
 }
 
 module.exports = fromCmyk;
@@ -475,32 +475,32 @@ module.exports = fromCmyk;
 
 
 function fromCssHsl(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	value = value.replace(/(hsl\(|\)|%|[\s]*)/g, '').split(",");
-	for (var i = 0; i < value.length; i++) {
-		value[i] = parseInt(value[i]);
-	}
-	switch (to) {
+  value = value.replace(/(hsl\(|\)|%|[\s]*)/g, '').split(",");
+  for (var i = 0; i < value.length; i++) {
+    value[i] = parseInt(value[i]);
+  }
+  switch (to) {
 
-		case "hsl":
-			return {
-				h: value[0],
-				s: value[1],
-				l: value[2]
-			};
+    case "hsl":
+      return {
+        h: value[0],
+        s: value[1],
+        l: value[2]
+      };
 
-		/* This colour mode is just an expression of HSL */
-		default:
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
-				h: value[0],
-				s: value[1],
-				l: value[2]
-			});
+    /* This colour mode is just an expression of HSL */
+    default:
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
+        h: value[0],
+        s: value[1],
+        l: value[2]
+      });
 
-	}
+  }
 }
 
 module.exports = fromCssHsl;
@@ -513,32 +513,32 @@ module.exports = fromCssHsl;
 
 
 function fromCssRgb(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	value = value.replace(/((rgb\(|\))|[\s]*)/g, '').split(",");
-	for (var i = 0; i < value.length; i++) {
-		value[i] = parseInt(value[i]);
-	}
-	switch (to) {
+  value = value.replace(/((rgb\(|\))|[\s]*)/g, '').split(",");
+  for (var i = 0; i < value.length; i++) {
+    value[i] = parseInt(value[i]);
+  }
+  switch (to) {
 
-		case "rgb":
-			return {
-				r: value[0],
-				g: value[1],
-				b: value[2]
-			};
+    case "rgb":
+      return {
+        r: value[0],
+        g: value[1],
+        b: value[2]
+      };
 
-		/* This colour mode is just an expression of RGB */
-		default:
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
-				r: value[0],
-				g: value[1],
-				b: value[2]
-			});
+    /* This colour mode is just an expression of RGB */
+    default:
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
+        r: value[0],
+        g: value[1],
+        b: value[2]
+      });
 
-	}
+  }
 }
 
 module.exports = fromCssRgb;
@@ -551,32 +551,32 @@ module.exports = fromCssRgb;
 
 
 function fromHex(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	value = value.replace('#', '').match(/.{2}/g);
-	for (var i = 0; i < value.length; i++) {
-		value[i] = parseInt(value[i], 16);
-	}
-	switch (to) {
+  value = value.replace('#', '').match(/.{2}/g);
+  for (var i = 0; i < value.length; i++) {
+    value[i] = parseInt(value[i], 16);
+  }
+  switch (to) {
 
-		case "rgb":
-			return {
-				r: value[0],
-				g: value[1],
-				b: value[2]
-			};
+    case "rgb":
+      return {
+        r: value[0],
+        g: value[1],
+        b: value[2]
+      };
 
-		/* This colour mode is just an expression of RGB */
-		default:
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
-				r: value[0],
-				g: value[1],
-				b: value[2]
-			});
+    /* This colour mode is just an expression of RGB */
+    default:
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, {
+        r: value[0],
+        g: value[1],
+        b: value[2]
+      });
 
-	}
+  }
 }
 
 module.exports = fromHex;
@@ -589,89 +589,89 @@ module.exports = fromHex;
 
 
 function fromHsl(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	switch (to) {
+  switch (to) {
 
-		case "rgb":
-			if (value.s == 0) {
-				var grey = value.l / 100 * 255;
-				return {
-					r: grey,
-					g: grey,
-					b: grey
-				};
-			} else {
-				var tempOne, tempTwo, tempHue;
-				if (value.l >= 50) {
-					tempOne = value.l / 100 + value.s / 100 - value.l / 100 * (value.s / 100);
-				} else {
-					tempOne = value.l / 100 * (1 + value.s / 100);
-				}
-				tempTwo = 2 * (value.l / 100) - tempOne;
-				tempHue = value.h / 360;
-				var tempR = (tempHue + 0.333) % 1;
-				var tempG = tempHue;
-				var tempB = helpers.negMod(tempHue - 0.333, 1);
-				var r, g, b;
-				if (6 * tempR < 1) {
-					r = tempTwo + (tempOne - tempTwo) * 6 * tempR;
-				} else if (2 * tempR < 1) {
-					r = tempOne;
-				} else if (3 * tempR < 2) {
-					r = tempTwo + (tempOne - tempTwo) * ((0.666 - tempR) * 6);
-				} else {
-					r = tempTwo;
-				}
-				if (6 * tempG < 1) {
-					g = tempTwo + (tempOne - tempTwo) * 6 * tempG;
-				} else if (2 * tempG < 1) {
-					g = tempOne;
-				} else if (3 * tempG < 2) {
-					g = tempTwo + (tempOne - tempTwo) * ((0.666 - tempG) * 6);
-				} else {
-					g = tempTwo;
-				}
-				if (6 * tempB < 1) {
-					b = tempTwo + (tempOne - tempTwo) * 6 * tempB;
-				} else if (2 * tempB < 1) {
-					b = tempOne;
-				} else if (3 * tempB < 2) {
-					b = tempTwo + (tempOne - tempTwo) * ((0.666 - tempB) * 6);
-				} else {
-					b = tempTwo;
-				}
-				if (r < 0) r = 0;
-				if (g < 0) g = 0;
-				if (b < 0) b = 0;
-				return {
-					r: r * 255,
-					g: g * 255,
-					b: b * 255
-				};
-			}
+    case "rgb":
+      if (value.s == 0) {
+        var grey = value.l / 100 * 255;
+        return {
+          r: grey,
+          g: grey,
+          b: grey
+        };
+      } else {
+        var tempOne, tempTwo, tempHue;
+        if (value.l >= 50) {
+          tempOne = value.l / 100 + value.s / 100 - value.l / 100 * (value.s / 100);
+        } else {
+          tempOne = value.l / 100 * (1 + value.s / 100);
+        }
+        tempTwo = 2 * (value.l / 100) - tempOne;
+        tempHue = value.h / 360;
+        var tempR = (tempHue + 0.333) % 1;
+        var tempG = tempHue;
+        var tempB = helpers.negMod(tempHue - 0.333, 1);
+        var r, g, b;
+        if (6 * tempR < 1) {
+          r = tempTwo + (tempOne - tempTwo) * 6 * tempR;
+        } else if (2 * tempR < 1) {
+          r = tempOne;
+        } else if (3 * tempR < 2) {
+          r = tempTwo + (tempOne - tempTwo) * ((0.666 - tempR) * 6);
+        } else {
+          r = tempTwo;
+        }
+        if (6 * tempG < 1) {
+          g = tempTwo + (tempOne - tempTwo) * 6 * tempG;
+        } else if (2 * tempG < 1) {
+          g = tempOne;
+        } else if (3 * tempG < 2) {
+          g = tempTwo + (tempOne - tempTwo) * ((0.666 - tempG) * 6);
+        } else {
+          g = tempTwo;
+        }
+        if (6 * tempB < 1) {
+          b = tempTwo + (tempOne - tempTwo) * 6 * tempB;
+        } else if (2 * tempB < 1) {
+          b = tempOne;
+        } else if (3 * tempB < 2) {
+          b = tempTwo + (tempOne - tempTwo) * ((0.666 - tempB) * 6);
+        } else {
+          b = tempTwo;
+        }
+        if (r < 0) r = 0;
+        if (g < 0) g = 0;
+        if (b < 0) b = 0;
+        return {
+          r: r * 255,
+          g: g * 255,
+          b: b * 255
+        };
+      }
 
-		case "csshsl":
-			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
+    case "csshsl":
+      return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
 
-		case "hsv":
-			value.s = value.s / 100;
-			value.l = value.l / 100;
-			var i = value.s * (value.l < .5 ? value.l : 1 - value.l);
+    case "hsv":
+      value.s = value.s / 100;
+      value.l = value.l / 100;
+      var i = value.s * (value.l < .5 ? value.l : 1 - value.l);
 
-			var h = value.h;
-			var s = 2 * i / (value.l + i);
-			var v = value.l + i;
+      var h = value.h;
+      var s = 2 * i / (value.l + i);
+      var v = value.l + i;
 
-			return { h: h, s: s * 100, v: v * 100 };
+      return { h: h, s: s * 100, v: v * 100 };
 
-		default:
-			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
+    default:
+      var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
 
-	}
+  }
 }
 
 module.exports = fromHsl;
@@ -684,78 +684,78 @@ module.exports = fromHsl;
 
 
 function fromHsv(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	switch (to) {
+  switch (to) {
 
-		case "rgb":
-			var r, g, b;
-			value.h = value.h / 360;
-			value.s = value.s / 100;
-			value.v = value.v / 100;
+    case "rgb":
+      var r, g, b;
+      value.h = value.h / 360;
+      value.s = value.s / 100;
+      value.v = value.v / 100;
 
-			var hsix = value.h * 6;
-			if (hsix == 6) hsix = 0;
-			var i = Math.round(hsix);
-			var var_1 = value.v * (1 - value.s);
-			var var_2 = value.v * (1 - value.s * (hsix - i));
-			var var_3 = value.v * (1 - value.s * (1 - (hsix - i)));
+      var hsix = value.h * 6;
+      if (hsix == 6) hsix = 0;
+      var i = Math.round(hsix);
+      var var_1 = value.v * (1 - value.s);
+      var var_2 = value.v * (1 - value.s * (hsix - i));
+      var var_3 = value.v * (1 - value.s * (1 - (hsix - i)));
 
-			var r2, g2, b2;
+      var r2, g2, b2;
 
-			if (i == 0) {
-				r2 = value.v;
-				g2 = var_3;
-				b2 = var_1;
-			} else if (i == 1) {
-				r2 = var_2;
-				g2 = value.v;
-				b2 = var_1;
-			} else if (i == 2) {
-				r2 = var_1;
-				g2 = value.v;
-				b2 = var_3;
-			} else if (i == 3) {
-				r2 = var_1;
-				g2 = var_2;
-				b2 = value.v;
-			} else if (i == 4) {
-				r2 = var_3;
-				g2 = var_1;
-				b2 = value.v;
-			} else {
-				r2 = value.v;
-				g2 = var_1;
-				b2 = var_2;
-			}
+      if (i == 0) {
+        r2 = value.v;
+        g2 = var_3;
+        b2 = var_1;
+      } else if (i == 1) {
+        r2 = var_2;
+        g2 = value.v;
+        b2 = var_1;
+      } else if (i == 2) {
+        r2 = var_1;
+        g2 = value.v;
+        b2 = var_3;
+      } else if (i == 3) {
+        r2 = var_1;
+        g2 = var_2;
+        b2 = value.v;
+      } else if (i == 4) {
+        r2 = var_3;
+        g2 = var_1;
+        b2 = value.v;
+      } else {
+        r2 = value.v;
+        g2 = var_1;
+        b2 = var_2;
+      }
 
-			r = r2 * 255;
-			g = g2 * 255;
-			b = b2 * 255;
+      r = r2 * 255;
+      g = g2 * 255;
+      b = b2 * 255;
 
-			return { r: r, g: g, b: b };
+      return { r: r, g: g, b: b };
 
-		case "hsl":
-			value.h = value.h / 360;
-			value.s = value.s / 100;
-			value.v = value.v / 100;
-			var h = value.h;
-			var s;
-			if ((2 - value.s) * value.v < 1) {
-				s = value.s * value.v / ((2 - value.s) * value.v);
-			} else {
-				s = value.s * value.v / (2 - (2 - value.s) * value.v);
-			}
-			var l = (2 - value.s) * value.v / 2;
-			return { h: h * 360, s: s * 100, l: l * 100 };
+    case "hsl":
+      value.h = value.h / 360;
+      value.s = value.s / 100;
+      value.v = value.v / 100;
+      var h = value.h;
+      var s;
+      if ((2 - value.s) * value.v < 1) {
+        s = value.s * value.v / ((2 - value.s) * value.v);
+      } else {
+        s = value.s * value.v / (2 - (2 - value.s) * value.v);
+      }
+      var l = (2 - value.s) * value.v / 2;
+      return { h: h * 360, s: s * 100, l: l * 100 };
 
-		default:
-			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
+    default:
+      var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
 
-	}
+  }
 }
 
 module.exports = fromHsv;
@@ -811,168 +811,168 @@ module.exports = fromLms;
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
 function fromRgb(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	switch (to) {
+  switch (to) {
 
-		case "hex":
-			var r = Math.round(value['r']).toString(16);
-			if (r.length == 1) r = "0" + r;
-			var g = Math.round(value['g']).toString(16);
-			if (g.length == 1) g = "0" + g;
-			var b = Math.round(value['b']).toString(16);
-			if (b.length == 1) b = "0" + b;
-			return "#" + r + g + b;
-			break;
+    case "hex":
+      var r = Math.round(value['r']).toString(16);
+      if (r.length == 1) r = "0" + r;
+      var g = Math.round(value['g']).toString(16);
+      if (g.length == 1) g = "0" + g;
+      var b = Math.round(value['b']).toString(16);
+      if (b.length == 1) b = "0" + b;
+      return "#" + r + g + b;
+      break;
 
-		case "cssrgb":
-			return "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")";
-			break;
+    case "cssrgb":
+      return "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")";
+      break;
 
-		case "hsl":
-			var r = value['r'] / 255;
-			var g = value['g'] / 255;
-			var b = value['b'] / 255;
-			var rgbOrdered = [r, g, b].sort();
-			var l = (rgbOrdered[0] + rgbOrdered[2]) / 2 * 100;
-			var s, h;
-			if (rgbOrdered[0] == rgbOrdered[2]) {
-				s = 0;
-				h = 0;
-			} else {
-				if (l >= 50) {
-					s = (rgbOrdered[2] - rgbOrdered[0]) / (2.0 - rgbOrdered[2] - rgbOrdered[0]) * 100;
-				} else {
-					s = (rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0]) * 100;
-				}
-				if (rgbOrdered[2] == r) {
-					h = (g - b) / (rgbOrdered[2] - rgbOrdered[0]) * 60;
-				} else if (rgbOrdered[2] == g) {
-					h = (2 + (b - r) / (rgbOrdered[2] - rgbOrdered[0])) * 60;
-				} else {
-					h = (4 + (r - g) / (rgbOrdered[2] - rgbOrdered[0])) * 60;
-				}
-				if (h < 0) {
-					h += 360;
-				} else if (h > 360) {
-					h = h % 360;
-				}
-			};
-			return {
-				h: h,
-				s: s,
-				l: l
-			};
-			break;
+    case "hsl":
+      var r = value['r'] / 255;
+      var g = value['g'] / 255;
+      var b = value['b'] / 255;
+      var rgbOrdered = [r, g, b].sort();
+      var l = (rgbOrdered[0] + rgbOrdered[2]) / 2 * 100;
+      var s, h;
+      if (rgbOrdered[0] == rgbOrdered[2]) {
+        s = 0;
+        h = 0;
+      } else {
+        if (l >= 50) {
+          s = (rgbOrdered[2] - rgbOrdered[0]) / (2.0 - rgbOrdered[2] - rgbOrdered[0]) * 100;
+        } else {
+          s = (rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0]) * 100;
+        }
+        if (rgbOrdered[2] == r) {
+          h = (g - b) / (rgbOrdered[2] - rgbOrdered[0]) * 60;
+        } else if (rgbOrdered[2] == g) {
+          h = (2 + (b - r) / (rgbOrdered[2] - rgbOrdered[0])) * 60;
+        } else {
+          h = (4 + (r - g) / (rgbOrdered[2] - rgbOrdered[0])) * 60;
+        }
+        if (h < 0) {
+          h += 360;
+        } else if (h > 360) {
+          h = h % 360;
+        }
+      };
+      return {
+        h: h,
+        s: s,
+        l: l
+      };
+      break;
 
-		case "csshsl":
-			var hsl = operations.convert({ conversions: conversions, helpers: helpers }, "hsl", value);
-			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
-			break;
+    case "csshsl":
+      var hsl = operations.convert({ conversions: conversions, helpers: helpers }, "hsl", value);
+      return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
+      break;
 
-		case "cmyk":
-			var tempR = value['r'] / 255;
-			var tempG = value['g'] / 255;
-			var tempB = value['b'] / 255;
-			var k = 1 - Math.max(tempR, tempG, tempB);
-			if (k != 1) {
-				var c = (1 - tempR - k) / (1 - k);
-				var m = (1 - tempG - k) / (1 - k);
-				var y = (1 - tempB - k) / (1 - k);
-			} else {
-				var c = 0;
-				var m = 0;
-				var y = 0;
-			}
-			return { c: c, m: m, y: y, k: k };
-			break;
+    case "cmyk":
+      var tempR = value['r'] / 255;
+      var tempG = value['g'] / 255;
+      var tempB = value['b'] / 255;
+      var k = 1 - Math.max(tempR, tempG, tempB);
+      if (k != 1) {
+        var c = (1 - tempR - k) / (1 - k);
+        var m = (1 - tempG - k) / (1 - k);
+        var y = (1 - tempB - k) / (1 - k);
+      } else {
+        var c = 0;
+        var m = 0;
+        var y = 0;
+      }
+      return { c: c, m: m, y: y, k: k };
+      break;
 
-		case "hsv":
-			var r = value.r / 255;
-			var g = value.g / 255;
-			var b = value.b / 255;
+    case "hsv":
+      var r = value.r / 255;
+      var g = value.g / 255;
+      var b = value.b / 255;
 
-			var min = Math.min(r, g, b);
-			var max = Math.max(r, g, b);
-			var maxDelta = max - min;
+      var min = Math.min(r, g, b);
+      var max = Math.max(r, g, b);
+      var maxDelta = max - min;
 
-			var v = max;
-			var h, s;
+      var v = max;
+      var h, s;
 
-			if (maxDelta == 0) {
-				h = 0;
-				s = 0;
-			} else {
-				s = maxDelta / max;
+      if (maxDelta == 0) {
+        h = 0;
+        s = 0;
+      } else {
+        s = maxDelta / max;
 
-				var rDelta = ((max - r) / 6 + maxDelta / 2) / maxDelta;
-				var gDelta = ((max - g) / 6 + maxDelta / 2) / maxDelta;
-				var bDelta = ((max - b) / 6 + maxDelta / 2) / maxDelta;
+        var rDelta = ((max - r) / 6 + maxDelta / 2) / maxDelta;
+        var gDelta = ((max - g) / 6 + maxDelta / 2) / maxDelta;
+        var bDelta = ((max - b) / 6 + maxDelta / 2) / maxDelta;
 
-				if (r == max) h = bDelta - gDelta;else if (g == max) h = 1 / 3 + rDelta - bDelta;else if (b == max) h = 2 / 3 + gDelta - rDelta;
+        if (r == max) h = bDelta - gDelta;else if (g == max) h = 1 / 3 + rDelta - bDelta;else if (b == max) h = 2 / 3 + gDelta - rDelta;
 
-				if (h < 0) h += 1;
-				if (h > 1) h -= 1;
-			}
-			return { h: h * 360, s: s * 100, v: v * 100 };
-			break;
+        if (h < 0) h += 1;
+        if (h > 1) h -= 1;
+      }
+      return { h: h * 360, s: s * 100, v: v * 100 };
+      break;
 
-		case "yiq":
-			var y = 0.299 * (value.r / 255) + 0.587 * (value.g / 255) + 0.114 * (value.b / 255);
-			var i = 0.596 * (value.r / 255) + -0.274 * (value.g / 255) + -0.322 * (value.b / 255);
-			var q = 0.211 * (value.r / 255) + -0.523 * (value.g / 255) + 0.312 * (value.b / 255);
-			/* YIQ is not a transformation of RGB, so it's pretty lossy */
-			i = helpers.bounded(i, [-0.5957, 0.5957]);
-			q = helpers.bounded(q, [-0.5226, 0.5226]);
-			return { y: y, i: i, q: q };
-			break;
+    case "yiq":
+      var y = 0.299 * (value.r / 255) + 0.587 * (value.g / 255) + 0.114 * (value.b / 255);
+      var i = 0.596 * (value.r / 255) + -0.274 * (value.g / 255) + -0.322 * (value.b / 255);
+      var q = 0.211 * (value.r / 255) + -0.523 * (value.g / 255) + 0.312 * (value.b / 255);
+      /* YIQ is not a transformation of RGB, so it's pretty lossy */
+      i = helpers.bounded(i, [-0.5957, 0.5957]);
+      q = helpers.bounded(q, [-0.5226, 0.5226]);
+      return { y: y, i: i, q: q };
+      break;
 
-		/**
-   * XYZ, used for XYZ dependants below as well
-   */
-		case "XYZ":
-			var normalized = [value.r, value.g, value.b].map(function (v) {
-				return v / 255;
-			});
+    /**
+     * XYZ, used for XYZ dependants below as well
+     */
+    case "XYZ":
+      var normalized = [value.r, value.g, value.b].map(function (v) {
+        return v / 255;
+      });
 
-			var linear = normalized.map(function (V) {
-				if (V <= 0.04045) return V / 12.92;
-				return Math.pow((V + 0.055) / 1.055, 2.4);
-			});
+      var linear = normalized.map(function (V) {
+        if (V <= 0.04045) return V / 12.92;
+        return Math.pow((V + 0.055) / 1.055, 2.4);
+      });
 
-			// Observer is 2°
-			// Whitepoint is D65
-			// sRGB standard stuff eh!
-			// [ Shamelessly stolen off Wikipedia ]
-			var M = [[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]];
+      // Observer is 2°
+      // Whitepoint is D65
+      // sRGB standard stuff eh!
+      // [ Shamelessly stolen off Wikipedia ]
+      var M = [[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]];
 
-			var _M$map$map = M.map(function (m) {
-				return linear.reduce(function (acc, v, key) {
-					return m[key] * v + acc;
-				}, 0);
-			}).map(function (o) {
-				return o * 100;
-			}),
-			    _M$map$map2 = _slicedToArray(_M$map$map, 3),
-			    X = _M$map$map2[0],
-			    Y = _M$map$map2[1],
-			    Z = _M$map$map2[2];
+      var _M$map$map = M.map(function (m) {
+        return linear.reduce(function (acc, v, key) {
+          return m[key] * v + acc;
+        }, 0);
+      }).map(function (o) {
+        return o * 100;
+      }),
+          _M$map$map2 = _slicedToArray(_M$map$map, 3),
+          X = _M$map$map2[0],
+          Y = _M$map$map2[1],
+          Z = _M$map$map2[2];
 
-			return { X: X, Y: Y, Z: Z };
-			break;
+      return { X: X, Y: Y, Z: Z };
+      break;
 
-		/**
-   * XYZ dependants
-   */
-		case "lms":
-		case "cielab":
-		case "xyY":
-			var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
-			break;
-	}
+    /**
+     * XYZ dependants
+     */
+    case "lms":
+    case "cielab":
+    case "xyY":
+      var XYZ = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "XYZ", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, XYZ);
+      break;
+  }
 }
 
 module.exports = fromRgb;
@@ -1092,30 +1092,30 @@ module.exports = fromXYZ;
 
 
 function fromYiq(_ref, to, value) {
-	var conversions = _ref.conversions,
-	    operations = _ref.operations,
-	    helpers = _ref.helpers;
+  var conversions = _ref.conversions,
+      operations = _ref.operations,
+      helpers = _ref.helpers;
 
-	/* YIQ is not a transformation of RGB, so it's pretty lossy */
-	value.i = helpers.bounded(value.i, [-0.5957, 0.5957]);
-	value.q = helpers.bounded(value.q, [-0.5226, 0.5226]);
+  /* YIQ is not a transformation of RGB, so it's pretty lossy */
+  value.i = helpers.bounded(value.i, [-0.5957, 0.5957]);
+  value.q = helpers.bounded(value.q, [-0.5226, 0.5226]);
 
-	switch (to) {
+  switch (to) {
 
-		case "rgb":
-			var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
-			var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
-			var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
-			r = helpers.bounded(r, [0, 255]);
-			g = helpers.bounded(g, [0, 255]);
-			b = helpers.bounded(b, [0, 255]);
-			return { r: r, g: g, b: b };
+    case "rgb":
+      var r = 255 * (value.y + 0.956 * value.i + 0.621 * value.q);
+      var g = 255 * (value.y + -0.272 * value.i + -0.647 * value.q);
+      var b = 255 * (value.y + -1.106 * value.i + -1.703 * value.q);
+      r = helpers.bounded(r, [0, 255]);
+      g = helpers.bounded(g, [0, 255]);
+      b = helpers.bounded(b, [0, 255]);
+      return { r: r, g: g, b: b };
 
-		default:
-			var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
-			return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
+    default:
+      var rgb = operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, "rgb", value);
+      return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, to, rgb);
 
-	}
+  }
 }
 
 module.exports = fromYiq;
@@ -1209,15 +1209,15 @@ module.exports = adapt;
 
 
 function adjacent(_dep, deg, amount, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
-	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
 
-	for (var i = 0; i < amount - 1; i++) {
-		colour.h = _dep.helpers.negMod(colour.h + deg, 360);
-		colours.push({ h: colour.h, s: colour.s, l: colour.l });
-	}
+  for (var i = 0; i < amount - 1; i++) {
+    colour.h = _dep.helpers.negMod(colour.h + deg, 360);
+    colours.push({ h: colour.h, s: colour.s, l: colour.l });
+  }
 
-	return _dep.helpers.ready(_dep, colours);
+  return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = adjacent;
@@ -1230,11 +1230,11 @@ module.exports = adjacent;
 
 
 function complementary(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	colour.h = (colour.h + 180) % 360;
+  colour.h = (colour.h + 180) % 360;
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = complementary;
@@ -1247,30 +1247,30 @@ module.exports = complementary;
 
 
 function contrast(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+  var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
-	colour.r = ((colour.r / 255.0 - 0.5) * shift + 0.5) * 255.0;
-	if (colour.r < 0) {
-		colour.r = 0;
-	} else if (colour.r > 255) {
-		colour.r = 255;
-	}
+  colour.r = ((colour.r / 255.0 - 0.5) * shift + 0.5) * 255.0;
+  if (colour.r < 0) {
+    colour.r = 0;
+  } else if (colour.r > 255) {
+    colour.r = 255;
+  }
 
-	colour.g = ((colour.g / 255.0 - 0.5) * shift + 0.5) * 255.0;
-	if (colour.g < 0) {
-		colour.g = 0;
-	} else if (colour.g > 255) {
-		colour.g = 255;
-	}
+  colour.g = ((colour.g / 255.0 - 0.5) * shift + 0.5) * 255.0;
+  if (colour.g < 0) {
+    colour.g = 0;
+  } else if (colour.g > 255) {
+    colour.g = 255;
+  }
 
-	colour.b = ((colour.b / 255.0 - 0.5) * shift + 0.5) * 255.0;
-	if (colour.b < 0) {
-		colour.b = 0;
-	} else if (colour.b > 255) {
-		colour.b = 255;
-	}
+  colour.b = ((colour.b / 255.0 - 0.5) * shift + 0.5) * 255.0;
+  if (colour.b < 0) {
+    colour.b = 0;
+  } else if (colour.b > 255) {
+    colour.b = 255;
+  }
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = contrast;
@@ -1283,16 +1283,16 @@ module.exports = contrast;
 
 
 function contrastRatio(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+  var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
-	var yiq = (colour.r * 299 + colour.g * 587 + colour.b * 114) / 1000;
-	if (yiq >= 128) {
-		colour = { r: 0, g: 0, b: 0 };
-	} else {
-		colour = { r: 255, g: 255, b: 255 };
-	}
+  var yiq = (colour.r * 299 + colour.g * 587 + colour.b * 114) / 1000;
+  if (yiq >= 128) {
+    colour = { r: 0, g: 0, b: 0 };
+  } else {
+    colour = { r: 255, g: 255, b: 255 };
+  }
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = contrastRatio;
@@ -1305,16 +1305,16 @@ module.exports = contrastRatio;
 
 
 function convert(_dep, to, value) {
-	if (Object.keys(_dep.conversions).indexOf(to) > -1) {
-		var from = _dep.helpers.determineMode(value);
-		if (from != to) {
-			return _dep.conversions[from].convert(_dep, to, value);
-		} else {
-			return value;
-		}
-	} else {
-		return _dep.helpers.ready(_dep, to);
-	}
+  if (Object.keys(_dep.conversions).indexOf(to) > -1) {
+    var from = _dep.helpers.determineMode(value);
+    if (from != to) {
+      return _dep.conversions[from].convert(_dep, to, value);
+    } else {
+      return value;
+    }
+  } else {
+    return _dep.helpers.ready(_dep, to);
+  }
 }
 
 module.exports = convert;
@@ -1371,27 +1371,27 @@ module.exports = difference;
 
 
 function fade(_dep, amount, fromRef, toRef) {
-	var fromColour = _dep.operations.convert(_dep, "rgb", fromRef);
-	var toColour = _dep.operations.convert(_dep, "rgb", toRef);
+  var fromColour = _dep.operations.convert(_dep, "rgb", fromRef);
+  var toColour = _dep.operations.convert(_dep, "rgb", toRef);
 
-	var colours = [fromColour];
-	amount = amount - 1;
+  var colours = [fromColour];
+  amount = amount - 1;
 
-	var rDiff = (toColour.r - fromColour.r) / amount;
-	var gDiff = (toColour.g - fromColour.g) / amount;
-	var bDiff = (toColour.b - fromColour.b) / amount;
-	var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b };
+  var rDiff = (toColour.r - fromColour.r) / amount;
+  var gDiff = (toColour.g - fromColour.g) / amount;
+  var bDiff = (toColour.b - fromColour.b) / amount;
+  var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b };
 
-	for (var i = 0; i < amount - 1; i++) {
-		colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
-		colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
-		colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
-		colours.push({ r: colour.r, g: colour.g, b: colour.b });
-	}
+  for (var i = 0; i < amount - 1; i++) {
+    colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
+    colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
+    colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
+    colours.push({ r: colour.r, g: colour.g, b: colour.b });
+  }
 
-	colours.push(toColour);
+  colours.push(toColour);
 
-	return _dep.helpers.ready(_dep, colours);
+  return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = fade;
@@ -1404,12 +1404,12 @@ module.exports = fade;
 
 
 function greyscale(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+  var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
-	var grey = (colour.r + colour.g + colour.b) / 3;
-	colour = { r: grey, g: grey, b: grey };
+  var grey = (colour.r + colour.g + colour.b) / 3;
+  colour = { r: grey, g: grey, b: grey };
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = greyscale;
@@ -1422,11 +1422,11 @@ module.exports = greyscale;
 
 
 function hue(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	colour.h = _dep.helpers.negMod(colour.h + shift, 360);
+  colour.h = _dep.helpers.negMod(colour.h + shift, 360);
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = hue;
@@ -1439,13 +1439,13 @@ module.exports = hue;
 
 
 function invert(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+  var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
-	colour.r = _dep.helpers.negMod(255 - colour.r, 255);
-	colour.g = _dep.helpers.negMod(255 - colour.g, 255);
-	colour.b = _dep.helpers.negMod(255 - colour.b, 255);
+  colour.r = _dep.helpers.negMod(255 - colour.r, 255);
+  colour.g = _dep.helpers.negMod(255 - colour.g, 255);
+  colour.b = _dep.helpers.negMod(255 - colour.b, 255);
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = invert;
@@ -1458,11 +1458,11 @@ module.exports = invert;
 
 
 function invertLightness(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	colour.l = 100 - colour.l;
+  colour.l = 100 - colour.l;
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = invertLightness;
@@ -1475,15 +1475,15 @@ module.exports = invertLightness;
 
 
 function mid(_dep, colourOneRef, colourTwoRef) {
-	var colourOne = _dep.operations.convert(_dep, "hsl", colourOneRef);
-	var colourTwo = _dep.operations.convert(_dep, "hsl", colourTwoRef);
+  var colourOne = _dep.operations.convert(_dep, "hsl", colourOneRef);
+  var colourTwo = _dep.operations.convert(_dep, "hsl", colourTwoRef);
 
-	var midHue = (colourOne.h + colourTwo.h) / 2;
-	var midSat = (colourOne.s + colourTwo.s) / 2;
-	var midLight = (colourOne.l + colourTwo.l) / 2;
-	var colour = { h: midHue, s: midSat, l: midLight };
+  var midHue = (colourOne.h + colourTwo.h) / 2;
+  var midSat = (colourOne.s + colourTwo.s) / 2;
+  var midLight = (colourOne.l + colourTwo.l) / 2;
+  var colour = { h: midHue, s: midSat, l: midLight };
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = mid;
@@ -1496,14 +1496,14 @@ module.exports = mid;
 
 
 function multiply(_dep, colourRefOne, colourRefTwo) {
-	var c1 = _dep.operations.convert(_dep, "hsl", colourRefOne);
-	var c2 = _dep.operations.convert(_dep, "hsl", colourRefTwo);
+  var c1 = _dep.operations.convert(_dep, "hsl", colourRefOne);
+  var c2 = _dep.operations.convert(_dep, "hsl", colourRefTwo);
 
-	var colour = { h: c1.h, s: c1.s, l: 100 * (c1.l / 100 * (c2.l / 100)) };
-	colour.l = colour.l > 100 ? 100 : colour.l;
-	colour.l = colour.l < 0 ? 0 : colour.l;
+  var colour = { h: c1.h, s: c1.s, l: 100 * (c1.l / 100 * (c2.l / 100)) };
+  colour.l = colour.l > 100 ? 100 : colour.l;
+  colour.l = colour.l < 0 ? 0 : colour.l;
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = multiply;
@@ -1516,16 +1516,16 @@ module.exports = multiply;
 
 
 function saturation(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	colour.s = colour.s + shift;
-	if (colour.s < 0) {
-		colour.s = 0;
-	} else if (colour.s > 100) {
-		colour.s = 100;
-	}
+  colour.s = colour.s + shift;
+  if (colour.s < 0) {
+    colour.s = 0;
+  } else if (colour.s > 100) {
+    colour.s = 100;
+  }
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = saturation;
@@ -1538,14 +1538,14 @@ module.exports = saturation;
 
 
 function sepia(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "rgb", colourRef);
+  var colour = _dep.operations.convert(_dep, "rgb", colourRef);
 
-	var newcolour = {};
-	newcolour.r = colour.r * 0.393 + colour.g * 0.769 + colour.b * 0.189;
-	newcolour.g = colour.r * 0.349 + colour.g * 0.686 + colour.b * 0.168;
-	newcolour.b = colour.r * 0.272 + colour.g * 0.534 + colour.b * 0.131;
+  var newcolour = {};
+  newcolour.r = colour.r * 0.393 + colour.g * 0.769 + colour.b * 0.189;
+  newcolour.g = colour.r * 0.349 + colour.g * 0.686 + colour.b * 0.168;
+  newcolour.b = colour.r * 0.272 + colour.g * 0.534 + colour.b * 0.131;
 
-	return _dep.helpers.ready(_dep, newcolour);
+  return _dep.helpers.ready(_dep, newcolour);
 }
 
 module.exports = sepia;
@@ -1558,16 +1558,16 @@ module.exports = sepia;
 
 
 function shade(_dep, shift, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	colour.l = colour.l + shift;
-	if (colour.l < 0) {
-		colour.l = 0;
-	} else if (colour.l > 100) {
-		colour.l = 100;
-	}
+  colour.l = colour.l + shift;
+  if (colour.l < 0) {
+    colour.l = 0;
+  } else if (colour.l > 100) {
+    colour.l = 100;
+  }
 
-	return _dep.helpers.ready(_dep, colour);
+  return _dep.helpers.ready(_dep, colour);
 }
 
 module.exports = shade;
@@ -1580,15 +1580,15 @@ module.exports = shade;
 
 
 function tetrad(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
-	for (var i = 0; i < 3; i++) {
-		colour.h = (colour.h + 90) % 360;
-		colours.push({ h: colour.h, s: colour.s, l: colour.l });
-	}
+  var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+  for (var i = 0; i < 3; i++) {
+    colour.h = (colour.h + 90) % 360;
+    colours.push({ h: colour.h, s: colour.s, l: colour.l });
+  }
 
-	return _dep.helpers.ready(_dep, colours);
+  return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = tetrad;
@@ -1601,15 +1601,15 @@ module.exports = tetrad;
 
 
 function triad(_dep, colourRef) {
-	var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-	var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
-	for (var i = 0; i < 2; i++) {
-		colour.h = (colour.h + 120) % 360;
-		colours.push({ h: colour.h, s: colour.s, l: colour.l });
-	}
+  var colours = [{ h: colour.h, s: colour.s, l: colour.l }];
+  for (var i = 0; i < 2; i++) {
+    colour.h = (colour.h + 120) % 360;
+    colours.push({ h: colour.h, s: colour.s, l: colour.l });
+  }
 
-	return _dep.helpers.ready(_dep, colours);
+  return _dep.helpers.ready(_dep, colours);
 }
 
 module.exports = triad;

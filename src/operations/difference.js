@@ -2,10 +2,10 @@ function difference( _dep, colourRefOne, colourRefTwo, l, c ) {
   l = l || 1;
   c = c || 1;
 
-	const Lab1 = _dep.operations.convert( _dep, "cielab", colourRefOne );
-	const Lab2 = _dep.operations.convert( _dep, "cielab", colourRefTwo );
+  const Lab1 = _dep.operations.convert( _dep, "cielab", colourRefOne );
+  const Lab2 = _dep.operations.convert( _dep, "cielab", colourRefTwo );
 
-	const C1 = Math.sqrt(Math.pow(Lab1.a, 2) + Math.pow(Lab1.b, 2));
+  const C1 = Math.sqrt(Math.pow(Lab1.a, 2) + Math.pow(Lab1.b, 2));
   const C2 = Math.sqrt(Math.pow(Lab2.a, 2) + Math.pow(Lab2.b, 2));
   const dC = C1 - C2;
 

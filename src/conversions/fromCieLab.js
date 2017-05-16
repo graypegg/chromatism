@@ -1,5 +1,5 @@
 function fromCieLab( { conversions, operations, helpers }, to, value ) {
-	switch (to) {
+  switch (to) {
 
     case "XYZ":
       const epsilon = 0.008856;
@@ -20,11 +20,11 @@ function fromCieLab( { conversions, operations, helpers }, to, value ) {
         Z: Zr * white.Z
       };
 
-		default:
+    default:
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
       return operations.convert({ conversions, operations, helpers }, to, XYZ);
 
-	}
+  }
 }
 
 module.exports = fromCieLab;

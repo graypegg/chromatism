@@ -1,8 +1,8 @@
 function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
-	var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
-	var illuminantD = _dep.operations.convert( _dep, "lms", illuminantDRef );
+  var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
+  var illuminantD = _dep.operations.convert( _dep, "lms", illuminantDRef );
   if (illuminantSRef) {
-	  var illuminantS = _dep.operations.convert( _dep, "lms", illuminantSRef );
+    var illuminantS = _dep.operations.convert( _dep, "lms", illuminantSRef );
   } else {
     var illuminantS = _dep.operations.convert( _dep, "lms", _dep.helpers.getIlluminant("D65") );
   }
@@ -43,7 +43,7 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
     Z: resultArray[2][0]
   }
 
-	return _dep.helpers.ready( _dep, result );
+  return _dep.helpers.ready( _dep, result );
 }
 
 module.exports = adapt;

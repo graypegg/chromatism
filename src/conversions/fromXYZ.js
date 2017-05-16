@@ -1,5 +1,5 @@
 function fromXYZ( { conversions, operations, helpers }, to, value ) {
-	switch (to) {
+  switch (to) {
 
     case "rgb":
       let normalized = [value.X, value.Y, value.Z].map((v) => v / 100);
@@ -77,11 +77,11 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         Y: value.Y
       };
 
-		default:
+    default:
       var rgb = helpers.boundedRgb(operations.convert({ conversions, operations, helpers }, "rgb", value));
       return operations.convert({ conversions, operations, helpers }, to, rgb);
 
-	}
+  }
 }
 
 module.exports = fromXYZ;
