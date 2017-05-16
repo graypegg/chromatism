@@ -1,7 +1,8 @@
-let constants = require('./constants.js')
-let conversions = require('./conversions')
+const constants = require('./constants.js')
+const conversions = require('./conversions')
+const api = require('./api.js')
 
-var helpers = {
+const helpers = {
   getIlluminant (ref) {
     return constants.ILLUMINANTS[ref];
   },
@@ -104,6 +105,9 @@ var helpers = {
             })
           })(model)
         }
+
+        out = Object.assign(out, api({ conversions, operations, helpers }, constants, out))
+
         return out;
 
       case "[object Array]":

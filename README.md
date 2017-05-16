@@ -61,6 +61,8 @@ var chromatism = require("chromatism");
 ## Functions
 All functions can take any colour type. **You can even mix colour types** if a function takes more than one. [A list of colour types are available here](#colour-modes). Return values are also not bound by the function. Any functions that return colours, return a colour object, which contains getters for each colour type. If you take the return value of one of these functions and get `returnValue.hex` for example, you will get the hexadecimal equivalent value.
 
+You can also chain these functions. The last parameter will be piped in from the output of the parent function.
+
 :warning: **_Note:_** The following examples return different types of values, (*hex*, *rgb*, *hsl*, etc) but you can use any of the available colour modes as seen in the colour modes table at the [bottom of this README.](#colour-modes)
 
 ### :currency_exchange: Colour Transformations

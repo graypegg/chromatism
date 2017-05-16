@@ -219,6 +219,7 @@ module.exports = {
 
 var constants = __webpack_require__(0);
 var conversions = __webpack_require__(1);
+var api = __webpack_require__(38);
 
 var helpers = {
   getIlluminant: function getIlluminant(ref) {
@@ -331,6 +332,9 @@ var helpers = {
             });
           })(model);
         }
+
+        out = Object.assign(out, api({ conversions: conversions, operations: operations, helpers: helpers }, constants, out));
+
         return out;
 
       case "[object Array]":
@@ -1622,36 +1626,52 @@ module.exports = triad;
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
 // Require dependencies
 var dependencies = {
   conversions: __webpack_require__(1),
   operations: __webpack_require__(3),
   helpers: __webpack_require__(2) };
 var constants = __webpack_require__(0);
+var api = __webpack_require__(38);
 
-// Apply transforms to API object
-var api = Object.keys(dependencies.operations).reduce(function (acc, key) {
-  var operation = dependencies.operations[key];
-  acc[key] = function () {
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
+module.exports = api(dependencies, constants);
 
-    var clone = args.slice(0).map(function (v) {
-      if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
-      return v;
-    });
-    return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone)));
-  };
-  return acc;
-}, {});
+/***/ }),
+/* 36 */,
+/* 37 */,
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// Apply constants to API object
-api = Object.assign(api, constants);
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var api = function api(dependencies, constants, chain) {
+  // Apply colour functions to API object
+  var out = Object.keys(dependencies.operations).reduce(function (acc, key) {
+    var operation = dependencies.operations[key];
+    acc[key] = function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var clone = args.slice(0).map(function (v) {
+        if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
+        return v;
+      });
+      return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [chain ? chain.colour : undefined]));
+    };
+    return acc;
+  }, {});
+
+  // Apply constants to API object if not chained
+  if (!chain) out = Object.assign(out, constants);
+
+  return out;
+};
 
 module.exports = api;
 
