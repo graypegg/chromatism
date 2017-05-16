@@ -1,5 +1,6 @@
 function fromCieLab( { conversions, operations, helpers }, to, value ) {
-	switch (to){
+	switch (to) {
+
     case "XYZ":
       const epsilon = 0.008856;
       const kappa = 903.3;
@@ -18,10 +19,11 @@ function fromCieLab( { conversions, operations, helpers }, to, value ) {
         Y: Yr * white.Y,
         Z: Zr * white.Z
       };
+
 		default:
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
       return operations.convert({ conversions, operations, helpers }, to, XYZ);
-      break;
+
 	}
 }
 

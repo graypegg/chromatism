@@ -4,6 +4,7 @@ function fromYiq( { conversions, operations, helpers }, to, value ) {
 	value.q = helpers.bounded(value.q, [-0.5226, 0.5226]);
 
 	switch (to) {
+
 		case "rgb":
 			var r = 255 * (value.y + (0.956 * value.i) + (0.621 * value.q));
 			var g = 255 * (value.y + (-0.272 * value.i) + (-0.647 * value.q));
@@ -12,11 +13,11 @@ function fromYiq( { conversions, operations, helpers }, to, value ) {
 			g = helpers.bounded(g, [0, 255]);
 			b = helpers.bounded(b, [0, 255]);
 			return {r: r, g: g, b: b};
-			break;
+
 		default:
 			var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
 			return operations.convert({ conversions, operations, helpers }, to, rgb);
-			break;
+
 	}
 }
 

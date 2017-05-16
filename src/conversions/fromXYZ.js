@@ -1,5 +1,6 @@
 function fromXYZ( { conversions, operations, helpers }, to, value ) {
-	switch (to){
+	switch (to) {
+
     case "rgb":
       let normalized = [value.X, value.Y, value.Z].map((v) => v / 100);
 
@@ -26,7 +27,6 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
 
       return helpers.boundedRgb({ r, g, b })
 
-      break;
     case "lms":
       let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
@@ -49,7 +49,6 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         beta: resultArray[2]
       }
 
-      break;
     case "cielab":
       const epsilon = 0.008856;
       const kappa = 903.3;
@@ -67,6 +66,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         a: 500 * (Fx - Fy),
         b: 200 * (Fy - Fz)
       };
+
     case "xyY":
       const x = value.X / (value.X + value.Y + value.Z);
       const y = value.Y / (value.X + value.Y + value.Z);
@@ -76,10 +76,11 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         y,
         Y: value.Y
       };
+
 		default:
       var rgb = helpers.boundedRgb(operations.convert({ conversions, operations, helpers }, "rgb", value));
       return operations.convert({ conversions, operations, helpers }, to, rgb);
-      break;
+
 	}
 }
 

@@ -4,13 +4,14 @@ function fromCssHsl( { conversions, operations, helpers }, to, value ) {
 		value[i] = parseInt(value[i]);
 	}
 	switch (to) {
+
 		case "hsl":
 			return {
 				h: value[0],
 				s: value[1],
 				l: value[2]
 			};
-			break;
+
 		/* This colour mode is just an expression of HSL */
 		default:
 			return operations.convert({ conversions, operations, helpers }, to, {
@@ -18,7 +19,7 @@ function fromCssHsl( { conversions, operations, helpers }, to, value ) {
 				s: value[1],
 				l: value[2]
 			});
-			break;
+
 	}
 }
 

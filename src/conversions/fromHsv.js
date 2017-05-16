@@ -1,5 +1,6 @@
 function fromHsv( { conversions, operations, helpers }, to, value ) {
-	switch (to){
+	switch (to) {
+
 		case "rgb":
 			var r, g, b;
 			value.h = value.h/360;
@@ -51,7 +52,7 @@ function fromHsv( { conversions, operations, helpers }, to, value ) {
 			b = b2 * 255
 
 			return {r: r, g: g, b: b};
-			break;
+
 		case "hsl":
 			value.h = value.h/360;
 			value.s = value.s/100;
@@ -65,11 +66,11 @@ function fromHsv( { conversions, operations, helpers }, to, value ) {
 			}
 			var l = ((2 - value.s) * value.v) / 2;
 			return {h: h*360, s: s*100, l: l*100};
-			break;
+
 		default:
       var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
       return operations.convert({ conversions, operations, helpers }, to, rgb);
-			break;
+
 	}
 }
 

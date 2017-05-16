@@ -11,7 +11,7 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			return "#"+r+g+b;
 			break;
 
-		case "css-rgb":
+		case "cssrgb":
 			return "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")";
 			break;
 
@@ -51,7 +51,7 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
 			};
 			break;
 
-		case "css-hsl":
+		case "csshsl":
 			var hsl = operations.convert({ conversions, helpers }, "hsl", value);
 			return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)";
 			break;

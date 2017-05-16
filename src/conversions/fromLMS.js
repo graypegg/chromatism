@@ -1,5 +1,6 @@
 function fromLms( { conversions, operations, helpers }, to, value ) {
-	switch (to){
+	switch (to) {
+
     case "XYZ":
       let valueArray = [ value.rho, value.gamma, value.beta ]
 
@@ -22,11 +23,10 @@ function fromLms( { conversions, operations, helpers }, to, value ) {
         Z: resultArray[2] * 100
       }
 
-      break;
 		default:
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
       return operations.convert({ conversions, operations, helpers }, to, XYZ);
-      break;
+
 	}
 }
 

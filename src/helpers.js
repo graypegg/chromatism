@@ -1,4 +1,5 @@
 let constants = require('./constants.js')
+let conversions = require('./conversions')
 
 var helpers = {
   getIlluminant (ref) {
@@ -76,111 +77,55 @@ var helpers = {
   },
 
   determineMode( colour ) {
-  	switch (typeof colour) {
-  		case "object":
-  			if (typeof colour.r != "undefined") {
-  				return "rgb";
-  			} else if (typeof colour.l != "undefined") {
-  				return "hsl";
-  			} else if (typeof colour.c != "undefined") {
-  				return "cmyk";
-  			} else if (typeof colour.v != "undefined") {
-  				return "hsv";
-  			} else if (typeof colour.q != "undefined") {
-  				return "yiq";
-  			} else if (typeof colour.X != "undefined") {
-  				return "XYZ";
-  			} else if (typeof colour.x != "undefined") {
-  				return "xyY";
-  			} else if (typeof colour.gamma != "undefined") {
-  				return "lms";
-        } else if (typeof colour.L != "undefined") {
-          return "cielab";
-  			} else {
-  				return null;
-  			}
-  			break;
-  		case "string":
-  			if (colour[0] === "#") {
-  				return "hex";
-  			} else if (colour.indexOf("rgb(") == 0) {
-  				return "css-rgb";
-  			} else if (colour.indexOf("hsl(") == 0) {
-  				return "css-hsl";
-  			} else {
-  				return null;
-  			}
-  			break;
-  		default:
-  			return null;
-  			break;
-  	}
+    for (model in conversions) {
+      if (!conversions.hasOwnProperty(model)) continue;
+      if (conversions[model].test(colour)) return model;
+    }
+    return null
   },
 
   ready( { conversions, operations, helpers }, colour ) {
+    let out = {};
+
   	switch (Object.prototype.toString.call(colour)) {
+
   		case "[object Object]":
   		case "[object String]":
-  			return {
-  				colour: colour,
-  				get rgb() { return operations.convert({ conversions, operations, helpers }, "rgb", this.colour) },
-  				get hsl() { return operations.convert({ conversions, operations, helpers }, "hsl", this.colour) },
-  				get hex() { return operations.convert({ conversions, operations, helpers }, "hex", this.colour) },
-  				get cmyk() { return operations.convert({ conversions, operations, helpers }, "cmyk", this.colour) },
-  				get cssrgb() { return operations.convert({ conversions, operations, helpers }, "css-rgb", this.colour) },
-  				get csshsl() { return operations.convert({ conversions, operations, helpers }, "css-hsl", this.colour) },
-  				get hsv() { return operations.convert({ conversions, operations, helpers }, "hsv", this.colour) },
-  				get yiq() { return operations.convert({ conversions, operations, helpers }, "yiq", this.colour) },
-  				get XYZ() { return operations.convert({ conversions, operations, helpers }, "XYZ", this.colour) },
-  				get xyY() { return operations.convert({ conversions, operations, helpers }, "xyY", this.colour) },
-  				get lms() { return operations.convert({ conversions, operations, helpers }, "lms", this.colour) },
-  				get cielab() { return operations.convert({ conversions, operations, helpers }, "cielab", this.colour) }
-  			}
-  			break;
+        out['colour'] = colour;
+        for (model in conversions) {
+          if (!conversions.hasOwnProperty(model)) continue;
+          (function (model) {
+            Object.defineProperty(out, model, {
+              get: () => {
+                const from = helpers.determineMode(colour);
+                return operations.convert({ conversions, operations, helpers }, model, colour);
+              },
+              enumerable: true
+            })
+          })(model)
+        }
+  			return out;
+
   		case "[object Array]":
-  			return {
-  				colours: colour,
-  				get rgb() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "rgb", colour)
-  				}) },
-  				get hsl() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "hsl", colour)
-  				}) },
-  				get hex() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "hex", colour)
-  				}) },
-  				get cmyk() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "cmyk", colour)
-  				}) },
-  				get cssrgb() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "css-rgb", colour)
-  				}) },
-  				get csshsl() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "css-hsl", colour)
-  				}) },
-  				get hsv() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "hsv", colour)
-  				}) },
-  				get yiq() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "yiq", colour)
-  				}) },
-  				get XYZ() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "XYZ", colour)
-  				}) },
-  				get xyY() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "xyY", colour)
-  				}) },
-  				get lms() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "lms", colour)
-  				}) },
-  				get cielab() { return this.colours.map( function(colour) {
-  					return operations.convert({ conversions, operations, helpers }, "cielab", colour)
-  				}) }
-  			}
-  			break;
+        out['colours'] = colour;
+        for (model in conversions) {
+          if (!conversions.hasOwnProperty(model)) continue;
+          (function (model) {
+            Object.defineProperty(out, model, {
+              get: () => {
+                colour.map((colourItem) => {
+                  operations.convert({ conversions, operations, helpers }, model, colourItem)
+                })
+              },
+              enumerable: true
+            })
+          })(model)
+        }
+        return out;
+
   		default:
   			return null;
-  			break;
+
   	}
   }
 }

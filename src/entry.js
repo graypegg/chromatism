@@ -18,6 +18,7 @@ var api = Object.keys(dependencies.operations).reduce((acc, key) => {
   return acc;
 }, {});
 
+
 // Apply constants to API object
 api = Object.assign(api, constants);
 

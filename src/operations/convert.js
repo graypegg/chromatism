@@ -1,24 +1,13 @@
 function convert( _dep, to, value ) {
-	if (to == "rgb" ||
-		to == "hsl" ||
-		to == "css-rgb" ||
-		to == "css-hsl" ||
-		to == "hex" ||
-		to == "cmyk" ||
-		to == "hsv" ||
-		to == "yiq" ||
-		to == "XYZ" ||
-		to == "xyY" ||
-		to == "lms" ||
-		to == "cielab") {
+	if (Object.keys(_dep.conversions).indexOf(to) > -1) {
 		let from = _dep.helpers.determineMode(value);
 		if (from != to) {
-			return _dep.conversions[from]( _dep, to, value );
+			return _dep.conversions[from].convert( _dep, to, value );
 		} else {
 			return value;
 		}
 	} else {
-		return _dep.helpers.ready( _dep, to);
+		return _dep.helpers.ready( _dep, to );
 	}
 }
 

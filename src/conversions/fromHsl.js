@@ -1,5 +1,6 @@
 function fromHsl( { conversions, operations, helpers }, to, value ) {
-	switch (to){
+	switch (to) {
+
 		case "rgb":
 			if (value.s == 0) {
 				var grey = (value.l / 100) * 255;
@@ -57,10 +58,10 @@ function fromHsl( { conversions, operations, helpers }, to, value ) {
 					b: b * 255
 				}
 			}
-			break;
-		case "css-hsl":
+
+		case "csshsl":
 			return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)";
-			break;
+
 		case "hsv":
 			value.s = value.s / 100;
 			value.l = value.l / 100;
@@ -71,11 +72,11 @@ function fromHsl( { conversions, operations, helpers }, to, value ) {
 			var v = value.l + i;
 
 			return {h: h, s: s*100, v: v*100};
-			break;
+
 		default:
       var rgb = operations.convert({ conversions, operations, helpers }, "rgb", value);
       return operations.convert({ conversions, operations, helpers }, to, rgb);
-			break;
+
 	}
 }
 

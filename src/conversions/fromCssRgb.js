@@ -4,13 +4,14 @@ function fromCssRgb( { conversions, operations, helpers }, to, value ) {
 		value[i] = parseInt(value[i]);
 	}
 	switch (to) {
+
 		case "rgb":
 			return {
 				r: value[0],
 				g: value[1],
 				b: value[2]
 			};
-			break;
+
 		/* This colour mode is just an expression of RGB */
 		default:
 			return operations.convert({ conversions, operations, helpers }, to, {
@@ -18,7 +19,7 @@ function fromCssRgb( { conversions, operations, helpers }, to, value ) {
 				g: value[1],
 				b: value[2]
 			});
-			break;
+
 	}
 }
 
