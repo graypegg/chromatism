@@ -1,6 +1,6 @@
 {
   "name": "chromatism",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "A simple set of utility functions for colours.",
   "main": "dist/chromatism.js",
   "repository": "toish/chromatism",
