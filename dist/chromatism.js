@@ -103,10 +103,21 @@ var api = function api(dependencies, constants, chain) {
 
       if (chain && chain.colours) {
         // Process a list of colours
-        return dependencies.helpers.ready(dependencies, chain.colours.map(function (colour) {
-          var colourObj = operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [colour]));
-          return colourObj.colour || colourObj.colours;
-        }));
+        var deepMap = function deepMap(colours) {
+          var map = dependencies.helpers.ready(dependencies, colours.map(function (colour) {
+            // If array, recurse...
+            if (Array.isArray(colour)) {
+              var branch = deepMap(colour);
+              return branch.colours || branch.colour;
+            }
+
+            // Else run function on colour
+            var colourObj = operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [colour]));
+            return colourObj.colours || colourObj.colour;
+          }));
+          return map;
+        };
+        return deepMap(chain.colours);
       } else {
         // Process a single colour
         return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [chain ? chain.colour : undefined]));
@@ -390,9 +401,13 @@ var helpers = {
           (function (model) {
             Object.defineProperty(out, model, {
               get: function get() {
-                return colour.map(function (colourItem) {
-                  return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, model, colourItem);
-                });
+                var deepMap = function deepMap(colours) {
+                  return colours.map(function (colourItem) {
+                    if (Array.isArray(colourItem)) return deepMap(colourItem);
+                    return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, model, colourItem);
+                  });
+                };
+                return deepMap(colour);
               },
               enumerable: true
             });

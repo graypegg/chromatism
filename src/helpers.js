@@ -116,9 +116,13 @@ const helpers = {
           (function (model) {
             Object.defineProperty(out, model, {
               get: () => {
-                return colour.map((colourItem) => {
-                  return operations.convert({ conversions, operations, helpers }, model, colourItem)
-                })
+                let deepMap = (function (colours) {
+                  return colours.map((colourItem) => {
+                    if (Array.isArray(colourItem)) return deepMap(colourItem);
+                    return operations.convert({ conversions, operations, helpers }, model, colourItem)
+                  });
+                });
+                return deepMap(colour);
               },
               enumerable: true
             })

@@ -10,10 +10,21 @@ var api = (function (dependencies, constants, chain) {
 
       if (chain && chain.colours) {
         // Process a list of colours
-        return dependencies.helpers.ready(dependencies, chain.colours.map((colour) => {
-          let colourObj = operation(dependencies, ...clone, colour);
-          return (colourObj.colour || colourObj.colours);
-        }));
+        let deepMap = (function (colours) {
+          let map = dependencies.helpers.ready(dependencies, colours.map((colour) => {
+            // If array, recurse...
+            if (Array.isArray(colour)) {
+              let branch = deepMap(colour);
+              return branch.colours || branch.colour;
+            }
+
+            // Else run function on colour
+            let colourObj = operation(dependencies, ...clone, colour);
+            return colourObj.colours || colourObj.colour;
+          }));
+          return map
+        });
+        return deepMap(chain.colours);
 
       } else {
         // Process a single colour
