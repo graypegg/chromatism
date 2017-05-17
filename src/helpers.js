@@ -107,7 +107,6 @@ const helpers = {
         }
 
         out = Object.assign(out, api({ conversions, operations, helpers }, constants, out))
-
         return out;
 
       case "[object Array]":
@@ -117,14 +116,16 @@ const helpers = {
           (function (model) {
             Object.defineProperty(out, model, {
               get: () => {
-                colour.map((colourItem) => {
-                  operations.convert({ conversions, operations, helpers }, model, colourItem)
+                return colour.map((colourItem) => {
+                  return operations.convert({ conversions, operations, helpers }, model, colourItem)
                 })
               },
               enumerable: true
             })
           })(model)
         }
+
+        out = Object.assign(out, api({ conversions, operations, helpers }, constants, out))
         return out;
 
       default:

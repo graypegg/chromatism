@@ -371,7 +371,6 @@ var helpers = {
         }
 
         out = Object.assign(out, api({ conversions: conversions, operations: operations, helpers: helpers }, constants, out));
-
         return out;
 
       case "[object Array]":
@@ -381,14 +380,16 @@ var helpers = {
           (function (model) {
             Object.defineProperty(out, model, {
               get: function get() {
-                colour.map(function (colourItem) {
-                  operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, model, colourItem);
+                return colour.map(function (colourItem) {
+                  return operations.convert({ conversions: conversions, operations: operations, helpers: helpers }, model, colourItem);
                 });
               },
               enumerable: true
             });
           })(_model);
         }
+
+        out = Object.assign(out, api({ conversions: conversions, operations: operations, helpers: helpers }, constants, out));
         return out;
 
       default:
