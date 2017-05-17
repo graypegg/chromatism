@@ -11,7 +11,7 @@ var api = (function (dependencies, constants, chain) {
       if (chain && chain.colours) {
         // Process a list of colours
         let deepMap = (function (colours) {
-          let map = dependencies.helpers.ready(dependencies, colours.map((colour) => {
+          return dependencies.helpers.ready(dependencies, colours.map((colour) => {
             // If array, recurse...
             if (Array.isArray(colour)) {
               let branch = deepMap(colour);
@@ -22,7 +22,6 @@ var api = (function (dependencies, constants, chain) {
             let colourObj = operation(dependencies, ...clone, colour);
             return colourObj.colours || colourObj.colour;
           }));
-          return map
         });
         return deepMap(chain.colours);
 

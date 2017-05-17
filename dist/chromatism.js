@@ -104,7 +104,7 @@ var api = function api(dependencies, constants, chain) {
       if (chain && chain.colours) {
         // Process a list of colours
         var deepMap = function deepMap(colours) {
-          var map = dependencies.helpers.ready(dependencies, colours.map(function (colour) {
+          return dependencies.helpers.ready(dependencies, colours.map(function (colour) {
             // If array, recurse...
             if (Array.isArray(colour)) {
               var branch = deepMap(colour);
@@ -115,7 +115,6 @@ var api = function api(dependencies, constants, chain) {
             var colourObj = operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [colour]));
             return colourObj.colours || colourObj.colour;
           }));
-          return map;
         };
         return deepMap(chain.colours);
       } else {
@@ -1627,13 +1626,13 @@ module.exports = sepia;
 
 
 function shade(_dep, shift, colourRef) {
-  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+  var colour = _dep.operations.convert(_dep, "hsv", colourRef);
 
-  colour.l = colour.l + shift;
-  if (colour.l < 0) {
-    colour.l = 0;
-  } else if (colour.l > 100) {
-    colour.l = 100;
+  colour.v = colour.v + shift;
+  if (colour.v < 0) {
+    colour.v = 0;
+  } else if (colour.v > 100) {
+    colour.v = 100;
   }
 
   return _dep.helpers.ready(_dep, colour);
