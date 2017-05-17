@@ -7,7 +7,18 @@ var api = (function (dependencies, constants, chain) {
         if (typeof v === 'object') return Object.assign({}, v);
         return v;
       });
-      return operation(dependencies, ...clone, (chain ? chain.colour : undefined));
+
+      if (chain && chain.colours) {
+        // Process a list of colours
+        return dependencies.helpers.ready(dependencies, chain.colours.map((colour) => {
+          let colourObj = operation(dependencies, ...clone, colour);
+          return (colourObj.colour || colourObj.colours);
+        }));
+
+      } else {
+        // Process a single colour
+        return operation(dependencies, ...clone, (chain ? chain.colour : undefined));
+      }
     }
     return acc;
   }, {});

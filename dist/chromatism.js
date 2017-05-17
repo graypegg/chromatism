@@ -100,7 +100,17 @@ var api = function api(dependencies, constants, chain) {
         if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
         return v;
       });
-      return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [chain ? chain.colour : undefined]));
+
+      if (chain && chain.colours) {
+        // Process a list of colours
+        return dependencies.helpers.ready(dependencies, chain.colours.map(function (colour) {
+          var colourObj = operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [colour]));
+          return colourObj.colour || colourObj.colours;
+        }));
+      } else {
+        // Process a single colour
+        return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [chain ? chain.colour : undefined]));
+      }
     };
     return acc;
   }, {});
@@ -1206,6 +1216,7 @@ module.exports = fromxyY;
 
 
 function adapt(_dep, colourRef, illuminantDRef, illuminantSRef) {
+
   var colour = _dep.operations.convert(_dep, "XYZ", colourRef);
   var illuminantD = _dep.operations.convert(_dep, "lms", illuminantDRef);
   if (illuminantSRef) {

@@ -1,4 +1,5 @@
 function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
+
   var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
   var illuminantD = _dep.operations.convert( _dep, "lms", illuminantDRef );
   if (illuminantSRef) {
