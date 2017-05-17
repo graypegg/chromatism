@@ -73,11 +73,48 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+/******/ 	return __webpack_require__(__webpack_require__.s = 36);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var api = function api(dependencies, constants, chain) {
+  // Apply colour functions to API object
+  var out = Object.keys(dependencies.operations).reduce(function (acc, key) {
+    var operation = dependencies.operations[key];
+    acc[key] = function () {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var clone = args.slice(0).map(function (v) {
+        if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
+        return v;
+      });
+      return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [chain ? chain.colour : undefined]));
+    };
+    return acc;
+  }, {});
+
+  // Apply constants to API object if not chained
+  if (!chain) out = Object.assign(out, constants);
+
+  return out;
+};
+
+module.exports = api;
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -121,7 +158,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -139,87 +176,87 @@ module.exports = {
     test: function test(colour) {
       return typeof colour === 'string' && colour.slice(0, 1) === '#';
     },
-    convert: __webpack_require__(8)
+    convert: __webpack_require__(9)
   },
   'rgb': {
     test: function test(colour) {
       return contains(colour, ['r', 'g', 'b']);
     },
-    convert: __webpack_require__(12)
+    convert: __webpack_require__(13)
   },
   'cssrgb': {
     test: function test(colour) {
       return typeof colour === 'string' && colour.slice(0, 4) === 'rgb(';
     },
-    convert: __webpack_require__(7)
+    convert: __webpack_require__(8)
   },
   'hsl': {
     test: function test(colour) {
       return contains(colour, ['h', 's', 'l']);
     },
-    convert: __webpack_require__(9)
+    convert: __webpack_require__(10)
   },
   'csshsl': {
     test: function test(colour) {
       return typeof colour === 'string' && colour.slice(0, 4) === 'hsl(';
     },
-    convert: __webpack_require__(6)
+    convert: __webpack_require__(7)
   },
   'hsv': {
     test: function test(colour) {
       return contains(colour, ['h', 's', 'v']);
     },
-    convert: __webpack_require__(10)
+    convert: __webpack_require__(11)
   },
   'cmyk': {
     test: function test(colour) {
       return contains(colour, ['c', 'm', 'y', 'k']);
     },
-    convert: __webpack_require__(5)
+    convert: __webpack_require__(6)
   },
   'yiq': {
     test: function test(colour) {
       return contains(colour, ['y', 'i', 'q']);
     },
-    convert: __webpack_require__(14)
+    convert: __webpack_require__(15)
   },
   'XYZ': {
     test: function test(colour) {
       return contains(colour, ['X', 'Y', 'Z']);
     },
-    convert: __webpack_require__(13)
+    convert: __webpack_require__(14)
   },
   'xyY': {
     test: function test(colour) {
       return contains(colour, ['x', 'y', 'Y']);
     },
-    convert: __webpack_require__(15)
+    convert: __webpack_require__(16)
   },
   'lms': {
     test: function test(colour) {
       return contains(colour, ['rho', 'gamma', 'beta']);
     },
-    convert: __webpack_require__(11)
+    convert: __webpack_require__(12)
   },
   'cielab': {
     test: function test(colour) {
       return contains(colour, ['L', 'a', 'b']);
     },
-    convert: __webpack_require__(4)
+    convert: __webpack_require__(5)
   }
 
 };
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var constants = __webpack_require__(0);
-var conversions = __webpack_require__(1);
-var api = __webpack_require__(38);
+var constants = __webpack_require__(1);
+var conversions = __webpack_require__(2);
+var api = __webpack_require__(0);
 
 var helpers = {
   getIlluminant: function getIlluminant(ref) {
@@ -302,7 +339,7 @@ var helpers = {
     };
   },
   determineMode: function determineMode(colour) {
-    for (model in conversions) {
+    for (var model in conversions) {
       if (!conversions.hasOwnProperty(model)) continue;
       if (conversions[model].test(colour)) return model;
     }
@@ -320,7 +357,7 @@ var helpers = {
       case "[object Object]":
       case "[object String]":
         out['colour'] = colour;
-        for (model in conversions) {
+        for (var model in conversions) {
           if (!conversions.hasOwnProperty(model)) continue;
           (function (model) {
             Object.defineProperty(out, model, {
@@ -339,8 +376,8 @@ var helpers = {
 
       case "[object Array]":
         out['colours'] = colour;
-        for (model in conversions) {
-          if (!conversions.hasOwnProperty(model)) continue;
+        for (var _model in conversions) {
+          if (!conversions.hasOwnProperty(_model)) continue;
           (function (model) {
             Object.defineProperty(out, model, {
               get: function get() {
@@ -350,7 +387,7 @@ var helpers = {
               },
               enumerable: true
             });
-          })(model);
+          })(_model);
         }
         return out;
 
@@ -364,36 +401,36 @@ var helpers = {
 module.exports = helpers;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 module.exports = {
-  adapt: __webpack_require__(16),
-  adjacent: __webpack_require__(17),
-  complementary: __webpack_require__(18),
-  contrast: __webpack_require__(19),
-  contrastRatio: __webpack_require__(20),
-  convert: __webpack_require__(21),
-  difference: __webpack_require__(22),
-  fade: __webpack_require__(23),
-  greyscale: __webpack_require__(24),
-  hue: __webpack_require__(25),
-  invert: __webpack_require__(26),
-  invertLightness: __webpack_require__(27),
-  mid: __webpack_require__(28),
-  multiply: __webpack_require__(29),
-  saturation: __webpack_require__(30),
-  sepia: __webpack_require__(31),
-  shade: __webpack_require__(32),
-  tetrad: __webpack_require__(33),
-  triad: __webpack_require__(34)
+  adapt: __webpack_require__(17),
+  adjacent: __webpack_require__(18),
+  complementary: __webpack_require__(19),
+  contrast: __webpack_require__(20),
+  contrastRatio: __webpack_require__(21),
+  convert: __webpack_require__(22),
+  difference: __webpack_require__(23),
+  fade: __webpack_require__(24),
+  greyscale: __webpack_require__(25),
+  hue: __webpack_require__(26),
+  invert: __webpack_require__(27),
+  invertLightness: __webpack_require__(28),
+  mid: __webpack_require__(29),
+  multiply: __webpack_require__(30),
+  saturation: __webpack_require__(31),
+  sepia: __webpack_require__(32),
+  shade: __webpack_require__(33),
+  tetrad: __webpack_require__(34),
+  triad: __webpack_require__(35)
 };
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -438,7 +475,7 @@ function fromCieLab(_ref, to, value) {
 module.exports = fromCieLab;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -472,7 +509,7 @@ function fromCmyk(_ref, to, value) {
 module.exports = fromCmyk;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -510,7 +547,7 @@ function fromCssHsl(_ref, to, value) {
 module.exports = fromCssHsl;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -548,7 +585,7 @@ function fromCssRgb(_ref, to, value) {
 module.exports = fromCssRgb;
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -586,7 +623,7 @@ function fromHex(_ref, to, value) {
 module.exports = fromHex;
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -681,7 +718,7 @@ function fromHsl(_ref, to, value) {
 module.exports = fromHsl;
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -765,7 +802,7 @@ function fromHsv(_ref, to, value) {
 module.exports = fromHsv;
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -806,7 +843,7 @@ function fromLms(_ref, to, value) {
 module.exports = fromLms;
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -982,7 +1019,7 @@ function fromRgb(_ref, to, value) {
 module.exports = fromRgb;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1089,7 +1126,7 @@ function fromXYZ(_ref, to, value) {
 module.exports = fromXYZ;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1125,7 +1162,7 @@ function fromYiq(_ref, to, value) {
 module.exports = fromYiq;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1161,7 +1198,7 @@ function fromxyY(_ref, to, value) {
 module.exports = fromxyY;
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1206,7 +1243,7 @@ function adapt(_dep, colourRef, illuminantDRef, illuminantSRef) {
 module.exports = adapt;
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1227,7 +1264,7 @@ function adjacent(_dep, deg, amount, colourRef) {
 module.exports = adjacent;
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1244,7 +1281,7 @@ function complementary(_dep, colourRef) {
 module.exports = complementary;
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1280,7 +1317,7 @@ function contrast(_dep, shift, colourRef) {
 module.exports = contrast;
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1302,7 +1339,7 @@ function contrastRatio(_dep, colourRef) {
 module.exports = contrastRatio;
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1325,7 +1362,7 @@ function convert(_dep, to, value) {
 module.exports = convert;
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1369,7 +1406,7 @@ function difference(_dep, colourRefOne, colourRefTwo, l, c) {
 module.exports = difference;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1402,7 +1439,7 @@ function fade(_dep, amount, fromRef, toRef) {
 module.exports = fade;
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1420,7 +1457,7 @@ function greyscale(_dep, colourRef) {
 module.exports = greyscale;
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1437,7 +1474,7 @@ function hue(_dep, shift, colourRef) {
 module.exports = hue;
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1456,7 +1493,7 @@ function invert(_dep, colourRef) {
 module.exports = invert;
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1473,7 +1510,7 @@ function invertLightness(_dep, colourRef) {
 module.exports = invertLightness;
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1494,7 +1531,7 @@ function mid(_dep, colourOneRef, colourTwoRef) {
 module.exports = mid;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1514,7 +1551,7 @@ function multiply(_dep, colourRefOne, colourRefTwo) {
 module.exports = multiply;
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1536,7 +1573,7 @@ function saturation(_dep, shift, colourRef) {
 module.exports = saturation;
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1556,7 +1593,7 @@ function sepia(_dep, colourRef) {
 module.exports = sepia;
 
 /***/ }),
-/* 32 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1578,7 +1615,7 @@ function shade(_dep, shift, colourRef) {
 module.exports = shade;
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1599,7 +1636,7 @@ function tetrad(_dep, colourRef) {
 module.exports = tetrad;
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1620,7 +1657,7 @@ function triad(_dep, colourRef) {
 module.exports = triad;
 
 /***/ }),
-/* 35 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1628,52 +1665,13 @@ module.exports = triad;
 
 // Require dependencies
 var dependencies = {
-  conversions: __webpack_require__(1),
-  operations: __webpack_require__(3),
-  helpers: __webpack_require__(2) };
-var constants = __webpack_require__(0);
-var api = __webpack_require__(38);
+  conversions: __webpack_require__(2),
+  operations: __webpack_require__(4),
+  helpers: __webpack_require__(3) };
+var constants = __webpack_require__(1);
+var api = __webpack_require__(0);
 
 module.exports = api(dependencies, constants);
-
-/***/ }),
-/* 36 */,
-/* 37 */,
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var api = function api(dependencies, constants, chain) {
-  // Apply colour functions to API object
-  var out = Object.keys(dependencies.operations).reduce(function (acc, key) {
-    var operation = dependencies.operations[key];
-    acc[key] = function () {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      var clone = args.slice(0).map(function (v) {
-        if ((typeof v === 'undefined' ? 'undefined' : _typeof(v)) === 'object') return Object.assign({}, v);
-        return v;
-      });
-      return operation.apply(undefined, [dependencies].concat(_toConsumableArray(clone), [chain ? chain.colour : undefined]));
-    };
-    return acc;
-  }, {});
-
-  // Apply constants to API object if not chained
-  if (!chain) out = Object.assign(out, constants);
-
-  return out;
-};
-
-module.exports = api;
 
 /***/ })
 /******/ ]);

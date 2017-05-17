@@ -13,11 +13,11 @@ const helpers = {
     }
 
     var result = [];
-    for (var i = 0; i < a.length; i++) {
+    for (let i = 0; i < a.length; i++) {
       result[i] = [];
-      for (var j = 0; j < b[0].length; j++) {
+      for (let j = 0; j < b[0].length; j++) {
         var sum = 0;
-        for (var k = 0; k < a[0].length; k++) {
+        for (let k = 0; k < a[0].length; k++) {
           sum += a[i][k] * b[k][j];
         }
         result[i][j] = sum;
@@ -78,7 +78,7 @@ const helpers = {
   },
 
   determineMode( colour ) {
-    for (model in conversions) {
+    for (let model in conversions) {
       if (!conversions.hasOwnProperty(model)) continue;
       if (conversions[model].test(colour)) return model;
     }
@@ -93,7 +93,7 @@ const helpers = {
       case "[object Object]":
       case "[object String]":
         out['colour'] = colour;
-        for (model in conversions) {
+        for (let model in conversions) {
           if (!conversions.hasOwnProperty(model)) continue;
           (function (model) {
             Object.defineProperty(out, model, {
@@ -112,7 +112,7 @@ const helpers = {
 
       case "[object Array]":
         out['colours'] = colour;
-        for (model in conversions) {
+        for (let model in conversions) {
           if (!conversions.hasOwnProperty(model)) continue;
           (function (model) {
             Object.defineProperty(out, model, {
