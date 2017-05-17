@@ -29,6 +29,7 @@ A simple set of utility functions for colours.
       - [Generate an array of the fade between two colours](#generate-an-array-of-the-fade-between-two-colours)
       - [Generate a new shade of a colour](#generate-a-new-shade-of-a-colour)
       - [Generate a new saturation of a colour](#generate-a-new-saturation-of-a-colour)
+      - [Change colour's brightness](#change-colours-brightness)
       - [Shift the hue of a colour](#shift-the-hue-of-a-colour)
       - [Shift the contrast of a colour](#shift-the-contrast-of-a-colour)
       - [Greyscale version of the colour](#greyscale-version-of-the-colour)
@@ -169,7 +170,7 @@ var newColour = chromatism.shade( percent, colour ).csshsl;
 
 ![Shade](https://toi.sh/cdn/chromatism/shade.png)
 
-Shift should be a number between -100 and 100.
+Percent should be a number between -100 and 100.
 
 ---
 
@@ -180,7 +181,20 @@ var newColour = chromatism.saturation( percent, colour ).hex;
 
 ![Saturation](https://toi.sh/cdn/chromatism/saturation.png)
 
-Shift should be a number between -100 and 100.
+Percent should be a number between -100 and 100.
+
+---
+
+#### Change colour's brightness
+```javascript
+var newColour = chromatism.brightness( percent, colour ).hsl;
+```
+
+![Brightness](https://toi.sh/cdn/chromatism/brightness.png)
+
+This essentially acts as a sum of [saturation](#generate-a-new-saturation-of-a-colour) and [shade](#generate-a-new-shade-of-a-colour), and thus does not adjust luminosity. Brightness works for 99% of most scenarios though.
+
+Percent should be a number between -100 and 100.
 
 ---
 

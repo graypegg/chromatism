@@ -1,6 +1,7 @@
 module.exports = {
   adapt: require('./adapt.js'),
   adjacent: require('./adjacent.js'),
+  brightness: require('./brightness.js'),
   complementary: require('./complementary.js'),
   contrast: require('./contrast.js'),
   contrastRatio: require('./contrastRatio.js'),

@@ -1,7 +1,7 @@
 function shade( _dep, shift, colourRef ) {
   var colour = _dep.operations.convert( _dep, "hsv", colourRef );
 
-  colour.v = colour.v + shift;
+  colour.v += shift;
   if (colour.v < 0) {
     colour.v = 0;
   } else if (colour.v > 100) {

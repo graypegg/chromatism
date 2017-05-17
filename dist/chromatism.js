@@ -435,6 +435,7 @@ module.exports = helpers;
 module.exports = {
   adapt: __webpack_require__(17),
   adjacent: __webpack_require__(18),
+  brightness: __webpack_require__(38),
   complementary: __webpack_require__(19),
   contrast: __webpack_require__(20),
   contrastRatio: __webpack_require__(21),
@@ -1586,7 +1587,7 @@ module.exports = multiply;
 function saturation(_dep, shift, colourRef) {
   var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
-  colour.s = colour.s + shift;
+  colour.s += shift;
   if (colour.s < 0) {
     colour.s = 0;
   } else if (colour.s > 100) {
@@ -1628,7 +1629,7 @@ module.exports = sepia;
 function shade(_dep, shift, colourRef) {
   var colour = _dep.operations.convert(_dep, "hsv", colourRef);
 
-  colour.v = colour.v + shift;
+  colour.v += shift;
   if (colour.v < 0) {
     colour.v = 0;
   } else if (colour.v > 100) {
@@ -1698,6 +1699,29 @@ var constants = __webpack_require__(1);
 var api = __webpack_require__(0);
 
 module.exports = api(dependencies, constants);
+
+/***/ }),
+/* 37 */,
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+function brightness(_dep, shift, colourRef) {
+  var colour = _dep.operations.convert(_dep, "hsl", colourRef);
+
+  colour.l += shift;
+  if (colour.l < 0) {
+    colour.l = 0;
+  } else if (colour.l > 100) {
+    colour.l = 100;
+  }
+
+  return _dep.helpers.ready(_dep, colour);
+}
+
+module.exports = brightness;
 
 /***/ })
 /******/ ]);

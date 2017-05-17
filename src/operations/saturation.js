@@ -1,7 +1,7 @@
 function saturation( _dep, shift, colourRef ) {
   var colour = _dep.operations.convert( _dep, "hsl", colourRef );
 
-  colour.s = colour.s + shift;
+  colour.s += shift;
   if (colour.s < 0) {
     colour.s = 0;
   } else if (colour.s > 100) {
