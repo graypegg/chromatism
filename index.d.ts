@@ -21,7 +21,7 @@ export namespace ColourModes {
      * @example
      * "rgb(255,200,55)"
      */
-    export type CSS_RGB = string;
+    export type CSSRGB = string;
 
     /**
      * HSL Color Object
@@ -35,7 +35,7 @@ export namespace ColourModes {
      * @example
      * "hsl(44,100,61)"
      */
-    export type CSS_HSL = { h: number; s: number; l: number; };
+    export type CSSHSL = { h: number; s: number; l: number; };
 
     /**
      * HSV Color Object
@@ -90,7 +90,7 @@ export namespace ColourModes {
      * Represents all available color modes.
      */
     export type Any = (
-        HEX | RGB | CSS_RGB | HSL | CSS_HSL |
+        HEX | RGB | CSSRGB | HSL | CSSHSL |
         HSV | CMYK | YIQ | XYZ | XYY | LMS | CIELAB
     );
 }
@@ -101,9 +101,9 @@ export namespace ColourModes {
 export type ColourObject = {
     hex: ColourModes.HEX;
     rgb: ColourModes.RGB;
-    cssrgb: ColourModes.CSS_RGB;
+    cssrgb: ColourModes.CSSRGB;
     hsl: ColourModes.HSL;
-    csshsl: ColourModes.CSS_HSL;
+    csshsl: ColourModes.CSSHSL;
     hsv: ColourModes.HSV;
     cmyk: ColourModes.CMYK;
     yiq: ColourModes.YIQ;
