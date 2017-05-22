@@ -12,6 +12,7 @@ A simple set of utility functions for colours.
 ## Table of Contents
 - [Chromatism](#chromatism-rainbow)
   * [Table of Contents](#table-of-contents)
+  * [Contributing](#contributing)
   * [Installation](#installation)
       - [CommonJS](#commonjs)
       - [Browser without bundling](#browser-without-bundling)
@@ -41,6 +42,11 @@ A simple set of utility functions for colours.
   * [Constants](#constants)
   * [Scales + Colour Spaces](#scales--colour-spaces)
   * [Colour Modes](#colour-modes)
+
+## Contributing
+First off, thanks so much for helping out! Colour modes + functions contributing info will be added soon.
+
+*Note:* The type definitions file (/index.d.ts) must be updated as part of your pull request. (If you're not familiar with typescript, I can update it for ya.) It contains definitions for colour modes AND colour functions. (Special thanks to @bdoss on GitHub for adding the inital TS definitions!)
 
 ## Installation
 
