@@ -3,6 +3,7 @@
   "version": "2.5.6",
   "description": "A simple set of utility functions for colours.",
   "main": "dist/chromatism.js",
+  "typings": "./index.d.ts",
   "repository": "toish/chromatism",
   "scripts": {
     "test": "mocha"
