@@ -1,9 +1,3 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(global.chromatism = factory());
-}(this, (function () { 'use strict';
-
 function fromHex(_ref, to, value) {
   var conversions = _ref.conversions,
       operations = _ref.operations,
@@ -1476,6 +1470,4 @@ var dependencies = {
 
 var entry = api_1(dependencies, constants);
 
-return entry;
-
-})));
+export default entry;
