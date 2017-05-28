@@ -66,7 +66,7 @@ import chromatism from 'chromatism';
 
 #### Browser without bundling
 ```html
-<script type="text/javascript" src="path-to-files/dist/chromatism.min.js"></script>
+<script type="text/javascript" src="path-to-files/dist/chromatism.js"></script>
 ```
 
 
