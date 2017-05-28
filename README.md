@@ -56,7 +56,12 @@ $ npm install --save chromatism
 
 #### CommonJS
 ```javascript
-var chromatism = require("chromatism");
+var chromatism = require('chromatism');
+```
+
+#### ES Modules
+```javascript
+import chromatism from 'chromatism';
 ```
 
 #### Browser without bundling
