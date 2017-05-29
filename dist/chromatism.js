@@ -1187,6 +1187,20 @@ function shade(_dep, shift, colourRef) {
 
 var shade_1 = shade;
 
+function temperature(_dep, colourRef) {
+  var colour = _dep.operations.convert(_dep, "xyY", colourRef);
+
+  // McCamy's CCT fomula.
+  // DOI: 10.1002/col.5080170211
+  // http://onlinelibrary.wiley.com/doi/10.1002/col.5080170211/abstract;jsessionid=D127570AD1D0FEF9A18424F5C0E987C5.f02t04
+  var n = (colour.x - 0.3320) / (colour.y - 0.1858);
+  var out = -449 * Math.pow(n, 3) + 3525 * Math.pow(n, 2) - 6823.3 * n + 5520.33;
+
+  return out;
+}
+
+var temperature_1 = temperature;
+
 function tetrad(_dep, colourRef) {
   var colour = _dep.operations.convert(_dep, "hsl", colourRef);
 
@@ -1234,6 +1248,7 @@ var index$2 = {
   saturation: saturation_1,
   sepia: sepia_1,
   shade: shade_1,
+  temperature: temperature_1,
   tetrad: tetrad_1,
   triad: triad_1
 };
@@ -1292,7 +1307,8 @@ var api = function api(dependencies, constants, chain) {
       if (chain && chain.colours) {
         // Process a list of colours
         var deepMap = function deepMap(colours) {
-          return dependencies.helpers.ready(dependencies, colours.map(function (colour) {
+          var out = colours.map(function (colour) {
+
             // If array, recurse...
             if (Array.isArray(colour)) {
               var branch = deepMap(colour);
@@ -1301,8 +1317,13 @@ var api = function api(dependencies, constants, chain) {
 
             // Else run function on colour
             var colourObj = operation.apply(undefined, [dependencies].concat(toConsumableArray(clone), [colour]));
-            return colourObj.colours || colourObj.colour;
-          }));
+            if ((typeof colourObj === 'undefined' ? 'undefined' : _typeof(colourObj)) === 'object') return colourObj.colours || colourObj.colour;
+            return colourObj;
+          });
+
+          // Test first colour, if it is a number, don't try to make it a colour
+          if (typeof out[0] !== 'number') return dependencies.helpers.ready(dependencies, out);
+          return out;
         };
         return deepMap(chain.colours);
       } else {
