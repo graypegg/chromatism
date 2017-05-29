@@ -289,7 +289,7 @@ var diff = chromatism.temperature( colour );
 ```
 Returns the [correlated colour temperature](https://en.wikipedia.org/wiki/Color_temperature) of the supplied colour in Kelvin. (A higher number indicates a blue-er colour; a lower number indicates a red-er colour.) This should only be used when working with colours that could actually be emitted by a black-body radiator (think glowing stuff, such as tungsten in incandescent lightbulbs), [as colour temperature is only an approximation of the colour to a narrow strip of the XYZ gamut.](https://en.wikipedia.org/wiki/Color_temperature#/media/File:PlanckianLocus.png) (Note the thin line in the middle of this chart.)
 
-Colour temperature is calculated via [McCamy's CCT fomula. (DOI: 10.1002/col.5080170211)](ttp://onlinelibrary.wiley.com/doi/10.1002/col.5080170211/abstract;jsessionid=D127570AD1D0FEF9A18424F5C0E987C5.f02t04) **Which may mean that colours temperatures beyond 6500K (CIE Illuminant D65)**
+Colour temperature is calculated via [McCamy's CCT fomula. ](ttp://onlinelibrary.wiley.com/doi/10.1002/col.5080170211/abstract;jsessionid=D127570AD1D0FEF9A18424F5C0E987C5.f02t04)(DOI: 10.1002/col.5080170211) **Which may mean that colours temperatures beyond 6500K (CIE Illuminant D65) are not entirely accurate**
 
 ## Constants
 
