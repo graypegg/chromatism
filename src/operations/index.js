@@ -17,6 +17,7 @@ module.exports = {
   saturation: require('./saturation.js'),
   sepia: require('./sepia.js'),
   shade: require('./shade.js'),
+  temperature: require('./temperature.js'),
   tetrad: require('./tetrad.js'),
   triad: require('./triad.js')
 };

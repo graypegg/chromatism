@@ -180,7 +180,7 @@ export function invertLightness(colour: ColourModes.Any): ColourObject;
  * @param colourOne - Any supported colour mode.
  * @param colourTwo - Any supported colour mode.
  * @returns The blended colour.
- * @see {@link https://github.com/toish/chromatism/blob/883f7c56692aeb9339be7f17c37386a098057f88/README.md#blend-two-colours-multiply} 
+ * @see {@link https://github.com/toish/chromatism/blob/883f7c56692aeb9339be7f17c37386a098057f88/README.md#blend-two-colours-multiply}
  */
 export function multiply(colourOne: ColourModes.Any, colourTwo: ColourModes.Any): ColourObject;
 
@@ -293,6 +293,14 @@ export function adapt(colour: ColourModes.Any, illuminantColour: ColourModes.Any
  * @see {@link https://github.com/toish/chromatism/blob/883f7c56692aeb9339be7f17c37386a098057f88/README.md#colour-difference}
  */
 export function difference(colourOne: ColourModes.Any, colourTwo: ColourModes.Any, luminanceWeight?: number, chromaWeight?: number): number;
+
+/**
+ * Colour Temperature
+ * @param colour - Any supported colour mode.
+ * @returns The correlated colour temperature of the supplied colour.
+ * @see {@link https://github.com/toish/chromatism/blob/883f7c56692aeb9339be7f17c37386a098057f88/README.md#colour-temperature}
+ */
+export function temperature(colour: ColourModes.Any): number;
 
 /**
  * Properties representing standard CIE illuminants constants
