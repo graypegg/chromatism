@@ -11,7 +11,8 @@ var api = (function (dependencies, constants, chain) {
       if (chain && chain.colours) {
         // Process a list of colours
         let deepMap = (function (colours) {
-          return dependencies.helpers.ready(dependencies, colours.map((colour) => {
+          let out = colours.map((colour) => {
+
             // If array, recurse...
             if (Array.isArray(colour)) {
               let branch = deepMap(colour);
@@ -20,8 +21,13 @@ var api = (function (dependencies, constants, chain) {
 
             // Else run function on colour
             let colourObj = operation(dependencies, ...clone, colour);
-            return colourObj.colours || colourObj.colour;
-          }));
+            if (typeof colourObj === 'object') return colourObj.colours || colourObj.colour;
+            return colourObj;
+          });
+
+          // Test first colour, if it is a number, don't try to make it a colour
+          if (typeof out[0] !== 'number') return dependencies.helpers.ready(dependencies, out);
+          return out;
         });
         return deepMap(chain.colours);
 
