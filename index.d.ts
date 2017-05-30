@@ -320,6 +320,19 @@ interface IlluminantConstants {
 }
 
 /**
- * Exposes useful built in constants in XYZ format
+ * Exposes standard CIE Illuminants in XYZ colour mode.
  */
 export const ILLUMINANTS: IlluminantConstants;
+
+/**
+ * Properties representing useful transform matricies
+ */
+interface TransformConstants {
+    BRADFORD: Array<number>;
+    INVERSE_BRADFORD: Array<number>;
+}
+
+/**
+ * Exposes useful built in colour transformation matrcies
+ */
+export const TRANSFORMS: TransformConstants;

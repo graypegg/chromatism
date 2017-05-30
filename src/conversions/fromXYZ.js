@@ -31,11 +31,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
       // Bradford Transformation
-      let Mb = [
-        [ 0.8951000, 0.2664000, -0.1614000 ],
-        [ -0.7502000, 1.7135000, 0.0367000 ],
-        [ 0.0389000, -0.0685000, 1.0296000 ]
-      ]
+      let Mb = _dep.helpers.getTransform('BRADFORD')
 
       let resultArray = Mb.map((m) => {
         return valueArray.reduce((acc, v, key) => {

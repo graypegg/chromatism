@@ -9,18 +9,10 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
   }
 
   // Bradford Transformation
-  let Mb = [
-    [ 0.8951000, 0.2664000, -0.1614000 ],
-    [ -0.7502000, 1.7135000, 0.0367000 ],
-    [ 0.0389000, -0.0685000, 1.0296000 ]
-  ]
+  let Mb = _dep.helpers.getTransform('BRADFORD')
 
   // Inverse Bradford Transformation
-  let Mbi = [
-    [ 0.9869929, -0.1470543, 0.1599627 ],
-    [ 0.4323053, 0.5183603, 0.0492912 ],
-    [ -0.0085287, 0.0400428, 0.9684867 ]
-  ]
+  let Mbi = _dep.helpers.getTransform('INVERSE_BRADFORD')
 
   // Illuminant Ratio Matrix
   let Mir = [

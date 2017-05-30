@@ -7,11 +7,11 @@ const helpers = {
     return constants.ILLUMINANTS[ref];
   },
 
-  matrixMultiply(a, b) {
-    if (a[0].length != b.length) {
-      throw "error: incompatible sizes";
-    }
+  getTransform (ref) {
+    return constants.TRANSFORMS[ref];
+  },
 
+  matrixMultiply(a, b) {
     var result = [];
     for (let i = 0; i < a.length; i++) {
       result[i] = [];

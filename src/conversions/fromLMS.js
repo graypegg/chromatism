@@ -5,11 +5,7 @@ function fromLms( { conversions, operations, helpers }, to, value ) {
       let valueArray = [ value.rho, value.gamma, value.beta ]
 
       // Inverse Bradford Transformation
-      let Mbi = [
-        [ 0.9869929, -0.1470543, 0.1599627 ],
-        [ 0.4323053, 0.5183603, 0.0492912 ],
-        [ -0.0085287, 0.0400428, 0.9684867 ]
-      ]
+      let Mbi = _dep.helpers.getTransform('INVERSE_BRADFORD')
 
       let resultArray = Mbi.map((m) => {
         return valueArray.reduce((acc, v, key) => {
