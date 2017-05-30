@@ -18,11 +18,15 @@ const red = {
   },
   hex: {
     value: '#ff0000',
-    accuracy: { }
+    accuracy: {
+      cielab: 0.000000001
+    }
   },
   cssrgb: {
     value: 'rgb(255,0,0)',
-    accuracy: { }
+    accuracy: {
+      cielab: 0.000000001
+    }
   },
   hsl: {
     value: { h: 0, s: 100, l: 50 },
@@ -43,7 +47,9 @@ const red = {
   },
   csshsl: {
     value: 'hsl(0,100%,50%)',
-    accuracy: { }
+    accuracy: {
+      cielab: 0.000000001
+    }
   },
   hsv: {
     value: { h: 0, s: 100, v: 100 },
