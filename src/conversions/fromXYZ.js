@@ -8,11 +8,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       // Whitepoint is D65
       // sRGB standard stuff eh!
       // [ Shamelessly stolen off Wikipedia ]
-      let M = [
-        [ 3.2406, -1.5372, -0.4986 ],
-        [ -0.9689, 1.8758, 0.0415 ],
-        [ 0.0557, -0.2040, 1.0570 ]
-      ]
+      let M = helpers.getTransform('INVERSE_SRGB_XYZ')
 
       let linear = M.map((m) => {
         return normalized.reduce((acc, v, key) => {

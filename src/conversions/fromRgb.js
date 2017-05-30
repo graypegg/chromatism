@@ -130,11 +130,7 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
       // Whitepoint is D65
       // sRGB standard stuff eh!
       // [ Shamelessly stolen off Wikipedia ]
-      let M = [
-        [ 0.4124, 0.3576, 0.1805 ],
-        [ 0.2126, 0.7152, 0.0722 ],
-        [ 0.0193, 0.1192, 0.9505 ]
-      ]
+      let M = helpers.getTransform('SRGB_XYZ')
 
       let [ X, Y, Z ] = M.map((m) => {
         return linear.reduce((acc, v, key) => {

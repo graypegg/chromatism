@@ -330,6 +330,8 @@ export const ILLUMINANTS: IlluminantConstants;
 interface TransformConstants {
     BRADFORD: Array<number>;
     INVERSE_BRADFORD: Array<number>;
+    SRGB_XYZ: Array<number>;
+    INVERSE_SRGB_XYZ: Array<number>;
 }
 
 /**
