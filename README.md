@@ -298,6 +298,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | Reference | Values | Description |
 | --------- | ------ | ----------- |
 | `chromatism.ILLUMINANTS` | `.A`, `.B`, `.C`, `.D50`, `.D55`, `.D65`, `.D75`, `.E`, `.F2`, `.F7`, `.F11` | Standard CIE illuminants in XYZ format
+| `chromatism.TRANSFORMS` | `.BRADFORD`, `.INVERSE_BRADFORD`, `.SRGB_XYZ`, `.INVERSE_SRGB_XYZ` | Transformation matrices
 
 ## Scales + Colour Spaces
 | Mode                  | Scale                             | Colour Space |
