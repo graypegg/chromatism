@@ -54,5 +54,9 @@ module.exports = {
     test: (colour) => contains(colour, ['L', 'a', 'b']),
     convert: require('./fromCieLab.js')
   },
+  'cieluv': {
+    test: (colour) => contains(colour, ['L', 'u', 'v']),
+    convert: require('./fromCieLuv.js')
+  },
 
 }

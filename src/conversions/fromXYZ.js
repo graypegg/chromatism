@@ -1,4 +1,8 @@
 function fromXYZ( { conversions, operations, helpers }, to, value ) {
+  const epsilon = 0.008856;
+  const kappa = 903.3;
+  const white = helpers.getIlluminant('D65');
+
   switch (to) {
 
     case "rgb":
@@ -42,10 +46,6 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       }
 
     case "cielab":
-      const epsilon = 0.008856;
-      const kappa = 903.3;
-      const white = helpers.getIlluminant('D65');
-
       const Xr = value.X / white.X;
       const Yr = value.Y / white.Y;
       const Zr = value.Z / white.Z;
@@ -57,6 +57,23 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         L: ((116 * Fy) - 16),
         a: 500 * (Fx - Fy),
         b: 200 * (Fy - Fz)
+      };
+
+    case "cieluv":
+      const yr = value.Y / white.Y
+
+      const L = (yr > epsilon ? (116 * helpers.cbrt(yr)) - 16 : kappa * yr)
+
+      const chromeCoordsU = (c) => (c.X * 4) / (c.X + (15 * c.Y) + (3 * c.Z))
+      const chromeCoordsV = (c) => (c.Y * 9) / (c.X + (15 * c.Y) + (3 * c.Z))
+
+      const u = (13 * L) * (chromeCoordsU(value) - chromeCoordsU(white))
+      const v = (13 * L) * (chromeCoordsV(value) - chromeCoordsV(white))
+
+      return {
+        L,
+        u,
+        v
       };
 
     case "xyY":
