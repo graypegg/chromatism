@@ -314,7 +314,8 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.XYZ`                | (Y) 0 - 100, (X, Z) derived       | XYZ          |
 | `.xyY`                | (Y) 0 - 100, (x, y) 0 - 1         | XYZ          |
 | `.lms`                | (⍴, γ, β) 0 - 1                   | XYZ          |
-| `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128    | CIE          |
+| `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128    | CIELAB       |
+| `.cieluv` (L\*u\*v\*) | (L) 0 - 100, (u, v) -128 - 128    | CIELUV       |
 
 ## Colour Modes
 
@@ -332,6 +333,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.xyY`                | `{ x: 0.64, y: 0.33, Y: 21.26 }`                  |
 | `.lms`                | `{ rho: 42.266, gamma: 5.561, beta: 2.135 }`      |
 | `.cielab` (L\*a\*b\*) | `{ L: 53.23, a: 80.11, b: 67.22 }`                |
+| `.cieluv` (L\*u\*v\*) | `{ L: 53.23, u: 175.05, v: 37.75 }`               |
 
 All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 

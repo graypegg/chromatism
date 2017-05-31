@@ -87,11 +87,18 @@ export namespace ColourModes {
     export type CIELAB = { L: number; a: number; b: number; };
 
     /**
+     * CIELUV (L*u*v*) Color Object
+     * @example
+     * { L: 53.23, u: 175.05, v: 37.75 }
+     */
+    export type CIELUV = { L: number; u: number; v: number; };
+
+    /**
      * Represents all available color modes.
      */
     export type Any = (
         HEX | RGB | CSSRGB | HSL | CSSHSL |
-        HSV | CMYK | YIQ | XYZ | XYY | LMS | CIELAB
+        HSV | CMYK | YIQ | XYZ | XYY | LMS | CIELAB | CIELUV
     );
 }
 
@@ -111,6 +118,7 @@ export type ColourObject = {
     xyY: ColourModes.XYY;
     lms: ColourModes.LMS;
     cielab: ColourModes.CIELAB;
+    cieluv: ColourModes.CIELUV;
 };
 
 /**
