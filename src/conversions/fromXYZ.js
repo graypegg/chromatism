@@ -60,6 +60,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       };
 
     case "cieluv":
+
       const yr = value.Y / white.Y
 
       const L = (yr > epsilon ? (116 * helpers.cbrt(yr)) - 16 : kappa * yr)
@@ -67,8 +68,8 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
       const chromeCoordsU = (c) => (c.X * 4) / (c.X + (15 * c.Y) + (3 * c.Z))
       const chromeCoordsV = (c) => (c.Y * 9) / (c.X + (15 * c.Y) + (3 * c.Z))
 
-      const u = (13 * L) * (chromeCoordsU(value) - chromeCoordsU(white))
-      const v = (13 * L) * (chromeCoordsV(value) - chromeCoordsV(white))
+      const u = 13 * L * (chromeCoordsU(value) - chromeCoordsU(white))
+      const v = 13 * L * (chromeCoordsV(value) - chromeCoordsV(white))
 
       return {
         L,

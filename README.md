@@ -335,6 +335,8 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.cielab` (L\*a\*b\*) | `{ L: 53.23, a: 80.11, b: 67.22 }`                |
 | `.cieluv` (L\*u\*v\*) | `{ L: 53.23, u: 175.05, v: 37.75 }`               |
 
+:warning: **A note about CIELUV**: Conversion to CIELUV requires defining the illuminant, which can skew results slightly. By default, Chromatism assumes all colours are illuminated by `CIE D65`, which means that you may get differing chrominance values (±~10) if you are comparing against a CIELUV colour illuminated by anything other than D65.
+
 All functions return an object containing all modes of the result. (In getters, so don't worry, Chromatism doesn't calculate *all* the versions of the result when you use a function!)
 
 For example, if you need a string containing the hex code for the colour result, simply use `.hex`:
