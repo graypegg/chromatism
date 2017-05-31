@@ -146,6 +146,7 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
      */
     case "lms":
     case "cielab":
+    case "cieluv":
     case "xyY":
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
       return operations.convert({ conversions, operations, helpers }, to, XYZ);
