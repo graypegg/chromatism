@@ -15,7 +15,8 @@ const red = {
       lms: 0.1,
       cielab: 0.25,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.025
     }
   },
   hex: {
@@ -46,7 +47,8 @@ const red = {
       lms: 0.1,
       cielab: 0.25,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.025
     }
   },
   csshsl: {
@@ -71,7 +73,8 @@ const red = {
       lms: 0.1,
       cielab: 0.25,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.025
     }
   },
   cmyk: {
@@ -90,7 +93,8 @@ const red = {
       lms: 0.1,
       cielab: 0.25,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.025
     }
   },
   yiq: {
@@ -109,7 +113,8 @@ const red = {
       lms: 0.1,
       cielab: 0.25,
       cieluv: 0.25,
-      cielch: 0.25
+      cielch: 0.25,
+      hsluv: 0.25
     }
   },
   XYZ: {
@@ -128,7 +133,8 @@ const red = {
       lms: 0.5,
       cielab: 0.5,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.25
     }
   },
   xyY: {
@@ -147,7 +153,8 @@ const red = {
       lms: 0.5,
       cielab: 0.5,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.25
     }
   },
   lms: {
@@ -166,7 +173,8 @@ const red = {
       lms: 0,
       cielab: 0.5,
       cieluv: 0.0001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.25
     }
   },
   cielab: {
@@ -185,7 +193,8 @@ const red = {
       lms: 0.5,
       cielab: 0,
       cieluv: 0.000001,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.25
     }
   },
   cieluv: {
@@ -204,7 +213,8 @@ const red = {
       lms: 0.5,
       cielab: 0.000001,
       cieluv: 0,
-      cielch: 0.025
+      cielch: 0.025,
+      hsluv: 0.25
     }
   },
   cielch: {
@@ -223,7 +233,28 @@ const red = {
       lms: 0.5,
       cielab: 0.001,
       cieluv: 0.001,
-      cielch: 0.025
+      cielch: 0,
+      hsluv: 0.025
+    }
+  },
+  hsluv: {
+    value: { hu: 12.169571625677895, s: 99.98979433290384, l: 53.23288178584245 },
+    accuracy: {
+      rgb: 0.25,
+      cssrgb: null,
+      hex: null,
+      hsl: 0.25,
+      csshsl: null,
+      hsv: 0.25,
+      cmyk: 0.25,
+      yiq: 0.5,
+      XYZ: 0.25,
+      xyY: 0.25,
+      lms: 0.5,
+      cielab: 0.001,
+      cieluv: 0.001,
+      cielch: 0.025,
+      hsluv: 0
     }
   },
 }
