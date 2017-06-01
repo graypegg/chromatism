@@ -14,7 +14,8 @@ const red = {
       xyY: 0,
       lms: 0.1,
       cielab: 0.25,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   hex: {
@@ -44,7 +45,8 @@ const red = {
       xyY: 0,
       lms: 0.1,
       cielab: 0.25,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   csshsl: {
@@ -68,7 +70,8 @@ const red = {
       xyY: 0,
       lms: 0.1,
       cielab: 0.25,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   cmyk: {
@@ -86,7 +89,8 @@ const red = {
       xyY: 0,
       lms: 0.1,
       cielab: 0.25,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   yiq: {
@@ -104,7 +108,8 @@ const red = {
       xyY: 0.25,
       lms: 0.1,
       cielab: 0.25,
-      cieluv: 0.25
+      cieluv: 0.25,
+      cielch: 0.25
     }
   },
   XYZ: {
@@ -122,7 +127,8 @@ const red = {
       xyY: 0,
       lms: 0.5,
       cielab: 0.5,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   xyY: {
@@ -140,7 +146,8 @@ const red = {
       xyY: 0,
       lms: 0.5,
       cielab: 0.5,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   lms: {
@@ -158,7 +165,8 @@ const red = {
       xyY: 0.25,
       lms: 0,
       cielab: 0.5,
-      cieluv: 0.0001
+      cieluv: 0.0001,
+      cielch: 0.025
     }
   },
   cielab: {
@@ -176,7 +184,8 @@ const red = {
       xyY: 0.25,
       lms: 0.5,
       cielab: 0,
-      cieluv: 0.000001
+      cieluv: 0.000001,
+      cielch: 0.025
     }
   },
   cieluv: {
@@ -194,7 +203,27 @@ const red = {
       xyY: 0.25,
       lms: 0.5,
       cielab: 0.000001,
-      cieluv: 0
+      cieluv: 0,
+      cielch: 0.025
+    }
+  },
+  cielch: {
+    value: { L: 53.23288178584245, C: 179.077262517562, h: 12.169571625677895 },
+    accuracy: {
+      rgb: 0.25,
+      cssrgb: null,
+      hex: null,
+      hsl: 0.25,
+      csshsl: null,
+      hsv: 0.25,
+      cmyk: 0.25,
+      yiq: 0.5,
+      XYZ: 0.25,
+      xyY: 0.25,
+      lms: 0.5,
+      cielab: 0.001,
+      cieluv: 0.001,
+      cielch: 0.025
     }
   },
 }

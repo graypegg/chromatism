@@ -2,7 +2,6 @@ function fromCieLuv( { conversions, operations, helpers }, to, value ) {
   switch (to) {
 
     case "XYZ":
-
       const epsilon = 0.008856;
       const kappa = 903.3;
       const white = helpers.getIlluminant('D65');
@@ -28,6 +27,19 @@ function fromCieLuv( { conversions, operations, helpers }, to, value ) {
         Y: Y * 100,
         Z: Z * 100
       };
+
+    case 'cielch':
+      const C = Math.sqrt(Math.pow(value.u, 2) + Math.pow(value.v, 2))
+      let h = Math.atan2(value.v, value.u)
+      if (h < 0) h += (2 * Math.PI)
+      h = helpers.toDeg(h)
+
+      return {
+        L: value.L,
+        C,
+        h
+      }
+      break;
 
     default:
       var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
