@@ -159,6 +159,14 @@ function fromRgb( { conversions, operations, helpers }, to, value ) {
       var CieLuv = operations.convert({ conversions, operations, helpers }, "cieluv", value);
       return operations.convert({ conversions, operations, helpers }, to, CieLuv);
       break;
+
+    /**
+     * CIELCh dependants
+     */
+    case "hsluv":
+      var CieLCh = operations.convert({ conversions, operations, helpers }, "cielch", value);
+      return operations.convert({ conversions, operations, helpers }, to, CieLCh);
+      break;
   }
 }
 

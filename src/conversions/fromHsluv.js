@@ -1,31 +1,19 @@
 function fromCieLch( { conversions, operations, helpers }, to, value ) {
   switch (to) {
 
-    case "cieluv":
-      const h = helpers.toRad(value.h)
-
-      const u = value.C * Math.cos(h)
-      const v = value.C * Math.sin(h)
-
-      return {
-        L: value.L,
-        u,
-        v
-      };
-
-    case "hsluv":
+    case "cielch":
       if (value.L > 99.9999999) {
-          return { hu: value.h, s: 0, l: 100 }
+          return { L: 100, C: 0, h: value.hu }
       }
       if (value.L < 0.00000001) {
-          return { hu: value.h, s: 0, l: 0 }
+          return { L: 0, C: 0, h: value.hu }
       }
 
       const epsilon = 0.008856
       const kappa = 903.3
 
-      const s1 = (value.L + 16) / 1560896
-      const s2 = s1 > epsilon ? s1 : value.L / kappa
+      const s1 = (value.l + 16) / 1560896
+      const s2 = s1 > epsilon ? s1 : value.l / kappa
 
       const m = helpers.getTransform('INVERSE_SRGB_XYZ')
       let rays = []
@@ -37,7 +25,7 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
 
         for (let t = 0; t < 2; t++) {
           let top1 = (284517 * m1 - 94839 * m3) * s2
-          let top2 = (838422 * m3 + 769860 * m2 + 731718 * m1) * value.L * s2 - 769860 * t * value.L
+          let top2 = (838422 * m3 + 769860 * m2 + 731718 * m1) * value.l * s2 - 769860 * t * value.l
           let bottom = (632260 * m3 - 126452 * m2) * s2 + 126452 * t
 
           rays.push({
@@ -48,7 +36,7 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
       }
 
       var min = Number.MAX_VALUE
-      let hrad = helpers.toRad(value.h)
+      let hrad = helpers.toRad(value.hu)
 
       rays.forEach((ray) => {
         let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad));
@@ -58,14 +46,14 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
       let max = min
 
       return {
-        hu: value.h,
-        s: value.C / max * 100,
-        l: value.L
+        L: value.l,
+        C: max / 100 * value.s,
+        h: value.hu
       };
 
     default:
-      var CieLuv = operations.convert({ conversions, operations, helpers }, "cieluv", value);
-      return operations.convert({ conversions, operations, helpers }, to, CieLuv);
+      var CieLCh = operations.convert({ conversions, operations, helpers }, "cielch", value);
+      return operations.convert({ conversions, operations, helpers }, to, CieLCh);
 
   }
 }
