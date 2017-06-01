@@ -316,7 +316,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.lms`                | (⍴, γ, β) 0 - 1                   | XYZ          |
 | `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128    | CIELAB       |
 | `.cieluv` (L\*u\*v\*) | (L) 0 - 100, (u, v) -128 - 128    | CIELUV       |
-| `.cielch` (L\*C\*h\*) | (L) 0 - 100, (u, v) -128 - 128    | CIELCh       |
+| `.cielch` (L\*C\*h\*) | (L) 0 - 100, (C, h) -128 - 128    | CIELCh       |
 
 ## Colour Modes
 
