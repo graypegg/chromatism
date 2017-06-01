@@ -94,11 +94,18 @@ export namespace ColourModes {
     export type CIELUV = { L: number; u: number; v: number; };
 
     /**
+     * CIELCH (L*C*h*) Color Object
+     * @example
+     * { L: 53.23, C: 179.08, h: 12.17 }
+     */
+    export type CIELCH = { L: number; C: number; h: number; };
+
+    /**
      * Represents all available color modes.
      */
     export type Any = (
         HEX | RGB | CSSRGB | HSL | CSSHSL |
-        HSV | CMYK | YIQ | XYZ | XYY | LMS | CIELAB | CIELUV
+        HSV | CMYK | YIQ | XYZ | XYY | LMS | CIELAB | CIELUV | CIELCH
     );
 }
 
@@ -119,6 +126,7 @@ export type ColourObject = {
     lms: ColourModes.LMS;
     cielab: ColourModes.CIELAB;
     cieluv: ColourModes.CIELUV;
+    cielch: ColourModes.CIELCH;
 };
 
 /**
