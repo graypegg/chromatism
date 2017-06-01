@@ -317,6 +317,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128    | CIELAB       |
 | `.cieluv` (L\*u\*v\*) | (L) 0 - 100, (u, v) -128 - 128    | CIELUV       |
 | `.cielch` (L\*C\*h\*) | (L) 0 - 100, (C, h) -128 - 128    | CIELCh       |
+| `.hsluv`              | (hu) 0 - 365, (s, l) 0 - 10       | CIELCh       |
 
 ## Colour Modes
 
@@ -336,6 +337,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.cielab` (L\*a\*b\*) | `{ L: 53.23, a: 80.11, b: 67.22 }`                |
 | `.cieluv` (L\*u\*v\*) | `{ L: 53.23, u: 175.05, v: 37.75 }`               |
 | `.cielch` (L\*C\*h\*) | `{ L: 53.23, C: 179.08, h: 12.17 }`               |
+| `.hsluv`              | `{ hu: 12.17, s: 99.99, l: 53.23 }`               |
 
 :warning: **A note about CIELUV + CIELCH**: Conversion to CIELUV (and by extension, CIELCH) requires defining the illuminant, which can skew results slightly. By default, Chromatism assumes all colours are illuminated by `CIE D65`, which means that you may get differing chrominance values (±~10) if you are comparing against a CIELUV/CIELCH colour illuminated by anything other than D65.
 
