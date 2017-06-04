@@ -19,5 +19,8 @@ module.exports = {
   shade: require('./shade.js'),
   temperature: require('./temperature.js'),
   tetrad: require('./tetrad.js'),
-  triad: require('./triad.js')
+  triad: require('./triad.js'),
+  uniformComplementary: require('./uniformComplementary.js'),
+  uniformTriad: require('./uniformTriad.js'),
+  uniformTetrad: require('./uniformTetrad.js')
 };
