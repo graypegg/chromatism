@@ -176,6 +176,30 @@ export function triad(colour: ColourModes.Any): ColourObjectArray;
 export function tetrad(colour: ColourModes.Any): ColourObjectArray;
 
 /**
+ * Generate a complementary colour with uniform lightness.
+ * @param colour - Any supported colour mode.
+ * @returns The complementary colour.
+ * @see {@link https://github.com/toish/chromatism/blob/master/README.md#generate-a-complementary-colour}
+ */
+export function uniformComplementary(colour: ColourModes.Any): ColourObject;
+
+/**
+ * Generate an array of triad colours with uniform lightness.
+ * @param colour - Any supported colour mode.
+ * @returns Array of 3 colour objects.
+ * @see {@link https://github.com/toish/chromatism/blob/master/README.md#generate-an-array-of-triad-colours}
+ */
+export function uniformTriad(colour: ColourModes.Any): ColourObjectArray;
+
+/**
+ * Generate an array of tetrad colours with uniform lightness.
+ * @param colour - Any supported colour mode.
+ * @returns Array of 4 colour objects.
+ * @see {@link https://github.com/toish/chromatism/blob/master/README.md#generate-an-array-of-tetrad-colours}
+ */
+export function uniformTetrad(colour: ColourModes.Any): ColourObjectArray;
+
+/**
  * Find the mid point between two colours
  * [See more]{@link https://github.com/toish/chromatism/blob/master/README.md#find-the-mid-point-between-two-colours}
  * @param colourOne - Any supported colour mode.

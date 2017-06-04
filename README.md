@@ -97,6 +97,12 @@ All colour modes supported can be converted to any other. This does however mean
 var newColour = chromatism.complementary( colour ).rgb;
 ```
 
+There is also a `uniform` version of this function. When using the uniform version, the output colours will have the same apparent lightness as the source colour, which normally means they'll look nicer together. (There is a performance trade-off however.)
+
+```javascript
+var newColour = chromatism.uniformComplementary( colour ).rgb;
+```
+
 ![Complementary](https://toi.sh/cdn/chromatism/complementary.png)
 
 ---
@@ -106,6 +112,12 @@ var newColour = chromatism.complementary( colour ).rgb;
 var newColour = chromatism.triad( colour ).hsl;
 ```
 
+There is also a `uniform` version of this function. When using the uniform version, the output colours will have the same apparent lightness as the source colour, which normally means they'll look nicer together. (There is a performance trade-off however.)
+
+```javascript
+var newColour = chromatism.uniformTriad( colour ).rgb;
+```
+
 ![Triad](https://toi.sh/cdn/chromatism/triad.png)
 
 ---
@@ -113,6 +125,12 @@ var newColour = chromatism.triad( colour ).hsl;
 #### Generate an array of tetrad colours
 ```javascript
 var newColour = chromatism.tetrad( colour ).cmyk;
+```
+
+There is also a `uniform` version of this function. When using the uniform version, the output colours will have the same apparent lightness as the source colour, which normally means they'll look nicer together. (There is a performance trade-off however.)
+
+```javascript
+var newColour = chromatism.uniformTetrad( colour ).rgb;
 ```
 
 ![Tetrad](https://toi.sh/cdn/chromatism/tetrad.png)
