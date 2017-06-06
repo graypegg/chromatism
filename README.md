@@ -324,9 +324,9 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.hex`                | #000000 - #FFFFFF                 | sRGB         |
 | `.rgb`                | (r, g, b) 0 - 255                 | sRGB         |
 | `.cssrgb`             | (r, g, b) 0 - 255                 | sRGB         |
-| `.hsl`                | (h) 0 - 365, (s, l) 0 - 100       | sRGB         |
-| `.csshsl`             | (h) 0 - 365, (s, l) 0 - 100       | sRGB         |
-| `.hsv`                | (h) 0 - 365, (s, v) 0 - 100       | sRGB         |
+| `.hsl`                | (h) 0 - 359, (s, l) 0 - 100       | sRGB         |
+| `.csshsl`             | (h) 0 - 359, (s, l) 0 - 100       | sRGB         |
+| `.hsv`                | (h) 0 - 359, (s, v) 0 - 100       | sRGB         |
 | `.cmyk`               | (c, m, y, k) 0 - 1                | CMYK         |
 | `.yiq`                | (y, i, q) 0 - 1                   | YUV          |
 | `.XYZ`                | (Y) 0 - 100, (X, Z) derived       | XYZ          |
@@ -335,7 +335,7 @@ Chromatism has some useful constants built in, you can access them using the imp
 | `.cielab` (L\*a\*b\*) | (L) 0 - 100, (a, b) -128 - 128    | CIELAB       |
 | `.cieluv` (L\*u\*v\*) | (L) 0 - 100, (u, v) -128 - 128    | CIELUV       |
 | `.cielch` (L\*C\*h\*) | (L) 0 - 100, (C, h) -128 - 128    | CIELCh       |
-| `.hsluv`              | (hu) 0 - 365, (s, l) 0 - 10       | CIELCh       |
+| `.hsluv`              | (hu) 0 - 359, (s, l) 0 - 10       | CIELCh       |
 
 ## Colour Modes
 
