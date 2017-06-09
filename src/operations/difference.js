@@ -30,7 +30,7 @@ function difference( _dep, colourRefOne, colourRefTwo, l, c ) {
   const EqPrt2 = Math.pow((dC / (c * SC)), 2);
   const EqPrt3 = Math.pow((dH / (SH)), 2);
 
-  return Math.sqrt(EqPrt1 + EqPrt1 + EqPrt1);
+  return Math.sqrt(EqPrt1 + EqPrt2 + EqPrt3);
 }
 
 module.exports = difference;
