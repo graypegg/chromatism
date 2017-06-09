@@ -1,14 +1,17 @@
-function saturation( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+const helpers = require('../helpers')
+const convert = require('./convert')
 
-  colour.s += shift;
-  if (colour.s < 0) {
-    colour.s = 0;
-  } else if (colour.s > 100) {
-    colour.s = 100;
-  }
+function saturation(shift, colourRef) {
+	var colour = convert("hsl", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.s += shift
+	if (colour.s < 0) {
+		colour.s = 0
+	} else if (colour.s > 100) {
+		colour.s = 100
+	}
+
+	return helpers.ready(colour)
 }
 
-module.exports = saturation;
+module.exports = saturation

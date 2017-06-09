@@ -1,9 +1,12 @@
-function invertLightness( _dep, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+const helpers = require('../helpers')
+const convert = require('./convert')
 
-  colour.l  = 100 - colour.l;
+function invertLightness(colourRef) {
+	var colour = convert("hsl", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.l  = 100 - colour.l
+
+	return helpers.ready(colour)
 }
 
-module.exports = invertLightness;
+module.exports = invertLightness

@@ -1,11 +1,14 @@
-function invert( _dep, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "rgb", colourRef );
+const helpers = require('../helpers')
+const convert = require('./convert')
 
-  colour.r = _dep.helpers.negMod((255 - colour.r), 255);
-  colour.g = _dep.helpers.negMod((255 - colour.g), 255);
-  colour.b = _dep.helpers.negMod((255 - colour.b), 255);
+function invert(colourRef) {
+	var colour = convert("rgb", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.r = helpers.negMod((255 - colour.r), 255)
+	colour.g = helpers.negMod((255 - colour.g), 255)
+	colour.b = helpers.negMod((255 - colour.b), 255)
+
+	return helpers.ready(colour)
 }
 
-module.exports = invert;
+module.exports = invert

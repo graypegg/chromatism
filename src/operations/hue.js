@@ -1,9 +1,12 @@
-function hue( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+const helpers = require('../helpers')
+const convert = require('./convert')
 
-  colour.h = _dep.helpers.negMod((colour.h + shift), 360);
+function hue(shift, colourRef) {
+	const colour = convert("hsl", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.h = helpers.negMod((colour.h + shift), 360)
+
+	return helpers.ready(colour)
 }
 
-module.exports = hue;
+module.exports = hue

@@ -1,73 +1,78 @@
-function fromCieLch( { conversions, operations, helpers }, to, value ) {
-  switch (to) {
+const convert = require('../operations/convert.js')
+const helpers = require('../helpers.js')
 
-    case "cieluv":
-      const h = helpers.toRad(value.h)
+function fromCieLch(to, value) {
+	switch (to) {
 
-      const u = value.C * Math.cos(h)
-      const v = value.C * Math.sin(h)
+	case "cieluv":
+		const h = helpers.toRad(value.h)
 
-      return {
-        L: value.L,
-        u,
-        v
-      };
+		const u = value.C * Math.cos(h)
+		const v = value.C * Math.sin(h)
 
-    case "hsluv":
-      if (value.L > 99.9999999) {
-          return { hu: value.h, s: 0, l: 100 }
-      }
-      if (value.L < 0.00000001) {
-          return { hu: value.h, s: 0, l: 0 }
-      }
+		return {
+			L: value.L,
+			u,
+			v
+		}
 
-      const epsilon = 0.008856
-      const kappa = 903.3
+	case "hsluv":
+		if (value.L > 99.9999999) {
+			return { hu: value.h, s: 0, l: 100 }
+		}
+		if (value.L < 0.00000001) {
+			return { hu: value.h, s: 0, l: 0 }
+		}
 
-      const s1 = (value.L + 16) / 1560896
-      const s2 = s1 > epsilon ? s1 : value.L / kappa
+		const epsilon = 0.008856
+		const kappa = 903.3
 
-      const m = helpers.getTransform('INVERSE_SRGB_XYZ')
-      let rays = []
+		const s1 = (value.L + 16) / 1560896
+		const s2 = s1 > epsilon ? s1 : value.L / kappa
 
-      for (let c = 0; c < 3; c++) {
-        let m1 = m[c][0];
-        let m2 = m[c][1];
-        let m3 = m[c][2];
+		const m = helpers.getTransform('INVERSE_SRGB_XYZ')
+		let rays = []
 
-        for (let t = 0; t < 2; t++) {
-          let top1 = (284517 * m1 - 94839 * m3) * s2
-          let top2 = (838422 * m3 + 769860 * m2 + 731718 * m1) * value.L * s2 - 769860 * t * value.L
-          let bottom = (632260 * m3 - 126452 * m2) * s2 + 126452 * t
+		for (let c = 0; c < 3; c++) {
+			let m1 = m[c][0]
+			let m2 = m[c][1]
+			let m3 = m[c][2]
 
-          rays.push({
-            m: top1 / bottom,
-            b: top2 / bottom
-          });
-        }
-      }
+			for (let t = 0; t < 2; t++) {
+				let top1 = (284517 * m1 - 94839 * m3) * s2
+				let top2 = (838422 * m3 + 769860 * m2 + 731718 * m1) * value.L * s2 - 769860 * t * value.L
+				let bottom = (632260 * m3 - 126452 * m2) * s2 + 126452 * t
 
-      var min = Number.MAX_VALUE
-      let hrad = helpers.toRad(value.h)
+				rays.push({
+					m: top1 / bottom,
+					b: top2 / bottom
+				})
+			}
+		}
 
-      rays.forEach((ray) => {
-        let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad));
-        if (length >= 0) min = Math.min(min, length)
-      })
+		var min = Number.MAX_VALUE
+		let hrad = helpers.toRad(value.h)
 
-      let max = min
+		rays.forEach((ray) => {
+			let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad))
+			if (length >= 0) {
+				min = Math.min(min, length)
+			}
+		})
 
-      return {
-        hu: value.h,
-        s: value.C / max * 100,
-        l: value.L
-      };
+		let max = min
 
-    default:
-      var CieLuv = operations.convert({ conversions, operations, helpers }, "cieluv", value);
-      return operations.convert({ conversions, operations, helpers }, to, CieLuv);
+		return {
+			hu: value.h,
+			s: value.C / max * 100,
+			l: value.L
+		}
 
-  }
+	default:
+		var CieLuv = convert("cieluv", value)
+		return convert(to, CieLuv)
+
+	}
 }
 
-module.exports = fromCieLch;
+module.exports = fromCieLch
