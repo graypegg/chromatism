@@ -1,11 +1,10 @@
-function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
-
-  var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
-  var illuminantD = _dep.operations.convert( _dep, "lms", illuminantDRef );
+function adapt (_dep, colourRef, illuminantDRef, illuminantSRef) {
+  var colour = _dep.operations.convert(_dep, 'XYZ', colourRef)
+  var illuminantD = _dep.operations.convert(_dep, 'lms', illuminantDRef)
   if (illuminantSRef) {
-    var illuminantS = _dep.operations.convert( _dep, "lms", illuminantSRef );
+    var illuminantS = _dep.operations.convert(_dep, 'lms', illuminantSRef)
   } else {
-    var illuminantS = _dep.operations.convert( _dep, "lms", _dep.helpers.getIlluminant("D65") );
+    var illuminantS = _dep.operations.convert(_dep, 'lms', _dep.helpers.getIlluminant('D65'))
   }
 
   // Bradford Transformation
@@ -27,7 +26,7 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
   // Illuminant ratio matrix
   let M = _dep.helpers.matrixMultiply(MbiMir, Mb)
 
-  let valueArray = [[ colour.X ], [ colour.Y ], [ colour.Z ] ]
+  let valueArray = [[colour.X], [colour.Y], [colour.Z]]
   let resultArray = _dep.helpers.matrixMultiply(M, valueArray)
 
   let result = {
@@ -36,7 +35,7 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
     Z: resultArray[2][0]
   }
 
-  return _dep.helpers.ready( _dep, result );
+  return _dep.helpers.ready(_dep, result)
 }
 
-module.exports = adapt;
+module.exports = adapt

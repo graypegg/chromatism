@@ -1,7 +1,6 @@
-function fromLms( { conversions, operations, helpers }, to, value ) {
+function fromLms ({ conversions, operations, helpers }, to, value) {
   switch (to) {
-
-    case "XYZ":
+    case 'XYZ':
       let valueArray = [ value.rho, value.gamma, value.beta ]
 
       // Inverse Bradford Transformation
@@ -20,10 +19,9 @@ function fromLms( { conversions, operations, helpers }, to, value ) {
       }
 
     default:
-      var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
-      return operations.convert({ conversions, operations, helpers }, to, XYZ);
-
+      var XYZ = operations.convert({ conversions, operations, helpers }, 'XYZ', value)
+      return operations.convert({ conversions, operations, helpers }, to, XYZ)
   }
 }
 
-module.exports = fromLms;
+module.exports = fromLms

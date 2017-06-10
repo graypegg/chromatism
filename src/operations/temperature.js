@@ -1,5 +1,5 @@
-function temperature( _dep, colourRef ) {
-  const colour = _dep.operations.convert( _dep, "xyY", colourRef );
+function temperature (_dep, colourRef) {
+  const colour = _dep.operations.convert(_dep, 'xyY', colourRef)
 
   // McCamy's CCT fomula.
   // DOI: 10.1002/col.5080170211
@@ -7,7 +7,7 @@ function temperature( _dep, colourRef ) {
   const n = (colour.x - 0.3320) / (colour.y - 0.1858)
   const out = (-449 * Math.pow(n, 3)) + (3525 * Math.pow(n, 2)) - (6823.3 * n) + 5520.33
 
-  return out;
+  return out
 }
 
-module.exports = temperature;
+module.exports = temperature

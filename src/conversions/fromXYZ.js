@@ -1,12 +1,11 @@
-function fromXYZ( { conversions, operations, helpers }, to, value ) {
-  const epsilon = 0.008856;
-  const kappa = 903.3;
-  const white = helpers.getIlluminant('D65');
+function fromXYZ ({ conversions, operations, helpers }, to, value) {
+  const epsilon = 0.008856
+  const kappa = 903.3
+  const white = helpers.getIlluminant('D65')
 
   switch (to) {
-
-    case "rgb":
-      let normalized = [value.X, value.Y, value.Z].map((v) => v / 100);
+    case 'rgb':
+      let normalized = [value.X, value.Y, value.Z].map((v) => v / 100)
 
       // Observer is 2°
       // Whitepoint is D65
@@ -27,7 +26,7 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
 
       return helpers.boundedRgb({ r, g, b })
 
-    case "lms":
+    case 'lms':
       let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
       // Bradford Transformation
@@ -45,22 +44,21 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         beta: resultArray[2]
       }
 
-    case "cielab":
-      const Xr = value.X / white.X;
-      const Yr = value.Y / white.Y;
-      const Zr = value.Z / white.Z;
+    case 'cielab':
+      const Xr = value.X / white.X
+      const Yr = value.Y / white.Y
+      const Zr = value.Z / white.Z
 
-      const toF = (x) => x > epsilon ? helpers.cbrt(x) : (kappa * x + 16) / 116;
-      const Fx = toF(Xr), Fy = toF(Yr), Fz = toF(Zr);
+      const toF = (x) => x > epsilon ? helpers.cbrt(x) : (kappa * x + 16) / 116
+      const Fx = toF(Xr), Fy = toF(Yr), Fz = toF(Zr)
 
       return {
         L: ((116 * Fy) - 16),
         a: 500 * (Fx - Fy),
         b: 200 * (Fy - Fz)
-      };
+      }
 
-    case "cieluv":
-
+    case 'cieluv':
       const yr = value.Y / white.Y
 
       const L = (yr > epsilon ? (116 * helpers.cbrt(yr)) - 16 : kappa * yr)
@@ -75,23 +73,22 @@ function fromXYZ( { conversions, operations, helpers }, to, value ) {
         L,
         u,
         v
-      };
+      }
 
-    case "xyY":
-      const x = value.X / (value.X + value.Y + value.Z);
-      const y = value.Y / (value.X + value.Y + value.Z);
+    case 'xyY':
+      const x = value.X / (value.X + value.Y + value.Z)
+      const y = value.Y / (value.X + value.Y + value.Z)
 
       return {
         x,
         y,
         Y: value.Y
-      };
+      }
 
     default:
-      var rgb = helpers.boundedRgb(operations.convert({ conversions, operations, helpers }, "rgb", value));
-      return operations.convert({ conversions, operations, helpers }, to, rgb);
-
+      var rgb = helpers.boundedRgb(operations.convert({ conversions, operations, helpers }, 'rgb', value))
+      return operations.convert({ conversions, operations, helpers }, to, rgb)
   }
 }
 
-module.exports = fromXYZ;
+module.exports = fromXYZ
