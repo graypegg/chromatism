@@ -1,13 +1,19 @@
 {
-  "presets": [
-    [
-      "es2015",
-      {
-        "modules": false
-      }
-    ]
-  ],
-  "plugins": [
-    "external-helpers"
-  ]
+  "env": {
+    "development": {
+      "presets": [
+        ["env", {
+          "modules": false
+        }]
+      ],
+      "plugins": [
+        "external-helpers"
+      ]
+    },
+    "test": {
+      "presets": [
+        "env"
+      ]
+    }
+  }
 }
