@@ -1,7 +1,6 @@
-function fromCieLch( { conversions, operations, helpers }, to, value ) {
+function fromCieLch ({ conversions, operations, helpers }, to, value) {
   switch (to) {
-
-    case "cieluv":
+    case 'cieluv':
       const h = helpers.toRad(value.h)
 
       const u = value.C * Math.cos(h)
@@ -11,14 +10,14 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
         L: value.L,
         u,
         v
-      };
+      }
 
-    case "hsluv":
+    case 'hsluv':
       if (value.L > 99.9999999) {
-          return { hu: value.h, s: 0, l: 100 }
+        return { hu: value.h, s: 0, l: 100 }
       }
       if (value.L < 0.00000001) {
-          return { hu: value.h, s: 0, l: 0 }
+        return { hu: value.h, s: 0, l: 0 }
       }
 
       const epsilon = 0.008856
@@ -31,9 +30,9 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
       let rays = []
 
       for (let c = 0; c < 3; c++) {
-        let m1 = m[c][0];
-        let m2 = m[c][1];
-        let m3 = m[c][2];
+        let m1 = m[c][0]
+        let m2 = m[c][1]
+        let m3 = m[c][2]
 
         for (let t = 0; t < 2; t++) {
           let top1 = (284517 * m1 - 94839 * m3) * s2
@@ -43,7 +42,7 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
           rays.push({
             m: top1 / bottom,
             b: top2 / bottom
-          });
+          })
         }
       }
 
@@ -51,7 +50,7 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
       let hrad = helpers.toRad(value.h)
 
       rays.forEach((ray) => {
-        let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad));
+        let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad))
         if (length >= 0) min = Math.min(min, length)
       })
 
@@ -61,13 +60,12 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
         hu: value.h,
         s: value.C / max * 100,
         l: value.L
-      };
+      }
 
     default:
-      var CieLuv = operations.convert({ conversions, operations, helpers }, "cieluv", value);
-      return operations.convert({ conversions, operations, helpers }, to, CieLuv);
-
+      var CieLuv = operations.convert({ conversions, operations, helpers }, 'cieluv', value)
+      return operations.convert({ conversions, operations, helpers }, to, CieLuv)
   }
 }
 
-module.exports = fromCieLch;
+module.exports = fromCieLch

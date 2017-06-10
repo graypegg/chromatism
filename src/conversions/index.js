@@ -1,13 +1,13 @@
-function contains(obj, test) {
-  const arr = Object.keys(obj);
-  return arr.every(function(val) {
-    return test.indexOf(val) !== -1;
-  });
+function contains (obj, test) {
+  const arr = Object.keys(obj)
+  return arr.every(function (val) {
+    return test.indexOf(val) !== -1
+  })
 }
 
 module.exports = {
   'hex': {
-    test: (colour) => typeof colour === 'string' && colour.slice(0,1) === '#',
+    test: (colour) => typeof colour === 'string' && colour.slice(0, 1) === '#',
     convert: require('./fromHex.js')
   },
   'rgb': {
@@ -15,7 +15,7 @@ module.exports = {
     convert: require('./fromRgb.js')
   },
   'cssrgb': {
-    test: (colour) => typeof colour === 'string' && colour.slice(0,4) === 'rgb(',
+    test: (colour) => typeof colour === 'string' && colour.slice(0, 4) === 'rgb(',
     convert: require('./fromCssRgb.js')
   },
   'hsl': {
@@ -23,7 +23,7 @@ module.exports = {
     convert: require('./fromHsl.js')
   },
   'csshsl': {
-    test: (colour) => typeof colour === 'string' && colour.slice(0,4) === 'hsl(',
+    test: (colour) => typeof colour === 'string' && colour.slice(0, 4) === 'hsl(',
     convert: require('./fromCssHsl.js')
   },
   'hsv': {
@@ -65,6 +65,5 @@ module.exports = {
   'hsluv': {
     test: (colour) => contains(colour, ['hu', 's', 'l']),
     convert: require('./fromHsluv.js')
-  },
-
+  }
 }

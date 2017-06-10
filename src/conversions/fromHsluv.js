@@ -1,12 +1,11 @@
-function fromCieLch( { conversions, operations, helpers }, to, value ) {
+function fromCieLch ({ conversions, operations, helpers }, to, value) {
   switch (to) {
-
-    case "cielch":
+    case 'cielch':
       if (value.L > 99.9999999) {
-          return { L: 100, C: 0, h: value.hu }
+        return { L: 100, C: 0, h: value.hu }
       }
       if (value.L < 0.00000001) {
-          return { L: 0, C: 0, h: value.hu }
+        return { L: 0, C: 0, h: value.hu }
       }
 
       const epsilon = 0.008856
@@ -19,9 +18,9 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
       let rays = []
 
       for (let c = 0; c < 3; c++) {
-        let m1 = m[c][0];
-        let m2 = m[c][1];
-        let m3 = m[c][2];
+        let m1 = m[c][0]
+        let m2 = m[c][1]
+        let m3 = m[c][2]
 
         for (let t = 0; t < 2; t++) {
           let top1 = (284517 * m1 - 94839 * m3) * s2
@@ -31,7 +30,7 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
           rays.push({
             m: top1 / bottom,
             b: top2 / bottom
-          });
+          })
         }
       }
 
@@ -39,7 +38,7 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
       let hrad = helpers.toRad(value.hu)
 
       rays.forEach((ray) => {
-        let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad));
+        let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad))
         if (length >= 0) min = Math.min(min, length)
       })
 
@@ -49,13 +48,12 @@ function fromCieLch( { conversions, operations, helpers }, to, value ) {
         L: value.l,
         C: max / 100 * value.s,
         h: value.hu
-      };
+      }
 
     default:
-      var CieLCh = operations.convert({ conversions, operations, helpers }, "cielch", value);
-      return operations.convert({ conversions, operations, helpers }, to, CieLCh);
-
+      var CieLCh = operations.convert({ conversions, operations, helpers }, 'cielch', value)
+      return operations.convert({ conversions, operations, helpers }, to, CieLCh)
   }
 }
 
-module.exports = fromCieLch;
+module.exports = fromCieLch
