@@ -10,7 +10,8 @@
     "test": "BABEL_ENV=test mocha --compilers js:babel-core/register",
     "build": "npm run build:umd && npm run build:es",
     "build:umd": "rollup -c --format umd --output dist/chromatism.js",
-    "build:es": "rollup -c --format es --output dist/chromatism.esm.js"
+    "build:es": "rollup -c --format es --output dist/chromatism.esm.js",
+    "format": "eslint --fix src/**/*.js test/**/*.js"
   },
   "keywords": [
     "color",
