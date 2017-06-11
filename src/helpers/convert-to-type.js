@@ -1,5 +1,7 @@
 const determineType = require('./determine-type.js')
-const conversions = require('../conversions')
+const conversions = require('../conversions').default
+
+console.log(conversions)
 
 function depthFirstSearchRecursive (fromType, toType, typesSoFar, stack) {
   const possibilities = conversions[fromType]
