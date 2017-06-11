@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const { toRad } = require('../helpers')
+const convert = require('../helpers/convert-to-type.js')
 
 function difference(colourRefOne, colourRefTwo, l, c) {
 	l = l || 1
@@ -24,7 +24,7 @@ function difference(colourRefOne, colourRefTwo, l, c) {
 	const H = Math.atan2(Lab1.b, Lab1.a)
 	const H1 = H >= 0 ? H : H + 360
 
-	const T = (164 <= H1) && (H1 <= 345) ? (0.56 + Math.abs(0.2 * Math.cos(helpers.toRad(H1 + 168)))) : (0.36 + Math.abs(0.4 * Math.cos(helpers.toRad(H1 + 35))))
+	const T = (164 <= H1) && (H1 <= 345) ? (0.56 + Math.abs(0.2 * Math.cos(toRad(H1 + 168)))) : (0.36 + Math.abs(0.4 * Math.cos(toRad(H1 + 35))))
 	const F = Math.pow(C1, 4) / (Math.pow(C1, 4) + 1900)
 
 	const SH = SC * (((F * T) + 1) - F)
@@ -33,7 +33,7 @@ function difference(colourRefOne, colourRefTwo, l, c) {
 	const EqPrt2 = Math.pow((dC / (c * SC)), 2)
 	const EqPrt3 = Math.pow((dH / (SH)), 2)
 
-	return Math.sqrt(EqPrt1 + EqPrt1 + EqPrt1)
+	return Math.sqrt(EqPrt1 + EqPrt2 + EqPrt3)
 }
 
 module.exports = difference

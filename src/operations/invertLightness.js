@@ -1,12 +1,12 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function invertLightness(colourRef) {
 	var colour = convert("hsl", colourRef)
 
 	colour.l  = 100 - colour.l
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = invertLightness

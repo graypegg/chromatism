@@ -1,10 +1,78 @@
-const convert = require('../operations/convert.js')
-const helpers = require('../helpers.js')
+const { getTransform, bounded } = require('../helpers.js')
 
-function fromRgb(to, value) {
-	switch (to){
+const {
+	lms: fromXYZTolms,
+	cielab: fromXYZTocielab,
+	cieluv: fromXYZTocieluv,
+	xyY: fromXYZToxyY,
+} = require('./fromXYZ')
 
-	case "hex":
+const hsl = value => {
+	var r = value['r'] / 255
+	var g = value['g'] / 255
+	var b = value['b'] / 255
+	var rgbOrdered = [ r, g, b ].sort()
+	var l = ((rgbOrdered[0] + rgbOrdered[2]) / 2) * 100
+	var s, h
+	if (rgbOrdered[0] == rgbOrdered[2]) {
+		s = 0
+		h = 0
+	} else {
+		if (l >= 50) {
+			s = ((rgbOrdered[2] - rgbOrdered[0]) / ((2.0 - rgbOrdered[2]) - rgbOrdered[0])) * 100
+		} else {
+			s = ((rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0])) * 100
+		}
+		if (rgbOrdered[2] == r) {
+			h = ((g - b) / (rgbOrdered[2] - rgbOrdered[0])) * 60
+		} else if (rgbOrdered[2] == g) {
+			h = (2 + ((b - r) / (rgbOrdered[2] - rgbOrdered[0]))) * 60
+		} else {
+			h = (4 + ((r - g) / (rgbOrdered[2] - rgbOrdered[0]))) * 60
+		}
+		if (h < 0) {
+			h += 360
+		} else if (h > 360) {
+			h = h % 360
+		}
+	}
+
+	return {
+		h: h,
+		s: s,
+		l: l
+	}
+}
+
+const cieluv = value => fromXYZTocieluv(XYZ(value))
+
+const XYZ = value => {
+	let normalized = [ value.r, value.g, value.b ].map((v) => v / 255)
+
+	let linear = normalized.map((V) => {
+		if (V <= 0.04045) {
+			return V / 12.92
+		}
+		return Math.pow(((V + 0.055) / 1.055), 2.4)
+	})
+
+   // Observer is 2°
+   // Whitepoint is D65
+   // sRGB standard stuff eh!
+   // [ Shamelessly stolen off Wikipedia ]
+	let M = getTransform('SRGB_XYZ')
+
+	let [ X, Y, Z ] = M.map((m) => {
+		return linear.reduce((acc, v, key) => {
+			return (m[key] * v) + acc
+		}, 0)
+	}).map((o) => o * 100)
+
+	return { X, Y, Z }
+}
+
+module.exports = {
+	hex: value => {
 		var r = Math.round(value['r']).toString(16)
 		if (r.length == 1) {
 			r = "0" + r
@@ -18,67 +86,40 @@ function fromRgb(to, value) {
 			b = "0" + b
 		}
 		return "#" + r + g + b
+	},
 
-	case "cssrgb":
-		return "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")"
+	cssrgb: value => "rgb(" + Math.round(value['r']) + "," + Math.round(value['g']) + "," + Math.round(value['b']) + ")",
 
-	case "hsl":
-		var r = value['r'] / 255
-		var g = value['g'] / 255
-		var b = value['b'] / 255
-		var rgbOrdered = [ r, g, b ].sort()
-		var l = ((rgbOrdered[0] + rgbOrdered[2]) / 2) * 100
-		var s, h
-		if (rgbOrdered[0] == rgbOrdered[2]) {
-			s = 0
-			h = 0
-		} else {
-			if (l >= 50) {
-				s = ((rgbOrdered[2] - rgbOrdered[0]) / ((2.0 - rgbOrdered[2]) - rgbOrdered[0])) * 100
-			} else {
-				s = ((rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0])) * 100
-			}
-			if (rgbOrdered[2] == r) {
-				h = ((g - b) / (rgbOrdered[2] - rgbOrdered[0])) * 60
-			} else if (rgbOrdered[2] == g) {
-				h = (2 + ((b - r) / (rgbOrdered[2] - rgbOrdered[0]))) * 60
-			} else {
-				h = (4 + ((r - g) / (rgbOrdered[2] - rgbOrdered[0]))) * 60
-			}
-			if (h < 0) {
-				h += 360
-			} else if (h > 360) {
-				h = h % 360
-			}
-		}
+	hsl,
 
-		return {
-			h: h,
-			s: s,
-			l: l
-		}
+	csshsl: value => {
+		var { h, s, l } = hsl(value)
+		return "hsl(" + Math.round(h) + "," + Math.round(s) + "%," + Math.round(l) + "%)"
+	},
 
-	case "csshsl":
-		var hsl = convert("hsl", value)
-		return "hsl(" + Math.round(hsl.h) + "," + Math.round(hsl.s) + "%," + Math.round(hsl.l) + "%)"
-
-	case "cmyk":
+	cmyk: value => {
 		var tempR = value['r'] / 255
 		var tempG = value['g'] / 255
 		var tempB = value['b'] / 255
 		var k = 1 - (Math.max(tempR, tempG, tempB))
 		if (k != 1) {
-			var c = ((1 - tempR) - k) / (1 - k)
-			var m = ((1 - tempG) - k) / (1 - k)
-			var y = ((1 - tempB) - k) / (1 - k)
+			return {
+				c: ((1 - tempR) - k) / (1 - k),
+				m: ((1 - tempG) - k) / (1 - k),
+				y: ((1 - tempB) - k) / (1 - k),
+				k
+			}
 		} else {
-			var c = 0
-			var m = 0
-			var y = 0
+			return {
+				c: 0,
+				m: 0,
+				y: 0,
+				k
+			}
 		}
-		return { c: c, m: m, y: y, k: k }
+	},
 
-	case "hsv":
+	hsv: value => {
 		var r = (value.r / 255)
 		var g = (value.g / 255)
 		var b = (value.b / 255)
@@ -116,67 +157,23 @@ function fromRgb(to, value) {
 			}
 		}
 		return { h: h * 360, s: s * 100, v: v * 100 }
+	},
 
-	case "yiq":
+	yiq: value => {
 		var y = (0.299 * (value.r / 255)) + (0.587 * (value.g / 255)) + (0.114 * (value.b / 255))
 		var i = (0.596 * (value.r / 255)) + (-0.274 * (value.g / 255)) + (-0.322 * (value.b / 255))
 		var q = (0.211 * (value.r / 255)) + (-0.523 * (value.g / 255)) + (0.312 * (value.b / 255))
       /* YIQ is not a transformation of RGB, so it's pretty lossy */
-		i = helpers.bounded(i, [ -0.5957, 0.5957 ])
-		q = helpers.bounded(q, [ -0.5226, 0.5226 ])
-		return { y: y, i: i, q: q }
+		i = bounded(i, [ -0.5957, 0.5957 ])
+		q = bounded(q, [ -0.5226, 0.5226 ])
+		return { y, i, q }
+	},
 
-    /**
-     * XYZ, used for XYZ dependants below as well
-     */
-	case "XYZ":
-		let normalized = [ value.r, value.g, value.b ].map((v) => v / 255)
+	XYZ,
 
-		let linear = normalized.map((V) => {
-			if (V <= 0.04045) {
-				return V / 12.92
-			}
-			return Math.pow(((V + 0.055) / 1.055), 2.4)
-		})
+	lms: value => fromXYZTolms(XYZ(value)),
+	cielab: value => fromXYZTocielab(XYZ(value)),
+	cieluv,
+	xyY: value => fromXYZToxyY(XYZ(value)),
 
-      // Observer is 2°
-      // Whitepoint is D65
-      // sRGB standard stuff eh!
-      // [ Shamelessly stolen off Wikipedia ]
-		let M = helpers.getTransform('SRGB_XYZ')
-
-		let [ X, Y, Z ] = M.map((m) => {
-			return linear.reduce((acc, v, key) => {
-				return (m[key] * v) + acc
-			}, 0)
-		}).map((o) => o * 100)
-
-		return { X, Y, Z }
-
-    /**
-     * XYZ dependants
-     */
-	case "lms":
-	case "cielab":
-	case "cieluv":
-	case "xyY":
-		var XYZ = convert("XYZ", value)
-		return convert(to, XYZ)
-
-    /**
-     * CIELUV dependants
-     */
-	case "cielch":
-		var CieLuv = convert("cieluv", value)
-		return convert(to, CieLuv)
-
-    /**
-     * CIELCh dependants
-     */
-	case "hsluv":
-		var CieLCh = convert("cielch", value)
-		return convert(to, CieLCh)
-	}
 }
-
-module.exports = fromRgb

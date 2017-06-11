@@ -1,11 +1,8 @@
-const convert = require('../operations/convert.js')
-const helpers = require('../helpers.js')
+const { toRad, getTransform, }  = require('../helpers.js')
 
-function fromCieLch(to, value) {
-	switch (to) {
-
-	case "cieluv":
-		const h = helpers.toRad(value.h)
+module.exports = {
+	cieluv: value => {
+		const h = toRad(value.h)
 
 		const u = value.C * Math.cos(h)
 		const v = value.C * Math.sin(h)
@@ -15,8 +12,9 @@ function fromCieLch(to, value) {
 			u,
 			v
 		}
+	},
 
-	case "hsluv":
+	hsluv: value => {
 		if (value.L > 99.9999999) {
 			return { hu: value.h, s: 0, l: 100 }
 		}
@@ -30,7 +28,7 @@ function fromCieLch(to, value) {
 		const s1 = (value.L + 16) / 1560896
 		const s2 = s1 > epsilon ? s1 : value.L / kappa
 
-		const m = helpers.getTransform('INVERSE_SRGB_XYZ')
+		const m = getTransform('INVERSE_SRGB_XYZ')
 		let rays = []
 
 		for (let c = 0; c < 3; c++) {
@@ -51,7 +49,7 @@ function fromCieLch(to, value) {
 		}
 
 		var min = Number.MAX_VALUE
-		let hrad = helpers.toRad(value.h)
+		let hrad = toRad(value.h)
 
 		rays.forEach((ray) => {
 			let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad))
@@ -67,12 +65,5 @@ function fromCieLch(to, value) {
 			s: value.C / max * 100,
 			l: value.L
 		}
-
-	default:
-		var CieLuv = convert("cieluv", value)
-		return convert(to, CieLuv)
-
 	}
 }
-
-module.exports = fromCieLch

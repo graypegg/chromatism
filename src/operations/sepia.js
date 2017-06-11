@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function sepia(colourRef) {
 	var colour = convert("rgb", colourRef)
@@ -9,7 +9,7 @@ function sepia(colourRef) {
 	newcolour.g = (colour.r * 0.349) + (colour.g * 0.686) + (colour.b * 0.168)
 	newcolour.b = (colour.r * 0.272) + (colour.g * 0.534) + (colour.b * 0.131)
 
-	return helpers.ready(newcolour)
+	return makeColourObject(newcolour)
 }
 
 module.exports = sepia

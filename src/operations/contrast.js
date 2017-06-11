@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function contrast(shift, colourRef) {
 	var colour = convert("rgb", colourRef)
@@ -25,7 +25,7 @@ function contrast(shift, colourRef) {
 		colour.b = 255
 	}
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = contrast

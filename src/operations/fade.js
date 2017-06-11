@@ -1,5 +1,6 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const { slopeMod } = require('../helpers')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function fade(amount, fromRef, toRef) {
 	var fromColour = convert("rgb", fromRef)
@@ -14,15 +15,15 @@ function fade(amount, fromRef, toRef) {
 	var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b }
 
 	for (var i = 0;i < (amount - 1);i++) {
-		colour.r = helpers.slopeMod(colour.r + rDiff, 255)
-		colour.g = helpers.slopeMod(colour.g + gDiff, 255)
-		colour.b = helpers.slopeMod(colour.b + bDiff, 255)
+		colour.r = slopeMod(colour.r + rDiff, 255)
+		colour.g = slopeMod(colour.g + gDiff, 255)
+		colour.b = slopeMod(colour.b + bDiff, 255)
 		colours.push({ r: colour.r, g: colour.g, b: colour.b })
 	}
 
 	colours.push(toColour)
 
-	return helpers.ready(colours)
+	return makeColourObject(colours)
 }
 
 module.exports = fade

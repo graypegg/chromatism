@@ -1,12 +1,12 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function complementary(colourRef) {
 	var colour = convert("hsluv", colourRef)
 
 	colour.hu = (colour.hu + 180) % 360
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = complementary

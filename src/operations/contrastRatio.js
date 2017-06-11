@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const convert = require('../helpers/convert-to-type.js')
+const makeColourObject = require('./convert.js')
 
 function contrastRatio(colourRef) {
 	var colour = convert("rgb", colourRef)
@@ -11,7 +11,7 @@ function contrastRatio(colourRef) {
 		colour = { r: 255, g: 255, b: 255 }
 	}
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = contrastRatio

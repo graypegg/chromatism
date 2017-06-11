@@ -1,10 +1,7 @@
-const convert = require('../operations/convert.js')
 const helpers = require('../helpers.js')
 
-function fromCieLch(to, value) {
-	switch (to) {
-
-	case "cielch":
+module.exports = {
+	cielch: value => {
 		if (value.L > 99.9999999) {
 			return { L: 100, C: 0, h: value.hu }
 		}
@@ -55,12 +52,5 @@ function fromCieLch(to, value) {
 			C: max / 100 * value.s,
 			h: value.hu
 		}
-
-	default:
-		var CieLCh = convert("cielch", value)
-		return convert(to, CieLCh)
-
 	}
 }
-
-module.exports = fromCieLch

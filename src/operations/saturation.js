@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function saturation(shift, colourRef) {
 	var colour = convert("hsl", colourRef)
@@ -11,7 +11,7 @@ function saturation(shift, colourRef) {
 		colour.s = 100
 	}
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = saturation

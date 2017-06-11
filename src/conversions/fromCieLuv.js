@@ -1,10 +1,7 @@
-const convert = require('../operations/convert.js')
 const helpers = require('../helpers.js')
 
-function fromCieLuv(to, value) {
-	switch (to) {
-
-	case "XYZ":
+module.exports = {
+	XYZ: value => {
 		const epsilon = 0.008856
 		const kappa = 903.3
 		const white = helpers.getIlluminant('D65')
@@ -30,8 +27,9 @@ function fromCieLuv(to, value) {
 			Y: Y * 100,
 			Z: Z * 100
 		}
+	},
 
-	case 'cielch':
+	cielch: value => {
 		const C = Math.sqrt(Math.pow(value.u, 2) + Math.pow(value.v, 2))
 		let h = Math.atan2(value.v, value.u)
 		if (h < 0) {
@@ -44,13 +42,5 @@ function fromCieLuv(to, value) {
 			C,
 			h
 		}
-		break
-
-	default:
-		var XYZ = convert("XYZ", value)
-		return convert(to, XYZ)
-
 	}
 }
-
-module.exports = fromCieLuv

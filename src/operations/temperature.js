@@ -1,4 +1,4 @@
-const convert = require('./convert')
+const convert = require('../helpers/convert-to-type.js')
 
 function temperature(colourRef) {
 	const colour = convert("xyY", colourRef)

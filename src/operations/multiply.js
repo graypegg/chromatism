@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function multiply(colourRefOne, colourRefTwo) {
 	var c1 = convert("hsl", colourRefOne)
@@ -9,7 +9,7 @@ function multiply(colourRefOne, colourRefTwo) {
 	colour.l = (colour.l > 100 ? 100 : colour.l)
 	colour.l = (colour.l < 0 ? 0 : colour.l)
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = multiply

@@ -1,28 +1,14 @@
-const convert = require('../operations/convert.js')
+module.exports = {
+	rgb: value => {
+		const values = value
+			.replace('#', '')
+			.match(/.{2}/g)
+			.map(value => parseInt(value, 16))
 
-function fromHex(to, value) {
-	value = value.replace('#', '').match(/.{2}/g)
-	for (var i = 0;i < value.length;i++){
-		value[i] = parseInt(value[i], 16)
-	}
-	switch (to) {
-
-	case "rgb":
 		return {
-			r: value[0],
-			g: value[1],
-			b: value[2]
+			r: values[0],
+			g: values[1],
+			b: values[2]
 		}
-
-    /* This colour mode is just an expression of RGB */
-	default:
-		return convert(to, {
-			r: value[0],
-			g: value[1],
-			b: value[2]
-		})
-
 	}
 }
-
-module.exports = fromHex

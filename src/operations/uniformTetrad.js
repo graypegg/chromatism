@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function tetrad(colourRef) {
 	var colour = convert("hsluv", colourRef)
@@ -10,7 +10,7 @@ function tetrad(colourRef) {
 		colours.push({ h: colour.hu, s: colour.s, l: colour.l })
 	}
 
-	return helpers.ready(colours)
+	return makeColourObject(colours)
 }
 
 module.exports = tetrad

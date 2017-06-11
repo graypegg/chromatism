@@ -1,5 +1,5 @@
-const helpers = require('../helpers')
-const convert = require('./convert')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
 function mid(colourOneRef, colourTwoRef) {
 	var colourOne = convert("hsl", colourOneRef)
@@ -10,7 +10,7 @@ function mid(colourOneRef, colourTwoRef) {
 	var midLight = (colourOne.l + colourTwo.l) / 2
 	var colour = { h: midHue, s: midSat, l: midLight }
 
-	return helpers.ready(colour)
+	return makeColourObject(colour)
 }
 
 module.exports = mid

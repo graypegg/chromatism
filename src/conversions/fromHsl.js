@@ -1,10 +1,7 @@
-const convert = require('../operations/convert.js')
 const helpers = require('../helpers.js')
 
-function fromHsl(to, value) {
-	switch (to) {
-
-	case "rgb":
+module.exports = {
+	rgb: value => {
 		if (value.s == 0) {
 			var grey = (value.l / 100) * 255
 			return {
@@ -67,26 +64,21 @@ function fromHsl(to, value) {
 				b: b * 255
 			}
 		}
+	},
 
-	case "csshsl":
-		return "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)"
+	csshsl: value => "hsl(" + Math.round(value.h) + "," + Math.round(value.s) + "%," + Math.round(value.l) + "%)",
 
-	case "hsv":
-		value.s = value.s / 100
-		value.l = value.l / 100
-		var i = value.s * (value.l < .5 ? value.l : 1 - value.l)
+	hsv: value => {
+		const normalized = Object.assign({}, value, {
+			s: value.s / 100,
+			l: value.l / 100
+		})
+		var i = normalized.s * (normalized.l < .5 ? normalized.l : 1 - normalized.l)
 
-		var h = value.h
-		var s = 2 * i / (value.l + i)
-		var v = value.l + i
+		var h = normalized.h
+		var s = 2 * i / (normalized.l + i)
+		var v = normalized.l + i
 
 		return { h: h, s: s * 100, v: v * 100 }
-
-	default:
-		var rgb = convert("rgb", value)
-		return convert(to, rgb)
-
 	}
 }
-
-module.exports = fromHsl

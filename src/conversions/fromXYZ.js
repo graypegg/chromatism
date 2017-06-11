@@ -1,14 +1,11 @@
-const convert = require('../operations/convert.js')
 const helpers = require('../helpers.js')
 
-function fromXYZ(to, value) {
-	const epsilon = 0.008856
-	const kappa = 903.3
-	const white = helpers.getIlluminant('D65')
+const epsilon = 0.008856
+const kappa = 903.3
+const white = helpers.getIlluminant('D65')
 
-	switch (to) {
-
-	case "rgb":
+module.exports = {
+	rgb: value => {
 		let normalized = [ value.X, value.Y, value.Z ].map((v) => v / 100)
 
       // Observer is 2°
@@ -31,8 +28,9 @@ function fromXYZ(to, value) {
 		}).map((o) => o * 255)
 
 		return helpers.boundedRgb({ r, g, b })
+	},
 
-	case "lms":
+	lms: value => {
 		let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
       // Bradford Transformation
@@ -49,8 +47,9 @@ function fromXYZ(to, value) {
 			gamma: resultArray[1],
 			beta: resultArray[2]
 		}
+	},
 
-	case "cielab":
+	cielab: value => {
 		const Xr = value.X / white.X
 		const Yr = value.Y / white.Y
 		const Zr = value.Z / white.Z
@@ -63,9 +62,9 @@ function fromXYZ(to, value) {
 			a: 500 * (Fx - Fy),
 			b: 200 * (Fy - Fz)
 		}
+	},
 
-	case "cieluv":
-
+	cieluv: value => {
 		const yr = value.Y / white.Y
 
 		const L = (yr > epsilon ? (116 * helpers.cbrt(yr)) - 16 : kappa * yr)
@@ -81,8 +80,9 @@ function fromXYZ(to, value) {
 			u,
 			v
 		}
+	},
 
-	case "xyY":
+	xyY: value => {
 		const x = value.X / (value.X + value.Y + value.Z)
 		const y = value.Y / (value.X + value.Y + value.Z)
 
@@ -91,12 +91,5 @@ function fromXYZ(to, value) {
 			y,
 			Y: value.Y
 		}
-
-	default:
-		var rgb = helpers.boundedRgb(convert("rgb", value))
-		return convert(to, rgb)
-
 	}
 }
-
-module.exports = fromXYZ

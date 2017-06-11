@@ -1,28 +1,14 @@
-const convert = require('../operations/convert.js')
+module.exports = {
+	hsl: value => {
+		const values = value
+			.replace(/(hsl\(|\)|%|[\s]*)/g, '')
+			.split(",")
+			.map(value => parseInt(value, 10))
 
-function fromCssHsl(to, value) {
-	value = value.replace(/(hsl\(|\)|%|[\s]*)/g, '').split(",")
-	for (var i = 0;i < value.length;i++){
-		value[i] = parseInt(value[i])
-	}
-	switch (to) {
-
-	case "hsl":
 		return {
-			h: value[0],
-			s: value[1],
-			l: value[2]
+			h: values[0],
+			s: values[1],
+			l: values[2]
 		}
-
-    /* This colour mode is just an expression of HSL */
-	default:
-		return convert(to, {
-			h: value[0],
-			s: value[1],
-			l: value[2]
-		})
-
 	}
 }
-
-module.exports = fromCssHsl
