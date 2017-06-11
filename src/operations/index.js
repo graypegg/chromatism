@@ -23,4 +23,4 @@ module.exports = {
   uniformComplementary: require('./uniformComplementary.js'),
   uniformTriad: require('./uniformTriad.js'),
   uniformTetrad: require('./uniformTetrad.js')
-};
+}
