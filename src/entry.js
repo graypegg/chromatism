@@ -1,1 +1,3 @@
-module.exports = require('./operations')
+import operations from './operations'
+
+export default operations

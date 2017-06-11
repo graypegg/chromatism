@@ -1,5 +1,5 @@
 var assert = require('assert')
-var chroma = require('../src/entry.js')
+var chroma = require('../src/entry.js').default
 var round = require('./rounding.js')
 var consts = require('./consts.js')
 
