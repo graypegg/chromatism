@@ -1,12 +1,12 @@
 const makeColourObject = require('./convert.js')
 const convert = require('../helpers/convert-to-type.js')
 
-function complementary(colourRef) {
-	var colour = convert("hsluv", colourRef)
+function complementary (colourRef) {
+  var colour = convert('hsluv', colourRef)
 
-	colour.hu = (colour.hu + 180) % 360
+  colour.hu = (colour.hu + 180) % 360
 
-	return makeColourObject(colour)
+  return makeColourObject(colour)
 }
 
 module.exports = complementary
