@@ -1,26 +1,14 @@
-function fromHex( { conversions, operations, helpers }, to, value ) {
-  value = value.replace('#','').match(/.{2}/g);
-  for (var i=0;i<value.length;i++){
-    value[i] = parseInt(value[i], 16);
-  }
-  switch (to) {
+module.exports = {
+	rgb: value => {
+		const values = value
+			.replace('#', '')
+			.match(/.{2}/g)
+			.map(value => parseInt(value, 16))
 
-    case "rgb":
-      return {
-        r: value[0],
-        g: value[1],
-        b: value[2]
-      };
-
-    /* This colour mode is just an expression of RGB */
-    default:
-      return operations.convert({ conversions, operations, helpers }, to, {
-        r: value[0],
-        g: value[1],
-        b: value[2]
-      });
-
-  }
+		return {
+			r: values[0],
+			g: values[1],
+			b: values[2]
+		}
+	}
 }
-
-module.exports = fromHex;

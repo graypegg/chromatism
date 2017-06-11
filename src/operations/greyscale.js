@@ -1,10 +1,13 @@
-function greyscale( _dep, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "rgb", colourRef );
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
-  var grey = ( (colour.r + colour.g + colour.b) / 3 );
-  colour = {r: grey, g: grey, b: grey};
+function greyscale(colourRef) {
+	var colour = convert("rgb", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	var grey = ((colour.r + colour.g + colour.b) / 3)
+	colour = { r: grey, g: grey, b: grey }
+
+	return makeColourObject(colour)
 }
 
-module.exports = greyscale;
+module.exports = greyscale

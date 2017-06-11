@@ -37,6 +37,7 @@
     "rollup-plugin-uglify": "^2.0.1",
     "uglify-es": "^3.0.13"
   },
+  "false": {},
   "browserslist": [
     "ie >= 9",
     "last 2 versions"

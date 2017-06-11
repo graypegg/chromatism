@@ -1,14 +1,17 @@
-function brightness( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
-  colour.l += shift;
-  if (colour.l < 0) {
-    colour.l = 0;
-  } else if (colour.l > 100) {
-    colour.l = 100;
-  }
+function brightness(shift, colourRef) {
+	var colour = convert("hsl", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.l += shift
+	if (colour.l < 0) {
+		colour.l = 0
+	} else if (colour.l > 100) {
+		colour.l = 100
+	}
+
+	return makeColourObject(colour)
 }
 
-module.exports = brightness;
+module.exports = brightness

@@ -1,16 +1,15 @@
-function convert( _dep, to, value ) {
-  if (Object.keys(_dep.conversions).indexOf(to) > -1) {
-    if (value.colour) value = value.colour
-    else if (value.colours) value = value.colours
-    let from = _dep.helpers.determineMode(value);
-    if (from != to) {
-      return _dep.conversions[from].convert( _dep, to, value );
-    } else {
-      return value;
-    }
-  } else {
-    return _dep.helpers.ready( _dep, to );
-  }
-}
+const convert = require('../helpers/convert-to-type.js')
+const types = Object.keys(require('../helpers/test-color-type.js'))
 
-module.exports = convert;
+module.exports = function makeColourObject(colour) {
+	const object = {}
+
+	types.forEach(type => {
+		Object.defineProperty(object, type, {
+			get: () => convert(type, colour),
+			enumerable: true
+		})
+	})
+
+	return object
+}

@@ -1,14 +1,17 @@
-function shade( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsv", colourRef );
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
-  colour.v += shift;
-  if (colour.v < 0) {
-    colour.v = 0;
-  } else if (colour.v > 100) {
-    colour.v = 100;
-  }
+function shade(shift, colourRef) {
+	var colour = convert("hsv", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.v += shift
+	if (colour.v < 0) {
+		colour.v = 0
+	} else if (colour.v > 100) {
+		colour.v = 100
+	}
+
+	return makeColourObject(colour)
 }
 
-module.exports = shade;
+module.exports = shade

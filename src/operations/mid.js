@@ -1,13 +1,16 @@
-function mid( _dep, colourOneRef, colourTwoRef ) {
-  var colourOne = _dep.operations.convert( _dep, "hsl", colourOneRef );
-  var colourTwo = _dep.operations.convert( _dep, "hsl", colourTwoRef );
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
-  var midHue = (colourOne.h + colourTwo.h) / 2;
-  var midSat = (colourOne.s + colourTwo.s) / 2;
-  var midLight = (colourOne.l + colourTwo.l) / 2;
-  var colour = {h:midHue, s:midSat, l:midLight};
+function mid(colourOneRef, colourTwoRef) {
+	var colourOne = convert("hsl", colourOneRef)
+	var colourTwo = convert("hsl", colourTwoRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	var midHue = (colourOne.h + colourTwo.h) / 2
+	var midSat = (colourOne.s + colourTwo.s) / 2
+	var midLight = (colourOne.l + colourTwo.l) / 2
+	var colour = { h: midHue, s: midSat, l: midLight }
+
+	return makeColourObject(colour)
 }
 
-module.exports = mid;
+module.exports = mid

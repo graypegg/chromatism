@@ -1,13 +1,17 @@
-function adjacent( _dep, deg, amount, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
-  var colours = [{h:colour.h, s:colour.s, l:colour.l}];
+const { negMod } = require('../helpers')
+const convert = require('../helpers/convert-to-type.js')
+const makeColourObject = require('./convert.js')
 
-  for(var i=0;i<(amount-1);i++) {
-    colour.h = _dep.helpers.negMod((colour.h + deg), 360);
-    colours.push({h:colour.h, s:colour.s, l:colour.l});
-  }
+function adjacent(deg, amount, colourRef) {
+	const colour = convert("hsl", colourRef)
+	const colours = [{ h: colour.h, s: colour.s, l: colour.l }]
 
-  return _dep.helpers.ready( _dep, colours );
+	for (let i = 0;i < (amount - 1);i++) {
+		colour.h = negMod((colour.h + deg), 360)
+		colours.push({ h: colour.h, s: colour.s, l: colour.l })
+	}
+
+	return makeColourObject(colours)
 }
 
-module.exports = adjacent;
+module.exports = adjacent

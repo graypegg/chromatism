@@ -1,9 +1,12 @@
-function complementary( _dep, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsluv", colourRef );
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
-  colour.hu = (colour.hu + 180) % 360;
+function complementary(colourRef) {
+	var colour = convert("hsluv", colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+	colour.hu = (colour.hu + 180) % 360
+
+	return makeColourObject(colour)
 }
 
-module.exports = complementary;
+module.exports = complementary

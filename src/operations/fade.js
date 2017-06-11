@@ -1,25 +1,29 @@
-function fade( _dep, amount, fromRef, toRef ) {
-  var fromColour = _dep.operations.convert( _dep, "rgb", fromRef );
-  var toColour = _dep.operations.convert( _dep, "rgb", toRef );
+const { slopeMod } = require('../helpers')
+const makeColourObject = require('./convert.js')
+const convert = require('../helpers/convert-to-type.js')
 
-  var colours = [fromColour];
-  amount = amount - 1;
+function fade(amount, fromRef, toRef) {
+	var fromColour = convert("rgb", fromRef)
+	var toColour = convert("rgb", toRef)
 
-  var rDiff = (toColour.r - fromColour.r) / (amount);
-  var gDiff = (toColour.g - fromColour.g) / (amount);
-  var bDiff = (toColour.b - fromColour.b) / (amount);
-  var colour = {r:fromColour.r, g:fromColour.g, b:fromColour.b};
+	var colours = [ fromColour ]
+	amount = amount - 1
 
-  for(var i=0;i<(amount-1);i++) {
-    colour.r = _dep.helpers.slopeMod(colour.r + rDiff, 255);
-    colour.g = _dep.helpers.slopeMod(colour.g + gDiff, 255);
-    colour.b = _dep.helpers.slopeMod(colour.b + bDiff, 255);
-    colours.push({r:colour.r, g:colour.g, b:colour.b});
-  }
+	var rDiff = (toColour.r - fromColour.r) / (amount)
+	var gDiff = (toColour.g - fromColour.g) / (amount)
+	var bDiff = (toColour.b - fromColour.b) / (amount)
+	var colour = { r: fromColour.r, g: fromColour.g, b: fromColour.b }
 
-  colours.push(toColour);
+	for (var i = 0;i < (amount - 1);i++) {
+		colour.r = slopeMod(colour.r + rDiff, 255)
+		colour.g = slopeMod(colour.g + gDiff, 255)
+		colour.b = slopeMod(colour.b + bDiff, 255)
+		colours.push({ r: colour.r, g: colour.g, b: colour.b })
+	}
 
-  return _dep.helpers.ready( _dep, colours );
+	colours.push(toColour)
+
+	return makeColourObject(colours)
 }
 
-module.exports = fade;
+module.exports = fade
