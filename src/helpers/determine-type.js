@@ -1,8 +1,8 @@
-const colorTypeTests = require('./test-color-type.js')
+import colorTypeTests from './test-color-type'
 
 const types = Object.keys(colorTypeTests)
 
-module.exports = function determineType (colour) {
+export default function determineType (colour) {
   const type = types.find(type => colorTypeTests[type](colour))
 
   if (!type) {
