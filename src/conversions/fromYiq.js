@@ -1,8 +1,8 @@
-const helpers = require('../helpers.js')
+import helpers from '../helpers'
 
 const bound = v => helpers.bounded(v, [ 0, 255 ])
 
-module.exports = {
+export default {
   rgb: value => {
     const i = helpers.bounded(value.i, [ -0.5957, 0.5957 ])
     const q = helpers.bounded(value.q, [ -0.5226, 0.5226 ])

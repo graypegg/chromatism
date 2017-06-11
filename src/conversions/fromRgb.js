@@ -1,11 +1,12 @@
 import { getTransform, bounded } from '../helpers.js'
+import fromXYZ from './fromXYZ'
 
 const {
 	lms: fromXYZTolms,
 	cielab: fromXYZTocielab,
 	cieluv: fromXYZTocieluv,
 	xyY: fromXYZToxyY
-} = require('./fromXYZ')
+} = fromXYZ
 
 const hsl = value => {
   var r = value['r'] / 255

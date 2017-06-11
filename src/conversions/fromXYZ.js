@@ -1,10 +1,10 @@
-const helpers = require('../helpers.js')
+import helpers from '../helpers'
 
 const epsilon = 0.008856
 const kappa = 903.3
 const white = helpers.getIlluminant('D65')
 
-module.exports = {
+export default {
   rgb: value => {
     let normalized = [ value.X, value.Y, value.Z ].map((v) => v / 100)
 
