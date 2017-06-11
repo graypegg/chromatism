@@ -1,6 +1,6 @@
-const { toRad, getTransform } = require('../helpers.js')
+import { toRad, getTransform } from '../helpers.js'
 
-module.exports = {
+export default {
   cieluv: value => {
     const h = toRad(value.h)
 

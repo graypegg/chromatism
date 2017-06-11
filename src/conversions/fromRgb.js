@@ -1,4 +1,4 @@
-const { getTransform, bounded } = require('../helpers.js')
+import { getTransform, bounded } from '../helpers.js'
 
 const {
 	lms: fromXYZTolms,
@@ -71,7 +71,7 @@ const XYZ = value => {
   return { X, Y, Z }
 }
 
-module.exports = {
+export default {
   hex: value => {
     var r = Math.round(value['r']).toString(16)
     if (r.length == 1) {

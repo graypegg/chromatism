@@ -1,6 +1,6 @@
-const helpers = require('../helpers.js')
+import { negMod } from '../helpers.js'
 
-module.exports = {
+export default {
   rgb: value => {
     if (value.s == 0) {
       var grey = (value.l / 100) * 255
@@ -20,7 +20,7 @@ module.exports = {
       tempHue = value.h / 360
       var tempR = (tempHue + 0.333) % 1
       var tempG = tempHue
-      var tempB = helpers.negMod((tempHue - 0.333), 1)
+      var tempB = negMod((tempHue - 0.333), 1)
       var r, g, b
       if ((6 * tempR) < 1) {
         r = tempTwo + ((tempOne - tempTwo) * 6 * tempR)
