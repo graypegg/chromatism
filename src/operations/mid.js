@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js')
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function mid (colourOneRef, colourTwoRef) {
+export default function mid (colourOneRef, colourTwoRef) {
   var colourOne = convert('hsl', colourOneRef)
   var colourTwo = convert('hsl', colourTwoRef)
 
@@ -12,5 +12,3 @@ function mid (colourOneRef, colourTwoRef) {
 
   return makeColourObject(colour)
 }
-
-module.exports = mid

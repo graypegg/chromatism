@@ -1,9 +1,9 @@
-module.exports = {
+export default {
   hsl: value => {
     const values = value
-			.replace(/(hsl\(|\)|%|[\s]*)/g, '')
-			.split(',')
-			.map(value => parseInt(value, 10))
+      .replace(/(hsl\(|\)|%|[\s]*)/g, '')
+      .split(',')
+      .map(value => parseInt(value, 10))
 
     return {
       h: values[0],

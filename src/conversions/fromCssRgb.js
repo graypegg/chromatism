@@ -1,9 +1,9 @@
-module.exports = {
+export default {
   rgb: value => {
     const values = value
-			.replace(/((rgb\(|\))|[\s]*)/g, '')
-			.split(',')
-			.map(value => parseInt(value, 10))
+      .replace(/((rgb\(|\))|[\s]*)/g, '')
+      .split(',')
+      .map(value => parseInt(value, 10))
 
     return {
       r: values[0],

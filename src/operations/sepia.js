@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js')
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function sepia (colourRef) {
+export default function sepia (colourRef) {
   var colour = convert('rgb', colourRef)
 
   var newcolour = {}
@@ -11,5 +11,3 @@ function sepia (colourRef) {
 
   return makeColourObject(newcolour)
 }
-
-module.exports = sepia

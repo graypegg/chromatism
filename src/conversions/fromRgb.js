@@ -1,11 +1,12 @@
-const { getTransform, bounded } = require('../helpers.js')
+import { getTransform, bounded } from '../helpers.js'
+import fromXYZ from './fromXYZ'
 
 const {
 	lms: fromXYZTolms,
 	cielab: fromXYZTocielab,
 	cieluv: fromXYZTocieluv,
 	xyY: fromXYZToxyY
-} = require('./fromXYZ')
+} = fromXYZ
 
 const hsl = value => {
   var r = value['r'] / 255
@@ -71,7 +72,7 @@ const XYZ = value => {
   return { X, Y, Z }
 }
 
-module.exports = {
+export default {
   hex: value => {
     var r = Math.round(value['r']).toString(16)
     if (r.length == 1) {

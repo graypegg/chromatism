@@ -1,31 +1,31 @@
-const { getIlluminant, matrixMultiply, getTransform } = require('../helpers')
-const convert = require('../helpers/convert-to-type.js')
-const makeColourObject = require('./convert.js')
+import { getIlluminant, matrixMultiply, getTransform } from '../helpers'
+import convert from '../helpers/convert-to-type'
+import makeColourObject from './convert.js'
 
-function adapt (colourRef, illuminantDRef, illuminantSRef) {
+export default function adapt (colourRef, illuminantDRef, illuminantSRef) {
   const colour = convert('XYZ', colourRef)
   const illuminantD = convert('lms', illuminantDRef)
   const illuminantS = illuminantSRef
-		? convert('lms', illuminantSRef)
-		: convert('lms', getIlluminant('D65'))
+    ? convert('lms', illuminantSRef)
+    : convert('lms', getIlluminant('D65'))
 
-	// Bradford Transformation
+  // Bradford Transformation
   let Mb = getTransform('BRADFORD')
 
-	// Inverse Bradford Transformation
+  // Inverse Bradford Transformation
   let Mbi = getTransform('INVERSE_BRADFORD')
 
-	// Illuminant Ratio Matrix
+  // Illuminant Ratio Matrix
   let Mir = [
-		[ illuminantD.rho / illuminantS.rho, 0, 0 ],
-		[ 0, illuminantD.gamma / illuminantS.gamma, 0 ],
-		[ 0, 0, illuminantD.beta / illuminantS.beta ]
+    [ illuminantD.rho / illuminantS.rho, 0, 0 ],
+    [ 0, illuminantD.gamma / illuminantS.gamma, 0 ],
+    [ 0, 0, illuminantD.beta / illuminantS.beta ]
   ]
 
-	// Illuminant ratio matrix, pre-inversion
+  // Illuminant ratio matrix, pre-inversion
   let MbiMir = matrixMultiply(Mbi, Mir)
 
-	// Illuminant ratio matrix
+  // Illuminant ratio matrix
   let M = matrixMultiply(MbiMir, Mb)
 
   let valueArray = [ [ colour.X ], [ colour.Y ], [ colour.Z ] ]
@@ -39,5 +39,3 @@ function adapt (colourRef, illuminantDRef, illuminantSRef) {
 
   return makeColourObject(result)
 }
-
-module.exports = adapt
