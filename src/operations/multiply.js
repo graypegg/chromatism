@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js')
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function multiply (colourRefOne, colourRefTwo) {
+export default function multiply (colourRefOne, colourRefTwo) {
   var c1 = convert('hsl', colourRefOne)
   var c2 = convert('hsl', colourRefTwo)
 
@@ -11,5 +11,3 @@ function multiply (colourRefOne, colourRefTwo) {
 
   return makeColourObject(colour)
 }
-
-module.exports = multiply
