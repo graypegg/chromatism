@@ -1,12 +1,9 @@
-const convert = require('./convert')
-const makeColourObject = require('./convert.js')
+import convert from './convert'
 
-function complementary (colourRef) {
+export default function complementary (colourRef) {
   var colour = convert('hsl', colourRef)
 
   colour.h = (colour.h + 180) % 360
 
-  return makeColourObject(colour)
+  return convert(colour)
 }
-
-module.exports = complementary
