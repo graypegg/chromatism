@@ -1,7 +1,7 @@
-var assert = require('assert')
-var chroma = require('../src/entry.js').default
-var round = require('./rounding.js')
-var consts = require('./consts.js')
+import assert from 'assert'
+import chroma from '../src/entry'
+import round from './rounding'
+import consts from './consts'
 
 describe('Conversion', function () {
   for (let fromKey in consts.red) {
