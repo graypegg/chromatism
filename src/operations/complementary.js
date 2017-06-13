@@ -1,4 +1,4 @@
-const convert = require('./convert')
+const convert = require('../helpers/convert-to-type.js')
 const makeColourObject = require('./convert.js')
 
 function complementary (colourRef) {

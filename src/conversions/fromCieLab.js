@@ -1,8 +1,8 @@
-const helpers = require('../helpers.js')
+const getIlluminant = require('../helpers/get-illuminant.js')
 
 const epsilon = 0.008856
 const kappa = 903.3
-const white = helpers.getIlluminant('D65')
+const white = getIlluminant('D65')
 const toR = f => Math.pow(f, 3) > epsilon ? Math.pow(f, 3) : ((116 * f) - 16) / kappa
 
 module.exports = {

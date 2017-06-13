@@ -1,4 +1,4 @@
-const { toRad } = require('../helpers')
+const toRadian = require('../helpers/to-radian.js')
 const convert = require('../helpers/convert-to-type.js')
 
 function difference (colourRefOne, colourRefTwo, l, c) {
@@ -24,7 +24,7 @@ function difference (colourRefOne, colourRefTwo, l, c) {
   const H = Math.atan2(Lab1.b, Lab1.a)
   const H1 = H >= 0 ? H : H + 360
 
-  const T = (H1 >= 164) && (H1 <= 345) ? (0.56 + Math.abs(0.2 * Math.cos(toRad(H1 + 168)))) : (0.36 + Math.abs(0.4 * Math.cos(toRad(H1 + 35))))
+  const T = (H1 >= 164) && (H1 <= 345) ? (0.56 + Math.abs(0.2 * Math.cos(toRadian(H1 + 168)))) : (0.36 + Math.abs(0.4 * Math.cos(toRadian(H1 + 35))))
   const F = Math.pow(C1, 4) / (Math.pow(C1, 4) + 1900)
 
   const SH = SC * (((F * T) + 1) - F)

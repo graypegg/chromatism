@@ -1,10 +1,11 @@
-const helpers = require('../helpers.js')
+const getIlluminant = require('../helpers/get-illuminant.js')
+const toDegree = require('../helpers/to-degree.js')
 
 module.exports = {
   XYZ: value => {
     const epsilon = 0.008856
     const kappa = 903.3
-    const white = helpers.getIlluminant('D65')
+    const white = getIlluminant('D65')
 
     const chromeCoordsU = (c) => (c.X * 4) / (c.X + (15 * c.Y) + (3 * c.Z))
     const chromeCoordsV = (c) => (c.Y * 9) / (c.X + (15 * c.Y) + (3 * c.Z))
@@ -35,7 +36,7 @@ module.exports = {
     if (h < 0) {
       h += (2 * Math.PI)
     }
-    h = helpers.toDeg(h)
+    h = toDegree(h)
 
     return {
       L: value.L,

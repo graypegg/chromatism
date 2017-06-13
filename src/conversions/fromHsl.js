@@ -1,4 +1,4 @@
-const helpers = require('../helpers.js')
+const negativeModulo = require('../helpers/negative-modulo.js')
 
 module.exports = {
   rgb: value => {
@@ -20,7 +20,7 @@ module.exports = {
       tempHue = value.h / 360
       var tempR = (tempHue + 0.333) % 1
       var tempG = tempHue
-      var tempB = helpers.negMod((tempHue - 0.333), 1)
+      var tempB = negativeModulo((tempHue - 0.333), 1)
       var r, g, b
       if ((6 * tempR) < 1) {
         r = tempTwo + ((tempOne - tempTwo) * 6 * tempR)

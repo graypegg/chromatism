@@ -1,4 +1,5 @@
-const helpers = require('../helpers.js')
+const getTransform = require('../helpers/get-transform.js')
+const toRadian = require('../helpers/to-radian.js')
 
 module.exports = {
   cielch: value => {
@@ -15,7 +16,7 @@ module.exports = {
     const s1 = (value.l + 16) / 1560896
     const s2 = s1 > epsilon ? s1 : value.l / kappa
 
-    const m = helpers.getTransform('INVERSE_SRGB_XYZ')
+    const m = getTransform('INVERSE_SRGB_XYZ')
     let rays = []
 
     for (let c = 0; c < 3; c++) {
@@ -36,7 +37,7 @@ module.exports = {
     }
 
     var min = Number.MAX_VALUE
-    let hrad = helpers.toRad(value.hu)
+    let hrad = toRadian(value.hu)
 
     rays.forEach((ray) => {
       let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad))
