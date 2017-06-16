@@ -1,8 +1,11 @@
-const helpers = require('../helpers.js')
+const getIlluminant = require('../helpers/get-illuminant.js')
+const getTransform = require('../helpers/get-transform.js')
+const boundedRgb = require('../helpers/bounded-rgb.js')
+const cubeRoot = require('../helpers/cube-root.js')
 
 const epsilon = 0.008856
 const kappa = 903.3
-const white = helpers.getIlluminant('D65')
+const white = getIlluminant('D65')
 
 module.exports = {
   rgb: value => {
@@ -12,7 +15,7 @@ module.exports = {
       // Whitepoint is D65
       // sRGB standard stuff eh!
       // [ Shamelessly stolen off Wikipedia ]
-    let M = helpers.getTransform('INVERSE_SRGB_XYZ')
+    let M = getTransform('INVERSE_SRGB_XYZ')
 
     let linear = M.map((m) => {
       return normalized.reduce((acc, v, key) => {
@@ -27,14 +30,14 @@ module.exports = {
       return 1.055 * Math.pow(C, 1 / 2.4) - 0.055
     }).map((o) => o * 255)
 
-    return helpers.boundedRgb({ r, g, b })
+    return boundedRgb({ r, g, b })
   },
 
   lms: value => {
     let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
       // Bradford Transformation
-    let Mb = helpers.getTransform('BRADFORD')
+    let Mb = getTransform('BRADFORD')
 
     let resultArray = Mb.map((m) => {
       return valueArray.reduce((acc, v, key) => {
@@ -54,7 +57,7 @@ module.exports = {
     const Yr = value.Y / white.Y
     const Zr = value.Z / white.Z
 
-    const toF = (x) => x > epsilon ? helpers.cbrt(x) : (kappa * x + 16) / 116
+    const toF = (x) => x > epsilon ? cubeRoot(x) : (kappa * x + 16) / 116
     const Fx = toF(Xr), Fy = toF(Yr), Fz = toF(Zr)
 
     return {
@@ -67,7 +70,7 @@ module.exports = {
   cieluv: value => {
     const yr = value.Y / white.Y
 
-    const L = (yr > epsilon ? (116 * helpers.cbrt(yr)) - 16 : kappa * yr)
+    const L = (yr > epsilon ? (116 * cubeRoot(yr)) - 16 : kappa * yr)
 
     const chromeCoordsU = (c) => (c.X * 4) / (c.X + (15 * c.Y) + (3 * c.Z))
     const chromeCoordsV = (c) => (c.Y * 9) / (c.X + (15 * c.Y) + (3 * c.Z))

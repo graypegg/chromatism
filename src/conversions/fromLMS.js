@@ -1,11 +1,11 @@
-const helpers = require('../helpers.js')
+const getTransform = require('../helpers/get-transform.js')
 
 module.exports = {
   XYZ: value => {
     const valueArray = [ value.rho, value.gamma, value.beta ]
 
       // Inverse Bradford Transformation
-    const Mbi = helpers.getTransform('INVERSE_BRADFORD')
+    const Mbi = getTransform('INVERSE_BRADFORD')
 
     const resultArray = Mbi.map((m) => {
       return valueArray.reduce((acc, v, key) => {

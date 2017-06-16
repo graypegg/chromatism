@@ -1,8 +1,9 @@
-const { toRad, getTransform } = require('../helpers.js')
+const toRadian = require('../helpers/to-radian.js')
+const getTransform = require('../helpers/get-transform.js')
 
 module.exports = {
   cieluv: value => {
-    const h = toRad(value.h)
+    const h = toRadian(value.h)
 
     const u = value.C * Math.cos(h)
     const v = value.C * Math.sin(h)
@@ -49,7 +50,7 @@ module.exports = {
     }
 
     var min = Number.MAX_VALUE
-    let hrad = toRad(value.h)
+    let hrad = toRadian(value.h)
 
     rays.forEach((ray) => {
       let length = ray.b / (Math.sin(hrad) - ray.m * Math.cos(hrad))

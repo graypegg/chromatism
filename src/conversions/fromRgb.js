@@ -1,4 +1,5 @@
-const { getTransform, bounded } = require('../helpers.js')
+const getTransform = require('../helpers/get-transform.js')
+const bounded = require('../helpers/bounded.js')
 
 const {
 	lms: fromXYZTolms,
