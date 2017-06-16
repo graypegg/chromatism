@@ -5,8 +5,8 @@ function fromxyY( { conversions, operations, helpers }, to, value ) {
      * Instead, the chroma. coords. are used in conjuction with the luminance from XYZ
      */
     case "XYZ":
-      let X = (value.Y / value.y) * value.x;
-      let Z = (value.Y / value.y) * ((1 - value.x) - value.y);
+      const X = (value.Y / value.y) * value.x;
+      const Z = (value.Y / value.y) * ((1 - value.x) - value.y);
 
       return {
         X,
@@ -15,7 +15,7 @@ function fromxyY( { conversions, operations, helpers }, to, value ) {
       };
 
     default:
-      var XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
+      const XYZ = operations.convert({ conversions, operations, helpers }, "XYZ", value);
       return operations.convert({ conversions, operations, helpers }, to, XYZ);
 
   }
