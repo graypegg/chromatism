@@ -1,4 +1,4 @@
-const { slopeMod } = require('../helpers')
+const slopeMod = require('../helpers/slope-mod.js')
 const makeColourObject = require('./convert.js')
 const convert = require('../helpers/convert-to-type.js')
 
