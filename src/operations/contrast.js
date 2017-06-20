@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js').default
-const convert = require('../helpers/convert-to-type.js')
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function contrast (shift, colourRef) {
+export default function contrast (shift, colourRef) {
   var colour = convert('rgb', colourRef)
 
   colour.r = (((((colour.r / 255.0) - 0.5) * shift) + 0.5) * 255.0)
@@ -27,5 +27,3 @@ function contrast (shift, colourRef) {
 
   return makeColourObject(colour)
 }
-
-module.exports = contrast

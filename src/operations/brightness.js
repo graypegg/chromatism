@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js').default
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function brightness (shift, colourRef) {
+export default function brightness (shift, colourRef) {
   var colour = convert('hsl', colourRef)
 
   colour.l += shift
@@ -13,5 +13,3 @@ function brightness (shift, colourRef) {
 
   return makeColourObject(colour)
 }
-
-module.exports = brightness

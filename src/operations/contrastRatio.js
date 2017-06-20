@@ -1,7 +1,7 @@
-const convert = require('../helpers/convert-to-type.js')
-const makeColourObject = require('./convert.js').default
+import convert from '../helpers/convert-to-type'
+import makeColourObject from './convert'
 
-function contrastRatio (colourRef) {
+export default function contrastRatio (colourRef) {
   var colour = convert('rgb', colourRef)
 
   var yiq = ((colour.r * 299) + (colour.g * 587) + (colour.b * 114)) / 1000
@@ -13,5 +13,3 @@ function contrastRatio (colourRef) {
 
   return makeColourObject(colour)
 }
-
-module.exports = contrastRatio
