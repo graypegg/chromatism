@@ -2,7 +2,7 @@ function applyFactor (inp, factor) {
   return Math.round(inp * factor) / factor
 }
 
-function round (inp, step) {
+export default function round (inp, step) {
   if (step === 0) return inp
   let factor = 1.0 / step
   let out
@@ -20,5 +20,3 @@ function round (inp, step) {
 
   return out
 }
-
-module.exports = round
