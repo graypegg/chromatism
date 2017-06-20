@@ -1,5 +1,5 @@
 const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js')
+const convert = require('../helpers/convert-to-type.js').default
 
 function brightness (shift, colourRef) {
   var colour = convert('hsl', colourRef)

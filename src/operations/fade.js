@@ -1,6 +1,6 @@
 const slopeMod = require('../helpers/slope-mod.js')
 const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js')
+const convert = require('../helpers/convert-to-type.js').default
 
 function fade (amount, fromRef, toRef) {
   var fromColour = convert('rgb', fromRef)

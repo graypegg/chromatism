@@ -1,6 +1,6 @@
 const negativeModulo = require('../helpers/negative-modulo.js')
 const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js')
+const convert = require('../helpers/convert-to-type.js').default
 
 function invert (colourRef) {
   var colour = convert('rgb', colourRef)

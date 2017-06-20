@@ -1,7 +1,7 @@
 const getIlluminant = require('../helpers/get-illuminant.js')
 const matrixMultiply = require('../helpers/matrix-multiply.js')
 const getTransform = require('../helpers/get-transform.js')
-const convert = require('../helpers/convert-to-type.js')
+const convert = require('../helpers/convert-to-type.js').default
 const makeColourObject = require('./convert.js')
 
 function adapt (colourRef, illuminantDRef, illuminantSRef) {

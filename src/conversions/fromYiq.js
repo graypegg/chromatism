@@ -1,4 +1,4 @@
-const bounded = require('../helpers/bounded.js')
+const bounded = require('../helpers/bounded.js').default
 
 const bound = v => bounded(v, [ 0, 255 ])
 

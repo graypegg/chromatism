@@ -1,5 +1,5 @@
 const toRadian = require('../helpers/to-radian.js')
-const convert = require('../helpers/convert-to-type.js')
+const convert = require('../helpers/convert-to-type.js').default
 
 function difference (colourRefOne, colourRefTwo, l, c) {
   l = l || 1

@@ -1,4 +1,4 @@
-const makeColourObject = require('./convert.js')
+const makeColourObject = require('./convert.js').default
 const convert = require('../helpers/convert-to-type.js')
 
 function contrast (shift, colourRef) {

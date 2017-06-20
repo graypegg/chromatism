@@ -1,5 +1,5 @@
 const convert = require('../helpers/convert-to-type.js')
-const makeColourObject = require('./convert.js')
+const makeColourObject = require('./convert.js').default
 
 function contrastRatio (colourRef) {
   var colour = convert('rgb', colourRef)

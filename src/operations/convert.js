@@ -1,4 +1,4 @@
-const convert = require('../helpers/convert-to-type.js')
+const convert = require('../helpers/convert-to-type.js').default
 const types = Object.keys(require('../helpers/test-color-type.js'))
 
 module.exports = function makeColourObject (colour) {
