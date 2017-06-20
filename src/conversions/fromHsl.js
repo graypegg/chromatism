@@ -1,4 +1,4 @@
-const negativeModulo = require('../helpers/negative-modulo.js')
+const negativeModulo = require('../helpers/negative-modulo.js').default
 
 module.exports = {
   rgb: value => {

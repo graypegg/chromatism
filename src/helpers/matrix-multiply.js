@@ -1,4 +1,4 @@
-module.exports = function matrixMultiply (a, b) {
+export default function matrixMultiply (a, b) {
   var result = []
   for (let i = 0; i < a.length; i++) {
     result[i] = []

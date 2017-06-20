@@ -1,4 +1,4 @@
-const getIlluminant = require('../helpers/get-illuminant.js')
+const getIlluminant = require('../helpers/get-illuminant.js').default
 
 const epsilon = 0.008856
 const kappa = 903.3

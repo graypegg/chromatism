@@ -1,5 +1,5 @@
-const getTransform = require('../helpers/get-transform.js')
-const toRadian = require('../helpers/to-radian.js')
+const getTransform = require('../helpers/get-transform.js').default
+const toRadian = require('../helpers/to-radian.js').default
 
 module.exports = {
   cielch: value => {

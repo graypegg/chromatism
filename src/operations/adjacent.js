@@ -1,4 +1,4 @@
-const negativeModulo = require('../helpers/negative-modulo.js')
+const negativeModulo = require('../helpers/negative-modulo.js').default
 const convert = require('../helpers/convert-to-type.js').default
 const makeColourObject = require('./convert.js')
 

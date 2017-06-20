@@ -1,7 +1,7 @@
-const getIlluminant = require('../helpers/get-illuminant.js')
-const getTransform = require('../helpers/get-transform.js')
+const getIlluminant = require('../helpers/get-illuminant.js').default
+const getTransform = require('../helpers/get-transform.js').default
 const boundedRgb = require('../helpers/bounded-rgb.js').default
-const cubeRoot = require('../helpers/cube-root.js')
+const cubeRoot = require('../helpers/cube-root.js').default
 
 const epsilon = 0.008856
 const kappa = 903.3

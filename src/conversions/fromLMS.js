@@ -1,4 +1,4 @@
-const getTransform = require('../helpers/get-transform.js')
+const getTransform = require('../helpers/get-transform.js').default
 
 module.exports = {
   XYZ: value => {

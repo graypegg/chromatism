@@ -1,4 +1,4 @@
-const getIlluminant = require('../helpers/get-illuminant.js')
+const getIlluminant = require('../helpers/get-illuminant.js').default
 const matrixMultiply = require('../helpers/matrix-multiply.js')
 const getTransform = require('../helpers/get-transform.js')
 const convert = require('../helpers/convert-to-type.js').default

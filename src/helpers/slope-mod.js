@@ -1,4 +1,4 @@
-module.exports = function slopeMod (n, m) {
+export default function slopeMod (n, m) {
   if (n > (m * 2)) {
     return slopeMod(n - (m * 2), m)
   } else if (n > m) {

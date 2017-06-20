@@ -1,5 +1,5 @@
-const getIlluminant = require('../helpers/get-illuminant.js')
-const toDegree = require('../helpers/to-degree.js')
+const getIlluminant = require('../helpers/get-illuminant.js').default
+const toDegree = require('../helpers/to-degree.js').default
 
 module.exports = {
   XYZ: value => {
