@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js').default
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function shade (shift, colourRef) {
+export default function shade (shift, colourRef) {
   var colour = convert('hsv', colourRef)
 
   colour.v += shift
@@ -13,5 +13,3 @@ function shade (shift, colourRef) {
 
   return makeColourObject(colour)
 }
-
-module.exports = shade

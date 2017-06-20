@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js').default
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function greyscale (colourRef) {
+export default function greyscale (colourRef) {
   var colour = convert('rgb', colourRef)
 
   var grey = ((colour.r + colour.g + colour.b) / 3)
@@ -9,5 +9,3 @@ function greyscale (colourRef) {
 
   return makeColourObject(colour)
 }
-
-module.exports = greyscale

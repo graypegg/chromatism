@@ -1,7 +1,7 @@
-const makeColourObject = require('./convert.js')
-const convert = require('../helpers/convert-to-type.js').default
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-function triad (colourRef) {
+export default function triad (colourRef) {
   var colour = convert('hsluv', colourRef)
 
   var colours = [{ hu: colour.hu, s: colour.s, l: colour.l }]
@@ -12,5 +12,3 @@ function triad (colourRef) {
 
   return makeColourObject(colours)
 }
-
-module.exports = triad
