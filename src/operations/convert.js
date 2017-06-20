@@ -1,7 +1,9 @@
-const convert = require('../helpers/convert-to-type.js').default
-const types = Object.keys(require('../helpers/test-color-type.js').default)
+import convert from '../helpers/convert-to-type'
+import testColorType from '../helpers/test-color-type'
 
-module.exports = function makeColourObject (colour) {
+const types = Object.keys(testColorType)
+
+export default function makeColourObject (colour) {
   const object = {}
 
   types.forEach(type => {

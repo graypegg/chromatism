@@ -1,26 +1,51 @@
-module.exports = {
-  adapt: require('./adapt.js'),
-  adjacent: require('./adjacent.js'),
-  brightness: require('./brightness.js'),
-  complementary: require('./complementary.js'),
-  contrast: require('./contrast.js'),
-  contrastRatio: require('./contrastRatio.js'),
-  convert: require('./convert.js'),
-  difference: require('./difference.js'),
-  fade: require('./fade.js'),
-  greyscale: require('./greyscale.js'),
-  hue: require('./hue.js'),
-  invert: require('./invert.js'),
-  invertLightness: require('./invertLightness.js'),
-  mid: require('./mid.js'),
-  multiply: require('./multiply.js'),
-  saturation: require('./saturation.js'),
-  sepia: require('./sepia.js'),
-  shade: require('./shade.js'),
-  temperature: require('./temperature.js'),
-  tetrad: require('./tetrad.js'),
-  triad: require('./triad.js'),
-  uniformComplementary: require('./uniformComplementary.js'),
-  uniformTriad: require('./uniformTriad.js'),
-  uniformTetrad: require('./uniformTetrad.js')
+import adapt from './adapt'
+import adjacent from './adjacent'
+import brightness from './brightness'
+import complementary from './complementary'
+import contrast from './contrast'
+import contrastRatio from './contrastRatio'
+import convert from './convert'
+import difference from './difference'
+import fade from './fade'
+import greyscale from './greyscale'
+import hue from './hue'
+import invert from './invert'
+import invertLightness from './invertLightness'
+import mid from './mid'
+import multiply from './multiply'
+import saturation from './saturation'
+import sepia from './sepia'
+import shade from './shade'
+import temperature from './temperature'
+import tetrad from './tetrad'
+import triad from './triad'
+import uniformComplementary from './uniformComplementary'
+import uniformTriad from './uniformTriad'
+import uniformTetrad from './uniformTetrad'
+
+export default {
+  adapt,
+  adjacent,
+  brightness,
+  complementary,
+  contrast,
+  contrastRatio,
+  convert,
+  difference,
+  fade,
+  greyscale,
+  hue,
+  invert,
+  invertLightness,
+  mid,
+  multiply,
+  saturation,
+  sepia,
+  shade,
+  temperature,
+  tetrad,
+  triad,
+  uniformComplementary,
+  uniformTriad,
+  uniformTetrad
 }
