@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   XYZ: value => {
     const { x, y, Y } = value
     const X = (Y / y) * x

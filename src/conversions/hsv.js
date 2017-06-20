@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   rgb: value => {
     var r, g, b
     const normalized = Object.assign({}, value, {

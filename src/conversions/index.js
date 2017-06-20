@@ -1,17 +1,33 @@
-module.exports = {
-  hex: require('./fromHex.js'),
-  rgb: require('./fromRgb.js'),
-  cssrgb: require('./fromCssRgb.js'),
-  hsl: require('./fromHsl.js'),
-  csshsl: require('./fromCssHsl.js'),
-  hsv: require('./fromHsv.js'),
-  cmyk: require('./fromCmyk.js'),
-  yiq: require('./fromYiq.js'),
-  XYZ: require('./fromXYZ.js'),
-  xyY: require('./fromxyY.js'),
-  lms: require('./fromLms.js'),
-  cielab: require('./fromCieLab.js'),
-  cieluv: require('./fromCieLuv.js'),
-  cielch: require('./fromCieLch.js'),
-  hsluv: require('./fromHsluv.js')
+import cielab from './cielab'
+import cielch from './cielch'
+import cieluv from './cieluv'
+import cmyk from './cmyk'
+import csshsl from './csshsl'
+import cssrgb from './cssrgb'
+import hex from './hex'
+import hsl from './hsl'
+import hsluv from './hsluv'
+import hsv from './hsv'
+import lms from './lms'
+import rgb from './rgb'
+import xyY from './xyY'
+import XYZ from './XYZ'
+import yiq from './yiq'
+
+export default {
+  cielab,
+  cielch,
+  cieluv,
+  cmyk,
+  csshsl,
+  cssrgb,
+  hex,
+  hsl,
+  hsluv,
+  hsv,
+  lms,
+  rgb,
+  xyY,
+  XYZ,
+  yiq
 }

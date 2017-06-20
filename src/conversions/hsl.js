@@ -1,6 +1,6 @@
-const negativeModulo = require('../helpers/negative-modulo.js').default
+import negativeModulo from '../helpers/negative-modulo'
 
-module.exports = {
+export default {
   rgb: value => {
     if (value.s == 0) {
       var grey = (value.l / 100) * 255

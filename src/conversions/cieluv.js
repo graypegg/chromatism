@@ -1,7 +1,7 @@
-const getIlluminant = require('../helpers/get-illuminant.js').default
-const toDegree = require('../helpers/to-degree.js').default
+import getIlluminant from '../helpers/get-illuminant'
+import toDegree from '../helpers/to-degree'
 
-module.exports = {
+export default {
   XYZ: value => {
     const epsilon = 0.008856
     const kappa = 903.3

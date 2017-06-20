@@ -5,7 +5,7 @@ const rgb = value => {
   return { r: r, g: g, b: b }
 }
 
-module.exports = {
+export default {
   rgb,
 
   cssrgb: value => {

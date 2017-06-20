@@ -1,8 +1,8 @@
-const bounded = require('../helpers/bounded.js').default
+import bounded from '../helpers/bounded'
 
 const bound = v => bounded(v, [ 0, 255 ])
 
-module.exports = {
+export default {
   rgb: value => {
     const i = bounded(value.i, [ -0.5957, 0.5957 ])
     const q = bounded(value.q, [ -0.5226, 0.5226 ])
