@@ -1,8 +1,7 @@
 import assert from 'assert'
-import chroma from '../src/entry'
 import round from './rounding'
 import consts from './consts'
-import entry from '../'
+import * as chroma from '..'
 
 describe('Conversion', function () {
   for (let fromKey in consts.red) {
@@ -46,7 +45,7 @@ function allAreCloseXYZ(arrayActual, arrayExpected) {
 
 describe('Operations', function() {
   it('should match expected value for complementary', () => {
-    assert(closeXYZ(entry.complementary('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.complementary('#4fc7ff').XYZ,
       { X: 51.31525590295186,
         Y: 39.152459064169946,
         Z: 12.24970542237237 }
@@ -54,7 +53,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for uniformComplementary', () => {
-    assert(closeXYZ(entry.uniformComplementary('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.uniformComplementary('#4fc7ff').XYZ,
       { X: 52.112337192985905,
         Y: 49.72911239090597,
         Z: 12.489177408160534 }
@@ -62,7 +61,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for triad', () => {
-    assert(allAreCloseXYZ(entry.triad('#4fc7ff').XYZ,
+    assert(allAreCloseXYZ(chroma.triad('#4fc7ff').XYZ,
       [ { X: 41.53626010469932,
           Y: 49.405886246485146,
           Z: 101.95483866723517 },
@@ -76,7 +75,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for uniformTriad', () => {
-    assert(allAreCloseXYZ(entry.uniformTriad('#4fc7ff').XYZ,
+    assert(allAreCloseXYZ(chroma.uniformTriad('#4fc7ff').XYZ,
       [ { X: 41.69787317690973,
           Y: 49.72911239090597,
           Z: 102.00870969130524 },
@@ -90,7 +89,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for tetrad', () => {
-    assert(allAreCloseXYZ(entry.tetrad('#4fc7ff').XYZ,
+    assert(allAreCloseXYZ(chroma.tetrad('#4fc7ff').XYZ,
       [ { X: 41.53626010469932,
           Y: 49.405886246485146,
           Z: 101.95483866723517 },
@@ -107,7 +106,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for uniformTetrad', () => {
-    assert(allAreCloseXYZ(entry.uniformTetrad('#4fc7ff').XYZ,
+    assert(allAreCloseXYZ(chroma.uniformTetrad('#4fc7ff').XYZ,
       [ { X: 41.69787317690973,
           Y: 49.72911239090597,
           Z: 102.00870969130524 },
@@ -124,7 +123,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for mid', () => {
-    assert(closeXYZ(entry.mid('#4fc7ff', '#75c2e6').XYZ,
+    assert(closeXYZ(chroma.mid('#4fc7ff', '#75c2e6').XYZ,
       { X: 40.799216394001505,
         Y: 48.39740922533037,
         Z: 91.19689637619237 }
@@ -132,7 +131,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for invert', () => {
-    assert(closeXYZ(entry.invert('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.invert('#4fc7ff').XYZ,
       { X: 19.318669329342615,
         Y: 12.058453052067094,
         Z: 1.3093076423159207 }
@@ -140,7 +139,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for invertLightness', () => {
-    assert(closeXYZ(entry.invertLightness('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.invertLightness('#4fc7ff').XYZ,
       { X: 14.468583181643496,
         Y: 16.398809350560242,
         Z: 43.47700646797299 }
@@ -148,7 +147,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for multiply', () => {
-    assert(closeXYZ(entry.multiply('#4fc7ff', '#75c2e6').XYZ,
+    assert(closeXYZ(chroma.multiply('#4fc7ff', '#75c2e6').XYZ,
       { X: 25.461157806545266,
         Y: 28.682628838331315,
         Z: 77.04915252759945 }
@@ -156,7 +155,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for adjacent', () => {
-    assert(allAreCloseXYZ(entry.adjacent(60, 2, '#4fc7ff').XYZ,
+    assert(allAreCloseXYZ(chroma.adjacent(60, 2, '#4fc7ff').XYZ,
       [ { X: 41.53626010469932,
           Y: 49.405886246485146,
           Z: 101.95483866723517 },
@@ -167,7 +166,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for fade', () => {
-    assert(allAreCloseXYZ(entry.fade(2, '#4fc7ff', '#75c2e6').XYZ,
+    assert(allAreCloseXYZ(chroma.fade(2, '#4fc7ff', '#75c2e6').XYZ,
       [ { X: 41.69787317690974,
           Y: 49.729112390905975,
           Z: 102.00870969130528 },
@@ -178,7 +177,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for shade', () => {
-    assert(closeXYZ(entry.shade(20, '#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.shade(20, '#4fc7ff').XYZ,
       { X: 41.69787317690973,
         Y: 49.72911239090596,
         Z: 102.00870969130528 }
@@ -186,7 +185,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for saturation', () => {
-    assert(closeXYZ(entry.saturation(20, '#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.saturation(20, '#4fc7ff').XYZ,
       { X: 41.53626010469932,
         Y: 49.405886246485146,
         Z: 101.95483866723517 }
@@ -194,7 +193,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for brightness', () => {
-    assert(closeXYZ(entry.brightness(20, '#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.brightness(20, '#4fc7ff').XYZ,
       { X: 65.72636615483249,
         Y: 74.2843783908222,
         Z: 105.48191217236125 }
@@ -202,7 +201,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for hue', () => {
-    assert(closeXYZ(entry.hue(60, '#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.hue(60, '#4fc7ff').XYZ,
       { X: 30.781108042819238,
         Y: 17.933709687296894,
         Z: 96.44695024806809 }
@@ -210,7 +209,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for contrast', () => {
-    assert(closeXYZ(entry.contrast(2, '#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.contrast(2, '#4fc7ff').XYZ,
       { X: 54.36013053099219,
         Y: 79.02360269371712,
         Z: 106.99574568197903 }
@@ -218,7 +217,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for greyscale', () => {
-    assert(closeXYZ(entry.greyscale('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.greyscale('#4fc7ff').XYZ,
       { X: 42.14029244103617,
         Y: 44.33486842823374,
         Z: 48.280671718346554 }
@@ -226,7 +225,7 @@ describe('Operations', function() {
   })
 
   it('should match expected value for sepia', () => {
-    assert(closeXYZ(entry.sepia('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.sepia('#4fc7ff').XYZ,
       { X: 62.109119777183,
         Y: 64.36966501897096,
         Z: 42.94285971766853 }
@@ -234,13 +233,13 @@ describe('Operations', function() {
   })
 
   it('should match expected value for contrastRatio', () => {
-    assert(closeXYZ(entry.contrastRatio('#4fc7ff').XYZ,
+    assert(closeXYZ(chroma.contrastRatio('#4fc7ff').XYZ,
       { X: 0, Y: 0, Z: 0 }
     ))
   })
 
   it('should match expected value for adapt', () => {
-    assert(closeXYZ(entry.adapt('#4fc7ff', '#75c2e6').XYZ,
+    assert(closeXYZ(chroma.adapt('#4fc7ff', '#75c2e6').XYZ,
       { X: 21.021090521182536,
         Y: 25.249770007097528,
         Z: 77.00969257863895 }
@@ -248,10 +247,10 @@ describe('Operations', function() {
   })
 
   it('should match expected value for difference', () => {
-    assert(close(entry.difference('#4fc7ff', '#75c2e6'), 202.64118553936103))
+    assert(close(chroma.difference('#4fc7ff', '#75c2e6'), 202.64118553936103))
   })
 
   it('should match expected value for temperature', () => {
-    assert(close(entry.temperature('#4fc7ff'), 28027.236159020416))
+    assert(close(chroma.temperature('#4fc7ff'), 28027.236159020416))
   })
 })
