@@ -1,4 +1,4 @@
-function contains (obj, test) {
+const contains = function (obj, test) {
   const set = new Set(Object.keys(obj))
   return test.every(val => set.has(val))
 }
