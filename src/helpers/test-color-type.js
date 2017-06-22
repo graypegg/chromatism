@@ -4,7 +4,7 @@ function contains (obj, test) {
 }
 const stringStartsWith = (colour, test) => typeof colour === 'string' && colour.slice(0, test.length) === test
 
-module.exports = {
+export default {
   hex: colour => stringStartsWith(colour, '#'),
   rgb: colour => contains(colour, [ 'r', 'g', 'b' ]),
   cssrgb: colour => stringStartsWith(colour, 'rgb('),

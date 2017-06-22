@@ -1,6 +1,6 @@
-const getTransform = require('../helpers/get-transform.js')
+import getTransform from '../helpers/get-transform'
 
-module.exports = {
+export default {
   XYZ: value => {
     const valueArray = [ value.rho, value.gamma, value.beta ]
 

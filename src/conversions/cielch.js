@@ -1,7 +1,7 @@
-const toRadian = require('../helpers/to-radian.js')
-const getTransform = require('../helpers/get-transform.js')
+import toRadian from '../helpers/to-radian'
+import getTransform from '../helpers/get-transform'
 
-module.exports = {
+export default {
   cieluv: value => {
     const h = toRadian(value.h)
 

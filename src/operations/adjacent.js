@@ -1,8 +1,8 @@
-const negativeModulo = require('../helpers/negative-modulo.js')
-const convert = require('../helpers/convert-to-type.js')
-const makeColourObject = require('./convert.js')
+import negativeModulo from '../helpers/negative-modulo'
+import convert from '../helpers/convert-to-type'
+import makeColourObject from './convert'
 
-function adjacent (deg, amount, colourRef) {
+export default function adjacent (deg, amount, colourRef) {
   const colour = convert('hsl', colourRef)
   const colours = [{ h: colour.h, s: colour.s, l: colour.l }]
 
@@ -13,5 +13,3 @@ function adjacent (deg, amount, colourRef) {
 
   return makeColourObject(colours)
 }
-
-module.exports = adjacent

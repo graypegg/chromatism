@@ -1,13 +1,13 @@
-const getIlluminant = require('../helpers/get-illuminant.js')
-const getTransform = require('../helpers/get-transform.js')
-const boundedRgb = require('../helpers/bounded-rgb.js')
-const cubeRoot = require('../helpers/cube-root.js')
+import getIlluminant from '../helpers/get-illuminant'
+import getTransform from '../helpers/get-transform'
+import boundedRgb from '../helpers/bounded-rgb'
+import cubeRoot from '../helpers/cube-root'
 
 const epsilon = 0.008856
 const kappa = 903.3
 const white = getIlluminant('D65')
 
-module.exports = {
+export default {
   rgb: value => {
     let normalized = [ value.X, value.Y, value.Z ].map((v) => v / 100)
 

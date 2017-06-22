@@ -1,8 +1,8 @@
-const bounded = require('./bounded.js')
+import bounded from './bounded'
 
 const bounded255 = val => bounded(val, [ 0, 255 ])
 
-module.exports = function boundedRgb (rgb) {  
+export default function boundedRgb (rgb) {
   return {
     r: bounded255(rgb.r),
     g: bounded255(rgb.g),

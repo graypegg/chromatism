@@ -1,5 +1,5 @@
-const TRANSFORMS = require('../constants/transforms.js')
+import TRANSFORMS from '../constants/transforms'
 
-module.exports = function getTransform (ref) {
+export default function getTransform (ref) {
   return TRANSFORMS[ref]
 }

@@ -1,9 +1,9 @@
-module.exports = {
+export default {
   rgb: value => {
     const values = value
-			.replace('#', '')
-			.match(/.{2}/g)
-			.map(value => parseInt(value, 16))
+      .replace('#', '')
+      .match(/.{2}/g)
+      .map(value => parseInt(value, 16))
 
     return {
       r: values[0],

@@ -1,6 +1,6 @@
-const convert = require('../helpers/convert-to-type.js')
+import convert from '../helpers/convert-to-type'
 
-function temperature (colourRef) {
+export default function temperature (colourRef) {
   const colour = convert('xyY', colourRef)
 
   // McCamy's CCT fomula.
@@ -11,5 +11,3 @@ function temperature (colourRef) {
 
   return out
 }
-
-module.exports = temperature

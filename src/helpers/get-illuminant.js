@@ -1,5 +1,5 @@
-const ILLUMINANTS = require('../constants/illuminants.js')
+import ILLUMINANTS from '../constants/illuminants'
 
-module.exports = function getIlluminant (ref) {
+export default function getIlluminant (ref) {
   return ILLUMINANTS[ref]
 }

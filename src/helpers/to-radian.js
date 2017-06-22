@@ -1,3 +1,3 @@
-module.exports = function toRadian (angle) {
+export default function toRadian (angle) {
   return angle * (Math.PI / 180)
 }

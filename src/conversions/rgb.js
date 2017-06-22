@@ -1,12 +1,13 @@
-const getTransform = require('../helpers/get-transform.js')
-const bounded = require('../helpers/bounded.js')
+import getTransform from '../helpers/get-transform'
+import bounded from '../helpers/bounded'
+import fromXYZ from './XYZ'
 
 const {
-	lms: fromXYZTolms,
-	cielab: fromXYZTocielab,
-	cieluv: fromXYZTocieluv,
-	xyY: fromXYZToxyY
-} = require('./fromXYZ')
+  lms: fromXYZTolms,
+  cielab: fromXYZTocielab,
+  cieluv: fromXYZTocieluv,
+  xyY: fromXYZToxyY
+} = fromXYZ
 
 const hsl = value => {
   var r = value['r'] / 255
@@ -72,7 +73,7 @@ const XYZ = value => {
   return { X, Y, Z }
 }
 
-module.exports = {
+export default {
   hex: value => {
     var r = Math.round(value['r']).toString(16)
     if (r.length == 1) {

@@ -1,4 +1,4 @@
-module.exports = function bounded (val, range) {
+export default function bounded (val, range) {
   if (val < range[0]) {
     val = range[0]
   } else if (val > range[1]) {

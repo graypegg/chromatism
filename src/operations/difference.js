@@ -1,7 +1,7 @@
-const toRadian = require('../helpers/to-radian.js')
-const convert = require('../helpers/convert-to-type.js')
+import toRadian from '../helpers/to-radian'
+import convert from '../helpers/convert-to-type'
 
-function difference (colourRefOne, colourRefTwo, l, c) {
+export default function difference (colourRefOne, colourRefTwo, l, c) {
   l = l || 1
   c = c || 1
 
@@ -35,5 +35,3 @@ function difference (colourRefOne, colourRefTwo, l, c) {
 
   return Math.sqrt(EqPrt1 + EqPrt2 + EqPrt3)
 }
-
-module.exports = difference

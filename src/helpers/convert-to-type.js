@@ -1,5 +1,5 @@
-const determineType = require('./determine-type.js')
-const conversions = require('../conversions')
+import determineType from './determine-type'
+import conversions from '../conversions'
 
 function depthFirstSearchRecursive (fromType, toType, typesSoFar, stack) {
   const possibilities = conversions[fromType]
@@ -7,12 +7,12 @@ function depthFirstSearchRecursive (fromType, toType, typesSoFar, stack) {
     return [ ...typesSoFar, toType ]
   } else {
     Object.keys(possibilities)
-			.filter(type => typesSoFar.indexOf(type) === -1)
-			.forEach(possibleType => {
-  stack.push(
-					() => depthFirstSearchRecursive(possibleType, toType, [ ...typesSoFar, possibleType ], stack)
-				)
-})
+      .filter(type => typesSoFar.indexOf(type) === -1)
+      .forEach(possibleType => {
+        stack.push(
+          () => depthFirstSearchRecursive(possibleType, toType, [ ...typesSoFar, possibleType ], stack)
+        )
+      })
   }
 }
 
@@ -28,7 +28,7 @@ function depthFirstSearch (fromType, toType) {
   return workingPath
 }
 
-function convert (toType, value) {
+export default function convert (toType, value) {
   if (value === undefined) {
     throw new Error('No value provided')
   }
@@ -53,5 +53,3 @@ function convert (toType, value) {
     lastType: fromType
   }).value
 }
-
-module.exports = convert

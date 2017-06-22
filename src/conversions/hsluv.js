@@ -1,7 +1,7 @@
-const getTransform = require('../helpers/get-transform.js')
-const toRadian = require('../helpers/to-radian.js')
+import getTransform from '../helpers/get-transform'
+import toRadian from '../helpers/to-radian'
 
-module.exports = {
+export default {
   cielch: value => {
     if (value.L > 99.9999999) {
       return { L: 100, C: 0, h: value.hu }
