@@ -4,7 +4,7 @@ export default {
   XYZ: value => {
     const valueArray = [ value.rho, value.gamma, value.beta ]
 
-      // Inverse Bradford Transformation
+    // Inverse Bradford Transformation
     const Mbi = getTransform('INVERSE_BRADFORD')
 
     const resultArray = Mbi.map((m) => {

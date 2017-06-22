@@ -27,23 +27,23 @@ describe('Conversion', function () {
   }
 })
 
-function close(numberA, numberB) {
+function close (numberA, numberB) {
   const difference = Math.abs(numberA - numberB)
   return difference < 0.0001
 }
 
-function closeXYZ(actual, expected) {
+function closeXYZ (actual, expected) {
   return close(actual.X, expected.X) && close(actual.Y, expected.Y) && close(actual.Z, expected.Z)
 }
 
-function allAreCloseXYZ(arrayActual, arrayExpected) {
+function allAreCloseXYZ (arrayActual, arrayExpected) {
   return arrayExpected.every((expectedXYZ, i) => {
     const actualXYZ = arrayActual[i]
     return closeXYZ(actualXYZ, expectedXYZ)
   })
 }
 
-describe('Operations', function() {
+describe('Operations', function () {
   it('should match expected value for complementary', () => {
     assert(closeXYZ(chroma.complementary('#4fc7ff').XYZ,
       { X: 51.31525590295186,
@@ -63,62 +63,62 @@ describe('Operations', function() {
   it('should match expected value for triad', () => {
     assert(allAreCloseXYZ(chroma.triad('#4fc7ff').XYZ,
       [ { X: 41.53626010469932,
-          Y: 49.405886246485146,
-          Z: 101.95483866723517 },
-        { X: 54.22256483378904,
-          Y: 30.926597459521155,
-          Z: 56.503804537994384 },
-        { X: 60.631173321886735,
-          Y: 84.17853037790493,
-          Z: 20.44961910775087 } ]
+        Y: 49.405886246485146,
+        Z: 101.95483866723517 },
+      { X: 54.22256483378904,
+        Y: 30.926597459521155,
+        Z: 56.503804537994384 },
+      { X: 60.631173321886735,
+        Y: 84.17853037790493,
+        Z: 20.44961910775087 } ]
     ))
   })
 
   it('should match expected value for uniformTriad', () => {
     assert(allAreCloseXYZ(chroma.uniformTriad('#4fc7ff').XYZ,
       [ { X: 41.69787317690973,
-          Y: 49.72911239090597,
-          Z: 102.00870969130524 },
-        { X: 53.4225834547738,
-          Y: 40.913416822510236,
-          Z: 35.27663235082702 },
-        { X: 51.14408373744017,
-          Y: 74.9924244853323,
-          Z: 36.79881316661437 } ]
+        Y: 49.72911239090597,
+        Z: 102.00870969130524 },
+      { X: 53.4225834547738,
+        Y: 40.913416822510236,
+        Z: 35.27663235082702 },
+      { X: 51.14408373744017,
+        Y: 74.9924244853323,
+        Z: 36.79881316661437 } ]
     ))
   })
 
   it('should match expected value for tetrad', () => {
     assert(allAreCloseXYZ(chroma.tetrad('#4fc7ff').XYZ,
       [ { X: 41.53626010469932,
-          Y: 49.405886246485146,
-          Z: 101.95483866723517 },
-        { X: 51.16905708482478,
-          Y: 28.4440830295141,
-          Z: 97.40109044329289 },
-        { X: 51.31525590295186,
-          Y: 39.152459064169946,
-          Z: 12.24970542237237 },
-        { X: 43.682618932785076,
-          Y: 75.44123003085592,
-          Z: 19.65643991349854 } ]
+        Y: 49.405886246485146,
+        Z: 101.95483866723517 },
+      { X: 51.16905708482478,
+        Y: 28.4440830295141,
+        Z: 97.40109044329289 },
+      { X: 51.31525590295186,
+        Y: 39.152459064169946,
+        Z: 12.24970542237237 },
+      { X: 43.682618932785076,
+        Y: 75.44123003085592,
+        Z: 19.65643991349854 } ]
     ))
   })
 
   it('should match expected value for uniformTetrad', () => {
     assert(allAreCloseXYZ(chroma.uniformTetrad('#4fc7ff').XYZ,
       [ { X: 41.69787317690973,
-          Y: 49.72911239090597,
-          Z: 102.00870969130524 },
-        { X: 58.82032091119712,
-          Y: 43.07251180507956,
-          Z: 63.70072903963791 },
-        { X: 72.21153579379627,
-          Y: 80.07129763623777,
-          Z: 36.668752823012454 },
-        { X: 52.326683318488,
-          Y: 75.19555888183191,
-          Z: 55.22058814500378 } ]
+        Y: 49.72911239090597,
+        Z: 102.00870969130524 },
+      { X: 58.82032091119712,
+        Y: 43.07251180507956,
+        Z: 63.70072903963791 },
+      { X: 72.21153579379627,
+        Y: 80.07129763623777,
+        Z: 36.668752823012454 },
+      { X: 52.326683318488,
+        Y: 75.19555888183191,
+        Z: 55.22058814500378 } ]
     ))
   })
 
@@ -157,22 +157,22 @@ describe('Operations', function() {
   it('should match expected value for adjacent', () => {
     assert(allAreCloseXYZ(chroma.adjacent(60, 2, '#4fc7ff').XYZ,
       [ { X: 41.53626010469932,
-          Y: 49.405886246485146,
-          Z: 101.95483866723517 },
-        { X: 30.781108042819238,
-          Y: 17.933709687296894,
-          Z: 96.44695024806809 } ]
+        Y: 49.405886246485146,
+        Z: 101.95483866723517 },
+      { X: 30.781108042819238,
+        Y: 17.933709687296894,
+        Z: 96.44695024806809 } ]
     ))
   })
 
   it('should match expected value for fade', () => {
     assert(allAreCloseXYZ(chroma.fade(2, '#4fc7ff', '#75c2e6').XYZ,
       [ { X: 41.69787317690974,
-          Y: 49.729112390905975,
-          Z: 102.00870969130528 },
-        { X: 40.91083262524179,
-          Y: 48.07865190715945,
-          Z: 81.98678938048923 } ]
+        Y: 49.729112390905975,
+        Z: 102.00870969130528 },
+      { X: 40.91083262524179,
+        Y: 48.07865190715945,
+        Z: 81.98678938048923 } ]
     ))
   })
 

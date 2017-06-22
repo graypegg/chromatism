@@ -58,10 +58,10 @@ const XYZ = value => {
     return Math.pow(((V + 0.055) / 1.055), 2.4)
   })
 
-   // Observer is 2°
-   // Whitepoint is D65
-   // sRGB standard stuff eh!
-   // [ Shamelessly stolen off Wikipedia ]
+  // Observer is 2°
+  // Whitepoint is D65
+  // sRGB standard stuff eh!
+  // [ Shamelessly stolen off Wikipedia ]
   let M = getTransform('SRGB_XYZ')
 
   let [ X, Y, Z ] = M.map((m) => {
@@ -165,7 +165,7 @@ export default {
     var y = (0.299 * (value.r / 255)) + (0.587 * (value.g / 255)) + (0.114 * (value.b / 255))
     var i = (0.596 * (value.r / 255)) + (-0.274 * (value.g / 255)) + (-0.322 * (value.b / 255))
     var q = (0.211 * (value.r / 255)) + (-0.523 * (value.g / 255)) + (0.312 * (value.b / 255))
-      /* YIQ is not a transformation of RGB, so it's pretty lossy */
+    /* YIQ is not a transformation of RGB, so it's pretty lossy */
     i = bounded(i, [ -0.5957, 0.5957 ])
     q = bounded(q, [ -0.5226, 0.5226 ])
     return { y, i, q }

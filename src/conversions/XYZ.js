@@ -11,10 +11,10 @@ export default {
   rgb: value => {
     let normalized = [ value.X, value.Y, value.Z ].map((v) => v / 100)
 
-      // Observer is 2°
-      // Whitepoint is D65
-      // sRGB standard stuff eh!
-      // [ Shamelessly stolen off Wikipedia ]
+    // Observer is 2°
+    // Whitepoint is D65
+    // sRGB standard stuff eh!
+    // [ Shamelessly stolen off Wikipedia ]
     let M = getTransform('INVERSE_SRGB_XYZ')
 
     let linear = M.map((m) => {
@@ -36,7 +36,7 @@ export default {
   lms: value => {
     let valueArray = [ value.X, value.Y, value.Z ].map((x) => x / 100)
 
-      // Bradford Transformation
+    // Bradford Transformation
     let Mb = getTransform('BRADFORD')
 
     let resultArray = Mb.map((m) => {
