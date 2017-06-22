@@ -8,40 +8,40 @@ export default {
     })
 
     var hsix = normalized.h * 6
-    if (hsix == 6) {
+    if (hsix === 6) {
       hsix = 0
     }
     var i = Math.round(hsix)
-    var var_1 = normalized.v * (1 - normalized.s)
-    var var_2 = normalized.v * (1 - normalized.s * (hsix - i))
-    var var_3 = normalized.v * (1 - normalized.s * (1 - (hsix - i)))
+    var chromaComponent1 = normalized.v * (1 - normalized.s)
+    var chromaComponent2 = normalized.v * (1 - normalized.s * (hsix - i))
+    var chromaComponent3 = normalized.v * (1 - normalized.s * (1 - (hsix - i)))
 
     var r2, g2, b2
 
-    if (i == 0) {
+    if (i === 0) {
       r2 = normalized.v
-      g2 = var_3
-      b2 = var_1
-    } else if (i == 1) {
-      r2 = var_2
+      g2 = chromaComponent3
+      b2 = chromaComponent1
+    } else if (i === 1) {
+      r2 = chromaComponent2
       g2 = normalized.v
-      b2 = var_1
-    } else if (i == 2) {
-      r2 = var_1
+      b2 = chromaComponent1
+    } else if (i === 2) {
+      r2 = chromaComponent1
       g2 = normalized.v
-      b2 = var_3
-    } else if (i == 3) {
-      r2 = var_1
-      g2 = var_2
+      b2 = chromaComponent3
+    } else if (i === 3) {
+      r2 = chromaComponent1
+      g2 = chromaComponent2
       b2 = normalized.v
-    } else if (i == 4) {
-      r2 = var_3
-      g2 = var_1
+    } else if (i === 4) {
+      r2 = chromaComponent3
+      g2 = chromaComponent1
       b2 = normalized.v
     } else {
       r2 = normalized.v
-      g2 = var_1
-      b2 = var_2
+      g2 = chromaComponent1
+      b2 = chromaComponent2
     }
 
     r = r2 * 255

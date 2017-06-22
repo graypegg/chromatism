@@ -58,7 +58,9 @@ export default {
     const Zr = value.Z / white.Z
 
     const toF = (x) => x > epsilon ? cubeRoot(x) : (kappa * x + 16) / 116
-    const Fx = toF(Xr), Fy = toF(Yr), Fz = toF(Zr)
+    const Fx = toF(Xr)
+    const Fy = toF(Yr)
+    const Fz = toF(Zr)
 
     return {
       L: ((116 * Fy) - 16),

@@ -11,7 +11,8 @@ export default {
     const Fx = (value.a / 500) + Fy
     const Fz = Fy - (value.b / 200)
 
-    const Xr = toR(Fx), Zr = toR(Fz)
+    const Xr = toR(Fx)
+    const Zr = toR(Fz)
     const Yr = value.L > (kappa * epsilon) ? Math.pow(Fy, 3) : value.L / kappa
 
     return {

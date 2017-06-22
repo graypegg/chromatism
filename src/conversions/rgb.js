@@ -16,7 +16,7 @@ const hsl = value => {
   var rgbOrdered = [ r, g, b ].sort()
   var l = ((rgbOrdered[0] + rgbOrdered[2]) / 2) * 100
   var s, h
-  if (rgbOrdered[0] == rgbOrdered[2]) {
+  if (rgbOrdered[0] === rgbOrdered[2]) {
     s = 0
     h = 0
   } else {
@@ -25,9 +25,9 @@ const hsl = value => {
     } else {
       s = ((rgbOrdered[2] - rgbOrdered[0]) / (rgbOrdered[2] + rgbOrdered[0])) * 100
     }
-    if (rgbOrdered[2] == r) {
+    if (rgbOrdered[2] === r) {
       h = ((g - b) / (rgbOrdered[2] - rgbOrdered[0])) * 60
-    } else if (rgbOrdered[2] == g) {
+    } else if (rgbOrdered[2] === g) {
       h = (2 + ((b - r) / (rgbOrdered[2] - rgbOrdered[0]))) * 60
     } else {
       h = (4 + ((r - g) / (rgbOrdered[2] - rgbOrdered[0]))) * 60
@@ -76,15 +76,15 @@ const XYZ = value => {
 export default {
   hex: value => {
     var r = Math.round(value['r']).toString(16)
-    if (r.length == 1) {
+    if (r.length === 1) {
       r = '0' + r
     }
     var g = Math.round(value['g']).toString(16)
-    if (g.length == 1) {
+    if (g.length === 1) {
       g = '0' + g
     }
     var b = Math.round(value['b']).toString(16)
-    if (b.length == 1) {
+    if (b.length === 1) {
       b = '0' + b
     }
     return '#' + r + g + b
@@ -104,7 +104,7 @@ export default {
     var tempG = value['g'] / 255
     var tempB = value['b'] / 255
     var k = 1 - (Math.max(tempR, tempG, tempB))
-    if (k != 1) {
+    if (k !== 1) {
       return {
         c: ((1 - tempR) - k) / (1 - k),
         m: ((1 - tempG) - k) / (1 - k),
@@ -133,7 +133,7 @@ export default {
     var v = max
     var h, s
 
-    if (maxDelta == 0) {
+    if (maxDelta === 0) {
       h = 0
       s = 0
     } else {
@@ -143,11 +143,11 @@ export default {
       var gDelta = (((max - g) / 6) + (maxDelta / 2)) / maxDelta
       var bDelta = (((max - b) / 6) + (maxDelta / 2)) / maxDelta
 
-      if (r == max) {
+      if (r === max) {
         h = bDelta - gDelta
-      }			else if (g == max) {
+      } else if (g === max) {
         h = (1 / 3) + rDelta - bDelta
-      }			else if (b == max) {
+      } else if (b === max) {
         h = (2 / 3) + gDelta - rDelta
       }
 
