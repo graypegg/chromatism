@@ -35,7 +35,6 @@
     "eslint-plugin-node": "^5.0.0",
     "eslint-plugin-promise": "^3.5.0",
     "eslint-plugin-standard": "^3.0.1",
-    "has-flag": "2.0.0",
     "mocha": "^3.2.0",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
