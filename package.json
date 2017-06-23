@@ -2,15 +2,14 @@
   "name": "chromatism",
   "version": "2.6.0",
   "description": "A simple set of utility functions for colours.",
-  "main": "dist/chromatism.js",
-  "module": "dist/chromatism.esm.js",
+  "main": "dist/chromatism.umd.js",
+  "browser": "dist/chromatism.cjs.js",
+  "module": "src/operations/index.js",
   "typings": "./index.d.ts",
   "repository": "toish/chromatism",
   "scripts": {
     "test": "BABEL_ENV=test mocha --compilers js:babel-core/register",
-    "build": "npm run build:umd && npm run build:es",
-    "build:umd": "rollup -c --format umd --output dist/chromatism.js",
-    "build:es": "rollup -c --format es --output dist/chromatism.esm.js",
+    "build": "rollup -c",
     "format": "eslint --fix src/**/*.js test/**/*.js"
   },
   "keywords": [
