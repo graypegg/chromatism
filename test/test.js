@@ -1,3 +1,5 @@
+/* global describe, it */
+
 import assert from 'assert'
 import round from './rounding'
 import consts from './consts'

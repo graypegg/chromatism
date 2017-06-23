@@ -9,8 +9,9 @@
   "repository": "toish/chromatism",
   "scripts": {
     "test": "BABEL_ENV=test mocha --compilers js:babel-core/register",
+    "lint": "standard \"src/**/*.js\" \"test/**/*.js\"",
     "build": "rollup -c",
-    "format": "eslint --fix src/**/*.js test/**/*.js"
+    "format": "standard --fix \"src/**/*.js\" \"test/**/*.js\""
   },
   "keywords": [
     "color",
@@ -29,18 +30,13 @@
     "babel-core": "6.25.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-preset-env": "^1.5.2",
-    "eslint": "^3.19.0",
-    "eslint-config-standard": "^10.2.1",
-    "eslint-plugin-import": "2.6.0",
-    "eslint-plugin-node": "^5.0.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
     "mocha": "^3.2.0",
     "rollup": "^0.41.6",
     "rollup-plugin-babel": "^2.7.1",
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
+    "standard": "10.0.2",
     "uglify-es": "3.0.19"
   },
   "false": {},
