@@ -6,10 +6,11 @@ import makeColourObject from './convert'
 
 export default function adapt (colourRef, illuminantDRef, illuminantSRef) {
   const colour = convert('XYZ', colourRef)
-  const illuminantD = convert('lms', illuminantDRef)
-  const illuminantS = illuminantSRef
-    ? convert('lms', illuminantSRef)
-    : convert('lms', getIlluminant('D65'))
+
+  // Source + Destination illuminant must be supplied as CIE Stanard Illuminant labels.
+  // Otherwise assuming CIE-D65
+  const illuminantD = convert('lms', getIlluminant(illuminantDRef) || getIlluminant('D65'))
+  const illuminantS = convert('lms', getIlluminant(illuminantSRef) || getIlluminant('D65'))
 
   // Bradford Transformation
   let Mb = getTransform('BRADFORD')

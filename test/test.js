@@ -241,10 +241,10 @@ describe('Operations', function () {
   })
 
   it('should match expected value for adapt', () => {
-    assert(closeXYZ(chroma.adapt('#4fc7ff', '#75c2e6').XYZ,
-      { X: 21.021090521182536,
-        Y: 25.249770007097528,
-        Z: 77.00969257863895 }
+    assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50').XYZ,
+    { X: 39.71624372658961,
+      Y: 48.74860966760767,
+      Z: 77.08702260499929 }
     ))
   })
 
