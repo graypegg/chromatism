@@ -240,7 +240,7 @@ describe('Operations', function () {
     ))
   })
 
-  it('should match expected value for adapt', () => {
+  it('should match expected value for adapt when using default D65 source illuminant', () => {
     assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50').XYZ,
     { X: 39.71624372658961,
       Y: 48.74860966760767,
@@ -248,11 +248,19 @@ describe('Operations', function () {
     ))
   })
 
+  it('should match expected value for adapt when using defined F2 source illuminant', () => {
+    assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50', 'F2').XYZ,
+    { X: 43.73825385154716,
+      Y: 51.0118924505256,
+      Z: 125.37810305190011 }
+    ))
+  })
+
   it('should match expected value for difference', () => {
     assert(close(chroma.difference('#4fc7ff', '#75c2e6'), 202.64118553936103))
   })
 
-  it('should match expected value for temperature', () => {
-    assert(close(chroma.temperature('#4fc7ff'), 28027.236159020416))
+  it('should be close to 6500K when temperature is passed the D65 illuminant', () => {
+    assert(close(chroma.temperature({ X: 95.047, Y: 100, Z: 108.883 }), 6503.4619534794965))
   })
 })
