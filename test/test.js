@@ -1,7 +1,9 @@
+/* global describe, it */
+
 import assert from 'assert'
 import round from './rounding'
 import consts from './consts'
-import * as chroma from '..'
+import * as chroma from '../src/operations'
 
 describe('Conversion', function () {
   for (let fromKey in consts.red) {

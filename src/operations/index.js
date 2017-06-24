@@ -1,51 +1,24 @@
-import adapt from './adapt'
-import adjacent from './adjacent'
-import brightness from './brightness'
-import complementary from './complementary'
-import contrast from './contrast'
-import contrastRatio from './contrastRatio'
-import convert from './convert'
-import difference from './difference'
-import fade from './fade'
-import greyscale from './greyscale'
-import hue from './hue'
-import invert from './invert'
-import invertLightness from './invertLightness'
-import mid from './mid'
-import multiply from './multiply'
-import saturation from './saturation'
-import sepia from './sepia'
-import shade from './shade'
-import temperature from './temperature'
-import tetrad from './tetrad'
-import triad from './triad'
-import uniformComplementary from './uniformComplementary'
-import uniformTriad from './uniformTriad'
-import uniformTetrad from './uniformTetrad'
-
-export default {
-  adapt,
-  adjacent,
-  brightness,
-  complementary,
-  contrast,
-  contrastRatio,
-  convert,
-  difference,
-  fade,
-  greyscale,
-  hue,
-  invert,
-  invertLightness,
-  mid,
-  multiply,
-  saturation,
-  sepia,
-  shade,
-  temperature,
-  tetrad,
-  triad,
-  uniformComplementary,
-  uniformTriad,
-  uniformTetrad
-}
+export { default as adapt } from './adapt'
+export { default as adjacent } from './adjacent'
+export { default as brightness } from './brightness'
+export { default as complementary } from './complementary'
+export { default as contrast } from './contrast'
+export { default as contrastRatio } from './contrastRatio'
+export { default as convert } from './convert'
+export { default as difference } from './difference'
+export { default as fade } from './fade'
+export { default as greyscale } from './greyscale'
+export { default as hue } from './hue'
+export { default as invert } from './invert'
+export { default as invertLightness } from './invertLightness'
+export { default as mid } from './mid'
+export { default as multiply } from './multiply'
+export { default as saturation } from './saturation'
+export { default as sepia } from './sepia'
+export { default as shade } from './shade'
+export { default as temperature } from './temperature'
+export { default as tetrad } from './tetrad'
+export { default as triad } from './triad'
+export { default as uniformComplementary } from './uniformComplementary'
+export { default as uniformTriad } from './uniformTriad'
+export { default as uniformTetrad } from './uniformTetrad'

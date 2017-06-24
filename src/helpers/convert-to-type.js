@@ -1,5 +1,5 @@
 import determineType from './determine-type'
-import conversions from '../conversions'
+import * as conversions from '../conversions'
 
 function depthFirstSearchRecursive (fromType, toType, typesSoFar, stack) {
   const possibilities = conversions[fromType]

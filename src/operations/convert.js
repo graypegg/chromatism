@@ -8,10 +8,14 @@ export default function makeColourObject (colour) {
 
   types.forEach(type => {
     Object.defineProperty(object, type, {
-      get: () => convert(type, colour),
+      get: () => convertArrayOrColour(type, colour),
       enumerable: true
     })
   })
 
   return object
 }
+
+const convertArrayOrColour = (type, any) => Array.isArray(any)
+  ? any.map(colour => convert(type, colour))
+  : convert(type, any)
