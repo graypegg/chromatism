@@ -1,55 +1,34 @@
 import determineType from './determine-type'
 import * as conversions from '../conversions'
 
-function depthFirstSearchRecursive (fromType, toType, typesSoFar, stack) {
-  const possibilities = conversions[fromType]
-  if (possibilities[toType]) {
-    return [ ...typesSoFar, toType ]
-  } else {
-    Object.keys(possibilities)
-      .filter(type => typesSoFar.indexOf(type) === -1)
-      .forEach(possibleType => {
-        stack.push(
-          () => depthFirstSearchRecursive(possibleType, toType, [ ...typesSoFar, possibleType ], stack)
-        )
-      })
-  }
-}
-
-function depthFirstSearch (fromType, toType) {
-  const stack = []
-  let workingPath = depthFirstSearchRecursive(fromType, toType, [], stack)
-
-  while (!workingPath) {
-    const nextStepFunction = stack.shift()
-    workingPath = nextStepFunction()
-  }
-
-  return workingPath
-}
-
 export default function convert (toType, value) {
   if (value === undefined) {
     throw new Error('No value provided')
   }
 
-  const fromType = determineType(value)
+  console.log(value)
 
-  if (fromType === toType) {
-    return value
+  if (Array.isArray(value)) {
+    // If value passed in is an array, then recurse over the array.
+
+    value.map((colour) => (
+      convert(toType, colour)
+    ))
+    return colour
+
+  } else {
+    // If value is NOT an array, convert to new colour mode as long as
+    // source + destination colour modes are different.
+
+    const fromType = determineType(value)
+
+    if (fromType === toType) {
+      return value
+    }
+
+    const conversionFunction = conversions[fromType][toType]
+
+    return conversionFunction(value)
   }
 
-  const conversionSteps = depthFirstSearch(fromType, toType)
-
-  return conversionSteps.reduce(({ lastType, value }, nextType) => {
-    const conversionFunction = conversions[lastType][nextType]
-
-    return {
-      lastType: nextType,
-      value: conversionFunction(value)
-    }
-  }, {
-    value,
-    lastType: fromType
-  }).value
 }
