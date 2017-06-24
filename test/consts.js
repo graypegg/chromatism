@@ -22,13 +22,19 @@ const red = {
   hex: {
     value: '#ff0000',
     accuracy: {
-      cielab: 0.000000001
+      cielab: 0.000000001,
+      cieluv: 0.000000001,
+      cielch: 0.000000001,
+      hsluv: 0.000000001
     }
   },
   cssrgb: {
     value: 'rgb(255,0,0)',
     accuracy: {
-      cielab: 0.000000001
+      cielab: 0.000000001,
+      cieluv: 0.000000001,
+      cielch: 0.000000001,
+      hsluv: 0.000000001
     }
   },
   hsl: {
@@ -54,7 +60,10 @@ const red = {
   csshsl: {
     value: 'hsl(0,100%,50%)',
     accuracy: {
-      cielab: 0.000000001
+      cielab: 0.000000001,
+      cieluv: 0.000000001,
+      cielch: 0.000000001,
+      hsluv: 0.000000001
     }
   },
   hsv: {
