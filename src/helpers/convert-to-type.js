@@ -6,8 +6,6 @@ export default function convert (toType, value) {
     throw new Error('No value provided')
   }
 
-  console.log(value)
-
   if (Array.isArray(value)) {
     // If value passed in is an array, then recurse over the array.
 
