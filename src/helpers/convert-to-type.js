@@ -1,4 +1,5 @@
 import determineType from './determine-type'
+import getChain from './get-chain'
 import * as conversions from '../conversions'
 
 export default function convert (toType, value) {
@@ -24,7 +25,18 @@ export default function convert (toType, value) {
       return value
     }
 
-    const conversionFunction = conversions[fromType][toType]
+    let conversionFunction = conversions[fromType][toType]
+    if (conversionFunction) return conversionFunction(value)
+
+    conversionFunction = (colour) => {
+      const chain = getChain(fromType, toType)
+      const functionChain = chain.slice(1).reduce((acc, mode) => {
+        acc.fns.push(conversions[acc.last][mode])
+        acc.last = mode
+        return acc
+      }, {last: fromType, fns: []}).fns
+      return functionChain.reduce((acc, fn) => fn(acc), colour)
+    }
 
     return conversionFunction(value)
   }
