@@ -1,8 +1,35 @@
 import determineType from './determine-type'
-import getChain from './get-chain'
 import * as conversions from '../conversions'
 
-export default function convert (toType, value) {
+const conversionSteps = {
+  rgb: {
+    default: 'XYZ',
+    csshsl: 'hsl'
+  },
+  hex: 'rgb',
+  hsl: 'rgb',
+  hsv: 'rgb',
+  csshsl: 'hsl',
+  cssrgb: 'rgb',
+  cmyk: 'rgb',
+  XYZ: {
+    default: 'rgb',
+    cielch: 'cieluv',
+    hsluv: 'cieluv'
+  },
+  xyY: 'XYZ',
+  lms: 'XYZ',
+  cieluv: {
+    default: 'XYZ',
+    hsluv: 'cielch'
+  },
+  cielch: 'cieluv',
+  cielab: 'XYZ',
+  yiq: 'rgb',
+  hsluv: 'cielch'
+}
+
+export default function convert (toType, value, currentType) {
   if (value === undefined) {
     throw new Error('No value provided')
   }
@@ -14,31 +41,28 @@ export default function convert (toType, value) {
       convert(toType, colour)
     ))
     return colour
-
   } else {
     // If value is NOT an array, convert to new colour mode as long as
     // source + destination colour modes are different.
 
-    const fromType = determineType(value)
+    const fromType = currentType || determineType(value)
 
     if (fromType === toType) {
       return value
     }
 
-    let conversionFunction = conversions[fromType][toType]
-    if (conversionFunction) return conversionFunction(value)
-
-    conversionFunction = (colour) => {
-      const chain = getChain(fromType, toType)
-      const functionChain = chain.slice(1).reduce((acc, mode) => {
-        acc.fns.push(conversions[acc.last][mode])
-        acc.last = mode
-        return acc
-      }, {last: fromType, fns: []}).fns
-      return functionChain.reduce((acc, fn) => fn(acc), colour)
+    if (conversions[fromType][toType]) {
+      return convertNow(fromType, toType, value)
     }
 
-    return conversionFunction(value)
-  }
+    const possibleSteps = conversionSteps[fromType]
+    const nextStepType = typeof possibleSteps === 'string'
+      ? possibleSteps
+      : (possibleSteps[toType] || possibleSteps.default)
 
+    const convertedToNextStep = convertNow(fromType, nextStepType, value)
+    return convert(toType, convertedToNextStep, nextStepType)
+  }
 }
+
+const convertNow = (fromType, toType, value) => conversions[fromType][toType](value)
