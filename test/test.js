@@ -19,9 +19,19 @@ describe('Conversion', function () {
       let accuracy = consts.red[fromKey].accuracy[toKey] || 0
 
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function () {
+        const fromValue = consts.red[fromKey].value
+        const expected = round(consts.red[toKey].value, accuracy)
+
         it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)}`, function () {
           assert.deepEqual(
-            round(chroma.convert(consts.red[fromKey].value)[toKey], accuracy), /* === */ round(consts.red[toKey].value, accuracy)
+            round(chroma.convert(fromValue)[toKey], accuracy),
+            expected
+          )
+        })
+        it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)} when passed in as an array`, () => {
+          assert.deepEqual(
+            chroma.convert([ fromValue, fromValue ])[toKey].map(value => round(value, accuracy)),
+            [ expected, expected ]
           )
         })
       })
