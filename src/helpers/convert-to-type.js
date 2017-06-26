@@ -4,7 +4,8 @@ import * as conversions from '../conversions'
 const conversionSteps = {
   rgb: {
     default: 'XYZ',
-    csshsl: 'hsl'
+    csshsl: 'hsl',
+    hsv: 'hsl'
   },
   hex: 'rgb',
   hsl: 'rgb',

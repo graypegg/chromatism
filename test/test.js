@@ -252,17 +252,17 @@ describe('Operations', function () {
 
   it('should match expected value for adapt when using default D65 source illuminant', () => {
     assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50').XYZ,
-    { X: 39.71624372658961,
-      Y: 48.74860966760767,
-      Z: 77.08702260499929 }
+      { X: 39.71624372658961,
+        Y: 48.74860966760767,
+        Z: 77.08702260499929 }
     ))
   })
 
   it('should match expected value for adapt when using defined F2 source illuminant', () => {
     assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50', 'F2').XYZ,
-    { X: 43.73825385154716,
-      Y: 51.0118924505256,
-      Z: 125.37810305190011 }
+      { X: 43.73825385154716,
+        Y: 51.0118924505256,
+        Z: 125.37810305190011 }
     ))
   })
 
