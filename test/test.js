@@ -19,9 +19,19 @@ describe('Conversion', function () {
       let accuracy = consts.red[fromKey].accuracy[toKey] || 0
 
       describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function () {
+        const fromValue = consts.red[fromKey].value
+        const expected = round(consts.red[toKey].value, accuracy)
+
         it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)}`, function () {
           assert.deepEqual(
-            round(chroma.convert(consts.red[fromKey].value)[toKey], accuracy), /* === */ round(consts.red[toKey].value, accuracy)
+            round(chroma.convert(fromValue)[toKey], accuracy),
+            expected
+          )
+        })
+        it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)} when passed in as an array`, () => {
+          assert.deepEqual(
+            chroma.convert([ fromValue, fromValue ])[toKey].map(value => round(value, accuracy)),
+            [ expected, expected ]
           )
         })
       })
@@ -242,17 +252,17 @@ describe('Operations', function () {
 
   it('should match expected value for adapt when using default D65 source illuminant', () => {
     assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50').XYZ,
-    { X: 39.71624372658961,
-      Y: 48.74860966760767,
-      Z: 77.08702260499929 }
+      { X: 39.71624372658961,
+        Y: 48.74860966760767,
+        Z: 77.08702260499929 }
     ))
   })
 
   it('should match expected value for adapt when using defined F2 source illuminant', () => {
     assert(closeXYZ(chroma.adapt('#4fc7ff', 'D50', 'F2').XYZ,
-    { X: 43.73825385154716,
-      Y: 51.0118924505256,
-      Z: 125.37810305190011 }
+      { X: 43.73825385154716,
+        Y: 51.0118924505256,
+        Z: 125.37810305190011 }
     ))
   })
 
