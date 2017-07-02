@@ -77,7 +77,7 @@ export default {
 
     var h = normalized.h
     var s = (2 * luminence) / (normalized.l + luminence)
-    var v = normalized.l + i
+    var v = normalized.l + luminence
 
     return { h: h, s: s * 100, v: v * 100 }
   }
