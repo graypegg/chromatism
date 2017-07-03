@@ -9,7 +9,7 @@ const conversionSteps = {
   },
   hex: 'rgb',
   hsl: 'rgb',
-  hsv: 'hsl',
+  hsv: 'rgb',
   csshsl: 'hsl',
   cssrgb: 'rgb',
   cmyk: 'rgb',

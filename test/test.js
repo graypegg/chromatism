@@ -189,10 +189,10 @@ describe('Operations', function () {
   })
 
   it('should match expected value for shade', () => {
-    assert(closeXYZ(chroma.shade(20, '#4fc700').XYZ,
-      { X: 39.303512967548,
-        Y: 71.00959149123706,
-        Z: 11.634716393545077 }
+    assert(closeXYZ(chroma.shade(20, '#4fc7ff').XYZ,
+      { X: 41.69787317690973,
+        Y: 49.72911239090596,
+        Z: 102.00870969130528 }
     ))
   })
 
