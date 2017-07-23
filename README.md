@@ -65,6 +65,12 @@ var chromatism = require('chromatism');
 import chromatism from 'chromatism';
 ```
 
+**ES Module also exports all functions individually, allowing for tree-shaking and smaller bundles**
+
+```javascript
+import { brightness } from 'chromatism';
+```
+
 #### Browser without bundling
 ```html
 <script type="text/javascript" src="path-to-files/dist/chromatism.js"></script>
@@ -74,7 +80,7 @@ import chromatism from 'chromatism';
 ## Functions
 All functions can take any colour type. **You can even mix colour types** if a function takes more than one. [A list of colour types are available here](#colour-modes). Return values are also not bound by the function. Any functions that return colours, return a colour object, which contains getters for each colour type. If you take the return value of one of these functions and get `returnValue.hex` for example, you will get the hexadecimal equivalent value.
 
-You can also chain these functions. The last parameter will be piped in from the output of the parent function.
+In previous versions (Pre. v2.6), you could chain functions. This functionality has been removed to save space on the bundle.
 
 :warning: **_Note:_** The following examples return different types of values, (*hex*, *rgb*, *hsl*, etc) but you can use any of the available colour modes as seen in the colour modes table at the [bottom of this README.](#colour-modes)
 
@@ -283,12 +289,12 @@ Use this function to determine the colour of text needed create a high contrast 
 
 #### Chromatic Adaptation (White point)
 ```javascript
-var newColour = chromatism.adapt( colour, illuminantColour, [source illuminant] ).XYZ;
+var newColour = chromatism.adapt( colour, illuminant, [source illuminant] ).XYZ;
 ```
 
 ![Illuminant Adaptation](https://toi.sh/cdn/chromatism/adapt.png)
 
-Shifts the Illuminant (white-point) on the supplied colour. Supply a value from the [ILLUMINANTS constant](#constants) to use a standard white-point. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65` in XYZ format.)
+Shifts the Illuminant (white-point) on the supplied colour. Supply an illuminant label as a capital-letter string in the illuminant attribute. (e.g. `"D65"`, `"F2"`) [A full list is available at the bottom of this README.](#supported-values) Most standard white-points are supported. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65`.)
 
 ---
 
@@ -309,14 +315,11 @@ Returns the [correlated colour temperature](https://en.wikipedia.org/wiki/Color_
 
 Colour temperature is calculated via [McCamy's CCT fomula. ](ttp://onlinelibrary.wiley.com/doi/10.1002/col.5080170211/abstract;jsessionid=D127570AD1D0FEF9A18424F5C0E987C5.f02t04)(DOI: 10.1002/col.5080170211) **Which may mean that colours temperatures beyond 6500K (CIE Illuminant D65) are not entirely accurate**
 
-## Constants
-
-Chromatism has some useful constants built in, you can access them using the imported chromatism object.
+## Supported Values
 
 | Reference | Values | Description |
 | --------- | ------ | ----------- |
-| `chromatism.ILLUMINANTS` | `.A`, `.B`, `.C`, `.D50`, `.D55`, `.D65`, `.D75`, `.E`, `.F2`, `.F7`, `.F11` | Standard CIE illuminants in XYZ format
-| `chromatism.TRANSFORMS` | `.BRADFORD`, `.INVERSE_BRADFORD`, `.SRGB_XYZ`, `.INVERSE_SRGB_XYZ` | Transformation matrices
+| Illuminants | `"A"`, `"B"`, `"C"`, `"D50"`, `"D55"`, `"D65"`, `"D75"`, `"E"`, `"F2"`, `"F7"`, `"F11"` | Standard CIE illuminants in XYZ format
 
 ## Scales + Colour Spaces
 | Mode                  | Scale                             | Colour Space |
