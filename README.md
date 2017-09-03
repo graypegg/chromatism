@@ -15,6 +15,7 @@ A simple set of utility functions for colours.
   * [Contributing](#contributing)
   * [Installation](#installation)
       - [CommonJS](#commonjs)
+      - [ES Modules](#es-modules)
       - [Browser without bundling](#browser-without-bundling)
   * [Functions](#functions)
     + [Colour Transformations](#currency_exchange-colour-transformations)
@@ -62,7 +63,7 @@ var chromatism = require('chromatism');
 
 #### ES Modules
 ```javascript
-import chromatism from 'chromatism';
+import * as chromatism from 'chromatism';
 ```
 
 **ES Module also exports all functions individually, allowing for tree-shaking and smaller bundles**
