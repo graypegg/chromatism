@@ -1,4 +1,5 @@
 # Chromatism :rainbow:
+[![CDNJS version](https://img.shields.io/cdnjs/v/chromatism.svg)](https://cdnjs.com/libraries/chromatism)
 
 A simple set of utility functions for colours.
 
