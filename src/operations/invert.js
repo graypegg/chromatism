@@ -1,11 +1,13 @@
-function invert( _dep, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "rgb", colourRef );
+import negativeModulo from '../helpers/negative-modulo'
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-  colour.r = _dep.helpers.negMod((255 - colour.r), 255);
-  colour.g = _dep.helpers.negMod((255 - colour.g), 255);
-  colour.b = _dep.helpers.negMod((255 - colour.b), 255);
+export default function invert (colourRef) {
+  var colour = convert('rgb', colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+  colour.r = negativeModulo((255 - colour.r), 255)
+  colour.g = negativeModulo((255 - colour.g), 255)
+  colour.b = negativeModulo((255 - colour.b), 255)
+
+  return makeColourObject(colour)
 }
-
-module.exports = invert;

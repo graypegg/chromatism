@@ -1,16 +1,21 @@
-function convert( _dep, to, value ) {
-  if (Object.keys(_dep.conversions).indexOf(to) > -1) {
-    if (value.colour) value = value.colour
-    else if (value.colours) value = value.colours
-    let from = _dep.helpers.determineMode(value);
-    if (from != to) {
-      return _dep.conversions[from].convert( _dep, to, value );
-    } else {
-      return value;
-    }
-  } else {
-    return _dep.helpers.ready( _dep, to );
-  }
+import convert from '../helpers/convert-to-type'
+import testColorType from '../helpers/test-color-type'
+
+const types = Object.keys(testColorType)
+
+export default function makeColourObject (colour) {
+  const object = {}
+
+  types.forEach(type => {
+    Object.defineProperty(object, type, {
+      get: () => convertArrayOrColour(type, colour),
+      enumerable: true
+    })
+  })
+
+  return object
 }
 
-module.exports = convert;
+const convertArrayOrColour = (type, any) => Array.isArray(any)
+  ? any.map(colour => convert(type, colour))
+  : convert(type, any)

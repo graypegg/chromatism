@@ -1,14 +1,15 @@
-function shade( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsv", colourRef );
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-  colour.v += shift;
+export default function shade (shift, colourRef) {
+  var colour = convert('hsv', colourRef)
+
+  colour.v += shift
   if (colour.v < 0) {
-    colour.v = 0;
+    colour.v = 0
   } else if (colour.v > 100) {
-    colour.v = 100;
+    colour.v = 100
   }
 
-  return _dep.helpers.ready( _dep, colour );
+  return makeColourObject(colour)
 }
-
-module.exports = shade;

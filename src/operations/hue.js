@@ -1,9 +1,11 @@
-function hue( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+import negativeModulo from '../helpers/negative-modulo'
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-  colour.h = _dep.helpers.negMod((colour.h + shift), 360);
+export default function hue (shift, colourRef) {
+  const colour = convert('hsl', colourRef)
 
-  return _dep.helpers.ready( _dep, colour );
+  colour.h = negativeModulo((colour.h + shift), 360)
+
+  return makeColourObject(colour)
 }
-
-module.exports = hue;

@@ -1,13 +1,15 @@
-function adjacent( _dep, deg, amount, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
-  var colours = [{h:colour.h, s:colour.s, l:colour.l}];
+import negativeModulo from '../helpers/negative-modulo'
+import convert from '../helpers/convert-to-type'
+import makeColourObject from './convert'
 
-  for(var i=0;i<(amount-1);i++) {
-    colour.h = _dep.helpers.negMod((colour.h + deg), 360);
-    colours.push({h:colour.h, s:colour.s, l:colour.l});
+export default function adjacent (deg, amount, colourRef) {
+  const colour = convert('hsl', colourRef)
+  const colours = [{ h: colour.h, s: colour.s, l: colour.l }]
+
+  for (let i = 0; i < (amount - 1); i++) {
+    colour.h = negativeModulo((colour.h + deg), 360)
+    colours.push({ h: colour.h, s: colour.s, l: colour.l })
   }
 
-  return _dep.helpers.ready( _dep, colours );
+  return makeColourObject(colours)
 }
-
-module.exports = adjacent;

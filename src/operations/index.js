@@ -1,26 +1,24 @@
-module.exports = {
-  adapt: require('./adapt.js'),
-  adjacent: require('./adjacent.js'),
-  brightness: require('./brightness.js'),
-  complementary: require('./complementary.js'),
-  contrast: require('./contrast.js'),
-  contrastRatio: require('./contrastRatio.js'),
-  convert: require('./convert.js'),
-  difference: require('./difference.js'),
-  fade: require('./fade.js'),
-  greyscale: require('./greyscale.js'),
-  hue: require('./hue.js'),
-  invert: require('./invert.js'),
-  invertLightness: require('./invertLightness.js'),
-  mid: require('./mid.js'),
-  multiply: require('./multiply.js'),
-  saturation: require('./saturation.js'),
-  sepia: require('./sepia.js'),
-  shade: require('./shade.js'),
-  temperature: require('./temperature.js'),
-  tetrad: require('./tetrad.js'),
-  triad: require('./triad.js'),
-  uniformComplementary: require('./uniformComplementary.js'),
-  uniformTriad: require('./uniformTriad.js'),
-  uniformTetrad: require('./uniformTetrad.js')
-};
+export { default as adapt } from './adapt'
+export { default as adjacent } from './adjacent'
+export { default as brightness } from './brightness'
+export { default as complementary } from './complementary'
+export { default as contrast } from './contrast'
+export { default as contrastRatio } from './contrastRatio'
+export { default as convert } from './convert'
+export { default as difference } from './difference'
+export { default as fade } from './fade'
+export { default as greyscale } from './greyscale'
+export { default as hue } from './hue'
+export { default as invert } from './invert'
+export { default as invertLightness } from './invertLightness'
+export { default as mid } from './mid'
+export { default as multiply } from './multiply'
+export { default as saturation } from './saturation'
+export { default as sepia } from './sepia'
+export { default as shade } from './shade'
+export { default as temperature } from './temperature'
+export { default as tetrad } from './tetrad'
+export { default as triad } from './triad'
+export { default as uniformComplementary } from './uniformComplementary'
+export { default as uniformTriad } from './uniformTriad'
+export { default as uniformTetrad } from './uniformTetrad'

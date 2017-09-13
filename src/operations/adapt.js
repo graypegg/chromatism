@@ -1,18 +1,22 @@
-function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
+import getIlluminant from '../helpers/get-illuminant'
+import matrixMultiply from '../helpers/matrix-multiply'
+import getTransform from '../helpers/get-transform'
+import convert from '../helpers/convert-to-type'
+import makeColourObject from './convert'
 
-  var colour = _dep.operations.convert( _dep, "XYZ", colourRef );
-  var illuminantD = _dep.operations.convert( _dep, "lms", illuminantDRef );
-  if (illuminantSRef) {
-    var illuminantS = _dep.operations.convert( _dep, "lms", illuminantSRef );
-  } else {
-    var illuminantS = _dep.operations.convert( _dep, "lms", _dep.helpers.getIlluminant("D65") );
-  }
+export default function adapt (colourRef, illuminantDRef, illuminantSRef) {
+  const colour = convert('XYZ', colourRef)
+
+  // Source + Destination illuminant must be supplied as CIE Stanard Illuminant labels.
+  // Otherwise assuming CIE-D65
+  const illuminantD = convert('lms', getIlluminant(illuminantDRef) || getIlluminant('D65'))
+  const illuminantS = convert('lms', getIlluminant(illuminantSRef) || getIlluminant('D65'))
 
   // Bradford Transformation
-  let Mb = _dep.helpers.getTransform('BRADFORD')
+  let Mb = getTransform('BRADFORD')
 
   // Inverse Bradford Transformation
-  let Mbi = _dep.helpers.getTransform('INVERSE_BRADFORD')
+  let Mbi = getTransform('INVERSE_BRADFORD')
 
   // Illuminant Ratio Matrix
   let Mir = [
@@ -22,13 +26,13 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
   ]
 
   // Illuminant ratio matrix, pre-inversion
-  let MbiMir = _dep.helpers.matrixMultiply(Mbi, Mir)
+  let MbiMir = matrixMultiply(Mbi, Mir)
 
   // Illuminant ratio matrix
-  let M = _dep.helpers.matrixMultiply(MbiMir, Mb)
+  let M = matrixMultiply(MbiMir, Mb)
 
-  let valueArray = [[ colour.X ], [ colour.Y ], [ colour.Z ] ]
-  let resultArray = _dep.helpers.matrixMultiply(M, valueArray)
+  let valueArray = [ [ colour.X ], [ colour.Y ], [ colour.Z ] ]
+  let resultArray = matrixMultiply(M, valueArray)
 
   let result = {
     X: resultArray[0][0],
@@ -36,7 +40,5 @@ function adapt( _dep, colourRef, illuminantDRef, illuminantSRef ) {
     Z: resultArray[2][0]
   }
 
-  return _dep.helpers.ready( _dep, result );
+  return makeColourObject(result)
 }
-
-module.exports = adapt;

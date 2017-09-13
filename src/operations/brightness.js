@@ -1,14 +1,15 @@
-function brightness( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-  colour.l += shift;
+export default function brightness (shift, colourRef) {
+  var colour = convert('hsl', colourRef)
+
+  colour.l += shift
   if (colour.l < 0) {
-    colour.l = 0;
+    colour.l = 0
   } else if (colour.l > 100) {
-    colour.l = 100;
+    colour.l = 100
   }
 
-  return _dep.helpers.ready( _dep, colour );
+  return makeColourObject(colour)
 }
-
-module.exports = brightness;

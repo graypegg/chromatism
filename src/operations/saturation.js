@@ -1,14 +1,15 @@
-function saturation( _dep, shift, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-  colour.s += shift;
+export default function saturation (shift, colourRef) {
+  var colour = convert('hsl', colourRef)
+
+  colour.s += shift
   if (colour.s < 0) {
-    colour.s = 0;
+    colour.s = 0
   } else if (colour.s > 100) {
-    colour.s = 100;
+    colour.s = 100
   }
 
-  return _dep.helpers.ready( _dep, colour );
+  return makeColourObject(colour)
 }
-
-module.exports = saturation;

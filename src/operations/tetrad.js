@@ -1,13 +1,14 @@
-function tetrad( _dep, colourRef ) {
-  var colour = _dep.operations.convert( _dep, "hsl", colourRef );
+import makeColourObject from './convert'
+import convert from '../helpers/convert-to-type'
 
-  var colours = [{h:colour.h, s:colour.s, l:colour.l}];
-  for(var i=0;i<3;i++) {
-    colour.h = (colour.h + 90) % 360;
-    colours.push({h:colour.h, s:colour.s, l:colour.l});
+export default function tetrad (colourRef) {
+  var colour = convert('hsl', colourRef)
+
+  var colours = [{ h: colour.h, s: colour.s, l: colour.l }]
+  for (var i = 0; i < 3; i++) {
+    colour.h = (colour.h + 90) % 360
+    colours.push({ h: colour.h, s: colour.s, l: colour.l })
   }
 
-  return _dep.helpers.ready( _dep, colours );
+  return makeColourObject(colours)
 }
-
-module.exports = tetrad;
