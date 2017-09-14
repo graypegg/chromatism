@@ -3,7 +3,6 @@
   "version": "3.0.0",
   "description": "A simple set of utility functions for colours.",
   "main": "dist/chromatism.umd.js",
-  "browser": "dist/chromatism.cjs.js",
   "module": "src/operations/index.js",
   "typings": "./index.d.ts",
   "repository": "toish/chromatism",
