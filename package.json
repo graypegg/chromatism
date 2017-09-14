@@ -1,6 +1,6 @@
 {
   "name": "chromatism",
-  "version": "2.6.0",
+  "version": "3.0.0",
   "description": "A simple set of utility functions for colours.",
   "main": "dist/chromatism.umd.js",
   "browser": "dist/chromatism.cjs.js",
