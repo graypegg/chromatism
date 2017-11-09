@@ -5,7 +5,7 @@ import round from './rounding'
 import consts from './consts'
 import * as chroma from '../src/operations'
 
-describe('Conversion', function () {
+describe('Conversion', () => {
   for (let fromKey in consts.red) {
     if (!consts.red.hasOwnProperty(fromKey)) {
       continue
