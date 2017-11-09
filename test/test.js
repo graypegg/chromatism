@@ -55,7 +55,7 @@ function allAreCloseXYZ (arrayActual, arrayExpected) {
   })
 }
 
-describe('Operations', function () {
+describe('Operations', () => {
   it('should match expected value for complementary', () => {
     assert(closeXYZ(chroma.complementary('#4fc7ff').XYZ,
       { X: 51.31525590295186,
