@@ -18,7 +18,7 @@ describe('Conversion', () => {
 
       let accuracy = consts.red[fromKey].accuracy[toKey] || 0
 
-      describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function () {
+      describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), () => {
         const fromValue = consts.red[fromKey].value
         const expected = round(consts.red[toKey].value, accuracy)
 
