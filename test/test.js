@@ -22,7 +22,7 @@ describe('Conversion', () => {
         const fromValue = consts.red[fromKey].value
         const expected = round(consts.red[toKey].value, accuracy)
 
-        it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)}`, function () {
+        it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)}`, () => {
           assert.deepEqual(
             round(chroma.convert(fromValue)[toKey], accuracy),
             expected
