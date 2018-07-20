@@ -5,7 +5,7 @@ import round from './rounding'
 import consts from './consts'
 import * as chroma from '../src/operations'
 
-describe('Conversion', function () {
+describe('Conversion', () => {
   for (let fromKey in consts.red) {
     if (!consts.red.hasOwnProperty(fromKey)) {
       continue
@@ -18,11 +18,11 @@ describe('Conversion', function () {
 
       let accuracy = consts.red[fromKey].accuracy[toKey] || 0
 
-      describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), function () {
+      describe(fromKey.toUpperCase() + ' > ' + toKey.toUpperCase(), () => {
         const fromValue = consts.red[fromKey].value
         const expected = round(consts.red[toKey].value, accuracy)
 
-        it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)}`, function () {
+        it(`should return ${accuracy !== 0 ? 'a value close to' : 'the value'} ${JSON.stringify(consts.red[toKey].value)}`, () => {
           assert.deepEqual(
             round(chroma.convert(fromValue)[toKey], accuracy),
             expected
@@ -55,7 +55,7 @@ function allAreCloseXYZ (arrayActual, arrayExpected) {
   })
 }
 
-describe('Operations', function () {
+describe('Operations', () => {
   it('should match expected value for complementary', () => {
     assert(closeXYZ(chroma.complementary('#4fc7ff').XYZ,
       { X: 51.31525590295186,
