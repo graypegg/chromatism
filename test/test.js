@@ -270,6 +270,10 @@ describe('Operations', () => {
     assert(close(chroma.difference('#4fc7ff', '#75c2e6'), 202.64118553936103))
   })
 
+  it('should return non NaN value for difference with greyscale colors', () => {
+    assert(!isNaN(chroma.difference('#f0f0f0', '#ffffff')))
+  })
+
   it('should be close to 6500K when temperature is passed the D65 illuminant', () => {
     assert(close(chroma.temperature({ X: 95.047, Y: 100, Z: 108.883 }), 6503.4619534794965))
   })
