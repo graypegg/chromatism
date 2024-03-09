@@ -110,7 +110,7 @@ There is also a `uniform` version of this function. When using the uniform versi
 var newColour = chromatism.uniformComplementary( colour ).rgb;
 ```
 
-![Complementary](https://toi.sh/cdn/chromatism/complementary.png)
+![Complementary](chromatism/complementary.png)
 
 ---
 
@@ -125,7 +125,7 @@ There is also a `uniform` version of this function. When using the uniform versi
 var newColour = chromatism.uniformTriad( colour ).rgb;
 ```
 
-![Triad](https://toi.sh/cdn/chromatism/triad.png)
+![Triad](chromatism/triad.png)
 
 ---
 
@@ -140,7 +140,7 @@ There is also a `uniform` version of this function. When using the uniform versi
 var newColour = chromatism.uniformTetrad( colour ).rgb;
 ```
 
-![Tetrad](https://toi.sh/cdn/chromatism/tetrad.png)
+![Tetrad](chromatism/tetrad.png)
 
 ---
 
@@ -149,7 +149,7 @@ var newColour = chromatism.uniformTetrad( colour ).rgb;
 var newColour = chromatism.mid( colourOne, colourTwo ).cssrgb;
 ```
 
-![Mid](https://toi.sh/cdn/chromatism/mid.png)
+![Mid](chromatism/mid.png)
 
 ---
 
@@ -158,7 +158,7 @@ var newColour = chromatism.mid( colourOne, colourTwo ).cssrgb;
 var newColour = chromatism.invert( colour ).hex;
 ```
 
-![Invert](https://toi.sh/cdn/chromatism/invert.png)
+![Invert](chromatism/invert.png)
 
 ---
 
@@ -167,7 +167,7 @@ var newColour = chromatism.invert( colour ).hex;
 var newColour = chromatism.invertLightness( colour ).hsl;
 ```
 
-![Invert Lightness](https://toi.sh/cdn/chromatism/invertLightness.png)
+![Invert Lightness](chromatism/invertLightness.png)
 
 ---
 
@@ -176,7 +176,7 @@ var newColour = chromatism.invertLightness( colour ).hsl;
 var newColour = chromatism.multiply( colourOne, colourTwo ).hsv;
 ```
 
-![Blend](https://toi.sh/cdn/chromatism/blend.png)
+![Blend](chromatism/blend.png)
 
 ---
 
@@ -185,7 +185,7 @@ var newColour = chromatism.multiply( colourOne, colourTwo ).hsv;
 var newColour = chromatism.adjacent( degrees, sections, colour ).cmyk;
 ```
 
-![Rainbow](https://toi.sh/cdn/chromatism/rainbow.png)
+![Rainbow](chromatism/rainbow.png)
 
 Shift should be in degrees. It can be either positive and negative.
 
@@ -196,7 +196,7 @@ Shift should be in degrees. It can be either positive and negative.
 var newColour = chromatism.fade( amount, colourFrom, colourTo ).hsl;
 ```
 
-![Fade](https://toi.sh/cdn/chromatism/fade.png)
+![Fade](chromatism/fade.png)
 
 ---
 
@@ -205,7 +205,7 @@ var newColour = chromatism.fade( amount, colourFrom, colourTo ).hsl;
 var newColour = chromatism.shade( percent, colour ).csshsl;
 ```
 
-![Shade](https://toi.sh/cdn/chromatism/shade.png)
+![Shade](chromatism/shade.png)
 
 Percent should be a number between -100 and 100.
 
@@ -216,7 +216,7 @@ Percent should be a number between -100 and 100.
 var newColour = chromatism.saturation( percent, colour ).hex;
 ```
 
-![Saturation](https://toi.sh/cdn/chromatism/saturation.png)
+![Saturation](chromatism/saturation.png)
 
 Percent should be a number between -100 and 100.
 
@@ -227,7 +227,7 @@ Percent should be a number between -100 and 100.
 var newColour = chromatism.brightness( percent, colour ).hsl;
 ```
 
-![Brightness](https://toi.sh/cdn/chromatism/brightness.png)
+![Brightness](chromatism/brightness.png)
 
 This essentially acts as a sum of [saturation](#generate-a-new-saturation-of-a-colour) and [shade](#generate-a-new-shade-of-a-colour), and thus does not adjust luminosity. Brightness works for 99% of most scenarios though.
 
@@ -240,7 +240,7 @@ Percent should be a number between -100 and 100.
 var newColour = chromatism.hue( degrees, colour ).hex;
 ```
 
-![Hue](https://toi.sh/cdn/chromatism/hue.png)
+![Hue](chromatism/hue.png)
 
 Hue shift is measured in degrees, using the HSL colour model.
 
@@ -251,7 +251,7 @@ Hue shift is measured in degrees, using the HSL colour model.
 var newColour = chromatism.contrast( contrastCoeff, colour ).hsl;
 ```
 
-![Contrast](https://toi.sh/cdn/chromatism/contrast.png)
+![Contrast](chromatism/contrast.png)
 
 Contrast coefficient is supplied in decimal form! You'll normally use a value between 0 and 4.
 
@@ -264,7 +264,7 @@ Imagine increasing the contrast *(shift > 1)* as making lighter colours lighter,
 var newColour = chromatism.greyscale( colour ).cmyk;
 ```
 
-![Greyscale](https://toi.sh/cdn/chromatism/greyscale.png)
+![Greyscale](chromatism/greyscale.png)
 
 ---
 
@@ -273,7 +273,7 @@ var newColour = chromatism.greyscale( colour ).cmyk;
 var newColour = chromatism.sepia( colour ).hsv;
 ```
 
-![Sepia](https://toi.sh/cdn/chromatism/sepia.png)
+![Sepia](chromatism/sepia.png)
 
 ---
 
@@ -282,7 +282,7 @@ var newColour = chromatism.sepia( colour ).hsv;
 var newColour = chromatism.contrastRatio( colour ).rgb;
 ```
 
-![Contrast Ratio](https://toi.sh/cdn/chromatism/contrastRatio.png)
+![Contrast Ratio](chromatism/contrastRatio.png)
 
 Use this function to determine the colour of text needed create a high contrast between text and a solid background of the supplied colour. Made according to the [W3C Standard on Web Accessibility](http://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-contrast.html)
 
@@ -293,7 +293,7 @@ Use this function to determine the colour of text needed create a high contrast 
 var newColour = chromatism.adapt( colour, illuminant, [source illuminant] ).XYZ;
 ```
 
-![Illuminant Adaptation](https://toi.sh/cdn/chromatism/adapt.png)
+![Illuminant Adaptation](chromatism/adapt.png)
 
 Shifts the Illuminant (white-point) on the supplied colour. Supply an illuminant label as a capital-letter string in the illuminant attribute. (e.g. `"D65"`, `"F2"`) [A full list is available at the bottom of this README.](#supported-values) Most standard white-points are supported. (Most colours in Chromatism are assumed to be illuminated by D65, so you can leave off the `source illuminant` property normally, it defaults to `CIE 2° D65`.)
 
