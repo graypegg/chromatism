@@ -1,5 +1,7 @@
 # Chromatism :rainbow:
 
+[![Reviewed by Hound](https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg)](https://houndci.com)
+
 A simple set of utility functions for colours.
 
 [![NPM](https://nodei.co/npm/chromatism.png?compact=true)](https://nodei.co/npm/chromatism/)
