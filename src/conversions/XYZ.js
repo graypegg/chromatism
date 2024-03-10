@@ -40,9 +40,7 @@ export default {
     let Mb = getTransform('BRADFORD')
 
     let resultArray = Mb.map((m) => {
-      return valueArray.reduce((acc, v, key) => {
-        return (m[key] * v) + acc
-      }, 0)
+      return valueArray.reduce((acc, v, key) => (m[key] * v) + acc, 0)
     })
 
     return {

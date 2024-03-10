@@ -8,9 +8,7 @@ export default {
     const Mbi = getTransform('INVERSE_BRADFORD')
 
     const resultArray = Mbi.map((m) => {
-      return valueArray.reduce((acc, v, key) => {
-        return (m[key] * v) + acc
-      }, 0)
+      return valueArray.reduce((acc, v, key) => (m[key] * v) + acc, 0)
     })
 
     return {
