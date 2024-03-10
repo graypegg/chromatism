@@ -16,7 +16,7 @@ export default function difference (colourRefOne, colourRefTwo, l, c) {
   const da = Lab1.a - Lab2.a
   const db = Lab1.b - Lab2.b
 
-  const dH = Math.sqrt(Math.pow(da, 2) + Math.pow(db, 2) - Math.pow(dC, 2))
+  const dH = Math.sqrt(Math.abs(Math.pow(da, 2) + Math.pow(db, 2) - Math.pow(dC, 2)))
 
   const SL = Lab1.L < 16 ? 0.511 : (0.040975 * Lab1.L) / (1.01765 * Lab1.L)
   const SC = (0.0638 * C1) / (1.0131 * C1)
